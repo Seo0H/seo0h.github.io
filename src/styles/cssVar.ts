@@ -4,6 +4,7 @@ const cssVar = {
   mainColor: '#006fff',
   pHeader: '#334051',
   pContents: '#333d4b',
+  gray0: '#C2C2C2',
 } as const;
 
 const cssVarConverted = Object.entries(cssVar).reduce((acc, [key, val]) => {

@@ -3,6 +3,8 @@ import reset from 'styled-reset';
 
 import CssVar from '@/styles/cssVar';
 
+import { cvar } from './cssVar';
+
 const GlobalStyles = createGlobalStyle`${css`
   ${reset}
   ${CssVar}
@@ -33,6 +35,13 @@ const GlobalStyles = createGlobalStyle`${css`
     font-size: 17px;
     font-weight: 400;
     line-height: 140%;
+  }
+
+  hr {
+    width: 100%;
+    border: 0;
+    background-color: var(${cvar('gray0')});
+    height: 1px;
   }
 `}`;
 

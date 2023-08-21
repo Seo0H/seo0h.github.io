@@ -9,6 +9,7 @@ const Header = () => {
       <Logo padding='5px 10px' justifyContent='center' alignItems='center' width='fit-content'>
         <a>isSEO®</a>
       </Logo>
+      <hr />
     </Nav>
   );
 };
@@ -33,4 +34,5 @@ const Nav = styled.nav`
   align-content: center;
   justify-content: center;
   width: 100%;
+  height: 90px;
 `;
