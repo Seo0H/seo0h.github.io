@@ -1,7 +1,0 @@
-{
-  "import Layout": {
-    "prefix": "layout",
-    "body": ["import * as Layout from '@/components/layout';"],
-    "description": "import Layout"
-  }
-}
