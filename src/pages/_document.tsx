@@ -33,6 +33,7 @@ export default class MyDocument extends Document {
             as='style'
             href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard-dynamic-subset.css'
           />
+          <link href='https://fonts.cdnfonts.com/css/consola-mono' rel='stylesheet' />
         </Head>
         <body>
           <Main />

@@ -1,3 +1,7 @@
 export default function Home() {
-  return <>hi</>;
+  return (
+    <>
+      <h1>Seo (young)</h1>hi
+    </>
+  );
 }
