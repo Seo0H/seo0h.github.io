@@ -9,9 +9,9 @@ export default function Home() {
       </Layout.Box>
       <Layout.VStack gap='10px'>
         <p>
-          Frontend Developer love design and codeing. I'm a maker lover who likes to make things.
+          I am a front-end developer who loves design and coding.
           <br />
-          Here is a small space that records the problems you face while developing.
+          This is a small space where I record the problems I faced while making the product.
         </p>
         -
         <p>
