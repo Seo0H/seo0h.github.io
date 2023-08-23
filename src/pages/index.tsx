@@ -1,13 +1,21 @@
 /* eslint-disable react/no-unescaped-entities */
-import * as Layout from '@/components/layout';
+import { compareDesc } from 'date-fns';
+import dayjs from 'dayjs';
+import { GetStaticProps } from 'next';
+import Image from 'next/image';
+import { styled } from 'styled-components';
 
-export default function Home() {
+import * as Layout from '@/components/layout';
+import { Post, allPosts } from 'contentlayer/generated';
+
+export default function Home({ posts }: { posts: Post[] }) {
+  console.log(posts);
   return (
-    <>
+    <Layout.Box padding='0 10px'>
       <Layout.Box margin='30px 0 25px 0'>
         <h1>Seo (young)</h1>
       </Layout.Box>
-      <Layout.VStack gap='10px'>
+      <Layout.VStack gap='10px' margin='0 0 100px 0'>
         <p>
           I am a front-end developer who loves design and coding.
           <br />
@@ -21,6 +29,39 @@ export default function Home() {
           이곳은 제가 메이킹을 하며 마주한 문제들을 기록해 둔 소소한 공간입니다.
         </p>
       </Layout.VStack>
-    </>
+
+      {posts.map((val) => (
+        <ListBoxWrapper key={val._id} gap='24px' alignItems='center'>
+          <Layout.Box position='relative' width='240px' height='240px'>
+            <Image
+              style={{ objectFit: 'cover', borderRadius: '10px' }}
+              src={val.image}
+              alt='img'
+              fill
+            />
+          </Layout.Box>
+          <Layout.VStack gap='16px'>
+            <h2>{val.title}</h2>
+            <p>{val.description}</p>
+            <p>{dayjs(val.date).format('YY.MM.DD')}</p>
+          </Layout.VStack>
+        </ListBoxWrapper>
+      ))}
+    </Layout.Box>
   );
 }
+
+export const getStaticProps: GetStaticProps = () => {
+  const posts = allPosts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
+  return { props: { posts } };
+};
+
+const ListBoxWrapper = styled(Layout.HStack)`
+  cursor: pointer;
+  border-radius: 18px;
+  border: 10px solid transparent;
+
+  &:hover {
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+  }
+`;
