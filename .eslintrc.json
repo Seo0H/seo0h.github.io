@@ -11,14 +11,19 @@
   },
   "rules": {
     "import/order": [
-      "error",
+      "warn",
       {
-        "newlines-between": "always",
+        "newlines-between": "always-and-inside-groups",
         "pathGroups": [
           {
             "pattern": "react",
             "group": "builtin",
             "position": "before"
+          },
+          {
+            "pattern": "contentlayer/generated",
+            "group": "external",
+            "position": "after"
           }
         ],
         "pathGroupsExcludedImportTypes": ["react"],

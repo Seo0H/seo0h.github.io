@@ -1,7 +1,8 @@
 import Image from 'next/image';
 
-import * as Layout from '@/components/layout';
 import { Post, allPosts } from 'contentlayer/generated';
+
+import * as Layout from '@/components/layout';
 
 import type { GetStaticPaths, GetStaticProps } from 'next';
 

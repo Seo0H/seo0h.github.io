@@ -5,8 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { styled } from 'styled-components';
 
-import * as Layout from '@/components/layout';
 import { Post, allPosts } from 'contentlayer/generated';
+
+import * as Layout from '@/components/layout';
 
 export default function Home({ posts }: { posts: Post[] }) {
   // console.log(posts);
