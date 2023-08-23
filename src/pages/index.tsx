@@ -3,6 +3,7 @@ import { compareDesc } from 'date-fns';
 import dayjs from 'dayjs';
 import { GetStaticProps } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 import { styled } from 'styled-components';
 
 import * as Layout from '@/components/layout';
@@ -31,21 +32,23 @@ export default function Home({ posts }: { posts: Post[] }) {
       </Layout.VStack>
 
       {posts.map((val) => (
-        <ListBoxWrapper key={val._id} gap='24px' alignItems='center'>
-          <Layout.Box position='relative' width='240px' height='240px'>
-            <Image
-              style={{ objectFit: 'cover', borderRadius: '10px' }}
-              src={val.image}
-              alt='img'
-              fill
-            />
-          </Layout.Box>
-          <Layout.VStack gap='16px'>
-            <h2>{val.title}</h2>
-            <p>{val.description}</p>
-            <p>{dayjs(val.date).format('YY.MM.DD')}</p>
-          </Layout.VStack>
-        </ListBoxWrapper>
+        <Link key={val._id} href={{ pathname: `/blog/[slug]`, query: { slug: val._id} }}>
+          <ListBoxWrapper gap='24px' alignItems='center'>
+            <Layout.Box position='relative' width='240px' height='240px'>
+              <Image
+                style={{ objectFit: 'cover', borderRadius: '10px' }}
+                src={val.image}
+                alt='img'
+                fill
+              />
+            </Layout.Box>
+            <Layout.VStack gap='16px'>
+              <h2>{val.title}</h2>
+              <p>{val.description}</p>
+              <p>{dayjs(val.date).format('YY.MM.DD')}</p>
+            </Layout.VStack>
+          </ListBoxWrapper>
+        </Link>
       ))}
     </Layout.Box>
   );
