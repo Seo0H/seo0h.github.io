@@ -22,8 +22,8 @@
           },
           {
             "pattern": "contentlayer/generated",
-            "group": "external",
-            "position": "after"
+            "group": "internal",
+            "position": "before"
           }
         ],
         "pathGroupsExcludedImportTypes": ["react"],
