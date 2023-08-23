@@ -41,6 +41,10 @@ const GlobalStyles = createGlobalStyle`${css`
     background-color: var(${cvar('gray0')});
     height: 1px;
   }
+
+  a {
+    text-decoration: none;
+  }
 `}`;
 
 export default GlobalStyles;
