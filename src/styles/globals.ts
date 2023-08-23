@@ -12,8 +12,6 @@ const GlobalStyles = createGlobalStyle`${css`
   html,
   body,
   #__next {
-    font-family: 'Pretendard';
-    font-style: normal;
     min-width: 100%;
     min-height: 100%;
   }

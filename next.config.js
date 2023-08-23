@@ -9,7 +9,9 @@ const nextConfig = {
     loader: 'akamai',
     path: '',
   },
-  assetPrefix: './',
+  compiler: {
+    styledComponents: true,
+  },
 };
 
 module.exports = withContentlayer(nextConfig);

@@ -27,12 +27,6 @@ export default class MyDocument extends Document {
     return (
       <Html lang='ko'>
         <Head>
-          <meta name='viewport' content='width=device-width, initial-scale=1' />
-          <link
-            rel='stylesheet'
-            as='style'
-            href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard-dynamic-subset.css'
-          />
           <link href='https://fonts.cdnfonts.com/css/consola-mono' rel='stylesheet' />
         </Head>
         <body>
