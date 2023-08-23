@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import { compareDesc } from 'date-fns';
 import dayjs from 'dayjs';
 import { GetStaticProps } from 'next';
@@ -32,7 +31,7 @@ export default function Home({ posts }: { posts: Post[] }) {
       </Layout.VStack>
 
       {posts.map((val) => (
-        <Link key={val._id} href={{ pathname: `/blog/[slug]`, query: { slug: val._id} }}>
+        <Link key={val._id} href={{ pathname: `/blog/[slug]`, query: { slug: val._id } }}>
           <ListBoxWrapper gap='24px' alignItems='center'>
             <Layout.Box position='relative' width='240px' height='240px'>
               <Image

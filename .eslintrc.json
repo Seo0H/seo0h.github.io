@@ -5,11 +5,7 @@
     "node": true
   },
   "plugins": ["import"],
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "next/core-web-vitals"
-  ],
+  "extends": ["eslint:recommended", "plugin:react/recommended", "next/core-web-vitals"],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
