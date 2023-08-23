@@ -9,7 +9,7 @@ import * as Layout from '@/components/layout';
 import { Post, allPosts } from 'contentlayer/generated';
 
 export default function Home({ posts }: { posts: Post[] }) {
-  console.log(posts);
+  // console.log(posts);
   return (
     <Layout.Box padding='0 10px'>
       <Layout.Box margin='30px 0 25px 0'>

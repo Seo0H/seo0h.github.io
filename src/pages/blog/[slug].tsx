@@ -36,7 +36,7 @@ export const getStaticPaths: GetStaticPaths = () => {
 
 export const getStaticProps: GetStaticProps = ({ params }) => {
   const { slug } = params as { slug: string };
-  console.log(params);
+  // console.log(params);
   const post = allPosts.find((post) => post._raw.sourceFilePath === slug);
 
   if (!post) {
