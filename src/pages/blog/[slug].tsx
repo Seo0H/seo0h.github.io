@@ -2,9 +2,9 @@ import Image from 'next/image';
 
 import { Post, allPosts } from 'contentlayer/generated';
 
-import * as Layout from '@/components/layout';
-
 import type { GetStaticPaths, GetStaticProps } from 'next';
+
+import * as Layout from '@/components/layout';
 
 const Blog = ({ post }: { post: Post }) => {
   return (
@@ -30,14 +30,14 @@ export default Blog;
 
 export const getStaticPaths: GetStaticPaths = () => {
   return {
-    paths: allPosts.map((post) => ({ params: { slug: post._raw.flattenedPath } })),
+    paths: allPosts.map((post) => ({ params: { slug: decodeURI(post._raw.flattenedPath) } })),
     fallback: 'blocking',
   };
 };
 
 export const getStaticProps: GetStaticProps = ({ params }) => {
   const { slug } = params as { slug: string };
-  // console.log(params);
+  console.log(params);
   const post = allPosts.find((post) => post._raw.sourceFilePath === slug);
 
   if (!post) {

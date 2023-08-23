@@ -10,7 +10,9 @@ const nextConfig = {
     path: '',
   },
   compiler: {
-    styledComponents: true,
+    styledComponents: {
+      displayName: true,
+    },
   },
 };
 export default withContentlayer(nextConfig);

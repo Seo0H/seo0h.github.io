@@ -1,4 +1,4 @@
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 
 import * as Layout from '@/components/layout';
 import { cvar } from '@/styles/cssVar';
