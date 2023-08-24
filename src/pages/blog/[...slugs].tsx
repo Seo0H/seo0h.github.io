@@ -1,12 +1,14 @@
 import Image from 'next/image';
 
-import { Post, allPosts } from 'contentlayer/generated';
+import { type Post, allPosts } from 'contentlayer/generated';
 
 import type { GetStaticPaths, GetStaticProps } from 'next';
 
 import * as Layout from '@/components/layout';
+import { allPostTitle } from '@/utils/blogDataset';
 
 const Blog = ({ post }: { post: Post }) => {
+  console.log(post);
   return (
     <Layout.VStack gap='10px' width='100%' alignItems='center' maxWidth='700px'>
       <Layout.Flex position='relative' width='100%' maxWidth='700px' height='340px'>
@@ -30,15 +32,16 @@ export default Blog;
 
 export const getStaticPaths: GetStaticPaths = () => {
   return {
-    paths: allPosts.map((post) => ({ params: { slug: decodeURI(post._raw.flattenedPath) } })),
+    /* TODO ling as 에 /blog 붙여야 되는거 추후 수정 */
+    paths: allPostTitle.map((post) => `/blog${post.url}`),
     fallback: 'blocking',
   };
 };
 
 export const getStaticProps: GetStaticProps = ({ params }) => {
-  const { slug } = params as { slug: string };
-  console.log(params);
-  const post = allPosts.find((post) => post._raw.sourceFilePath === slug);
+  const { slugs } = params as { slugs: string[] };
+  const slug = `/${[...slugs].join('/')}`;
+  const post = allPosts.find((post) => post.url === slug);
 
   if (!post) {
     return { notFound: true };

@@ -5,12 +5,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import { Post, allPosts } from 'contentlayer/generated';
+import { Post } from 'contentlayer/generated';
 
 import * as Layout from '@/components/layout';
+import { allPostTitle } from '@/utils/blogDataset';
 
 export default function Home({ posts }: { posts: Post[] }) {
-  // console.log(posts);
   return (
     <Layout.Box padding='0 10px'>
       <Layout.Box margin='30px 0 25px 0'>
@@ -31,21 +31,22 @@ export default function Home({ posts }: { posts: Post[] }) {
         </p>
       </Layout.VStack>
 
-      {posts.map((val) => (
-        <Link key={val._id} href={{ pathname: `/blog/[slug]`, query: { slug: val._id } }}>
+      {/* TODO ling as 에 /blog 붙여야 되는거 추후 수정 */}
+      {posts.map((post) => (
+        <Link key={`${post._id} post key`} href={`/blog/[...slugs]`} as={`/blog${post.url}`}>
           <ListBoxWrapper gap='24px' alignItems='center'>
             <Layout.Box position='relative' width='240px' height='240px'>
               <Image
                 style={{ objectFit: 'cover', borderRadius: '10px' }}
-                src={val.image}
+                src={post.image}
                 alt='img'
                 fill
               />
             </Layout.Box>
             <Layout.VStack gap='16px'>
-              <h2>{val.title}</h2>
-              <p>{val.description}</p>
-              <p>{dayjs(val.date).format('YY.MM.DD')}</p>
+              <h2>{post.title}</h2>
+              <p>{post.description}</p>
+              <p>{dayjs(post.date).format('YY.MM.DD')}</p>
             </Layout.VStack>
           </ListBoxWrapper>
         </Link>
@@ -55,7 +56,8 @@ export default function Home({ posts }: { posts: Post[] }) {
 }
 
 export const getStaticProps: GetStaticProps = () => {
-  const posts = allPosts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
+  const posts = allPostTitle.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
+
   return { props: { posts } };
 };
 
