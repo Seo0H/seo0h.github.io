@@ -28,7 +28,8 @@ const GlobalStyles = createGlobalStyle`${css`
     font-weight: 600;
   }
 
-  p {
+  p,
+  time {
     color: var(--pContents);
     font-size: 17px;
     font-weight: 400;

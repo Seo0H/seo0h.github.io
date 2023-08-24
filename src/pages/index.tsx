@@ -1,4 +1,3 @@
-import { compareDesc } from 'date-fns';
 import dayjs from 'dayjs';
 import { GetStaticProps } from 'next';
 import Image from 'next/image';
@@ -11,8 +10,9 @@ import * as Layout from '@/components/layout';
 import { allPostTitle } from '@/utils/blogDataset';
 
 export default function Home({ posts }: { posts: Post[] }) {
+  // console.log(posts);
   return (
-    <Layout.Box padding='0 10px'>
+    <Layout.Box padding='0 10px' margin='0 0 100px 0'>
       <Layout.Box margin='30px 0 25px 0'>
         <h1>Seo (young)</h1>
       </Layout.Box>
@@ -31,34 +31,34 @@ export default function Home({ posts }: { posts: Post[] }) {
         </p>
       </Layout.VStack>
 
-      {/* TODO ling as 에 /blog 붙여야 되는거 추후 수정 */}
-      {posts.map((post) => (
-        <Link key={`${post._id} post key`} href={`/blog/[...slugs]`} as={`/blog${post.url}`}>
-          <ListBoxWrapper gap='24px' alignItems='center'>
-            <Layout.Box position='relative' width='240px' height='240px'>
-              <Image
-                style={{ objectFit: 'cover', borderRadius: '10px' }}
-                src={post.image}
-                alt='img'
-                fill
-              />
-            </Layout.Box>
-            <Layout.VStack gap='16px'>
-              <h2>{post.title}</h2>
-              <p>{post.description}</p>
-              <p>{dayjs(post.date).format('YY.MM.DD')}</p>
-            </Layout.VStack>
-          </ListBoxWrapper>
-        </Link>
-      ))}
+      <Layout.VStack gap='20px'>
+        {/* TODO ling as 에 /blog 붙여야 되는거 추후 수정 */}
+        {posts.map((post) => (
+          <Link key={crypto.randomUUID()} href={`/blog/[...slugs]`} as={`/blog${post.url}`}>
+            <ListBoxWrapper gap='24px' alignItems='center'>
+              <Layout.Box position='relative' width='240px' height='240px'>
+                <Image
+                  style={{ objectFit: 'cover', borderRadius: '10px' }}
+                  src={post.image}
+                  alt='img'
+                  fill
+                />
+              </Layout.Box>
+              <Layout.VStack gap='16px'>
+                <h2>{post.title}</h2>
+                <p>{post.description}</p>
+                <time suppressHydrationWarning>{dayjs(post.date).format('YY.MM.DD')}</time>
+              </Layout.VStack>
+            </ListBoxWrapper>
+          </Link>
+        ))}
+      </Layout.VStack>
     </Layout.Box>
   );
 }
 
 export const getStaticProps: GetStaticProps = () => {
-  const posts = allPostTitle.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
-
-  return { props: { posts } };
+  return { props: { posts: allPostTitle } };
 };
 
 const ListBoxWrapper = styled(Layout.HStack)`
