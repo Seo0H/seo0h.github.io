@@ -17,20 +17,20 @@ const GlobalStyles = createGlobalStyle`${css`
   }
 
   h1 {
-    color: var(--pHeader);
+    color: ${cvar({ key: 'gray', idx: '500' })};
     font-size: 48px;
     font-weight: 800;
   }
 
   h2 {
-    color: var(--pHeader);
+    color: ${cvar({ key: 'gray', idx: '500' })};
     font-size: 36px;
-    font-weight: 600;
+    font-weight: 700;
   }
 
   p,
   time {
-    color: var(--pContents);
+    color: ${cvar({ key: 'gray', idx: '300' })};
     font-size: 17px;
     font-weight: 400;
     line-height: 140%;
@@ -39,7 +39,7 @@ const GlobalStyles = createGlobalStyle`${css`
   hr {
     width: 100%;
     border: 0;
-    background-color: var(${cvar('gray0')});
+    background-color: ${cvar({ key: 'gray', idx: '200' })};
     height: 1px;
   }
 

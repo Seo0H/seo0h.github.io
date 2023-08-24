@@ -17,7 +17,7 @@ const Header = () => {
 export default Header;
 
 const Logo = styled(Layout.VStack)`
-  background: var(${cvar('mainColor')});
+  background: ${cvar({key: 'mainColor'})};
   border-radius: 5px;
 
   a {
