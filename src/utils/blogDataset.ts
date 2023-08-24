@@ -1,6 +1,8 @@
-import type { ReducedPost } from '@/lib/types';
-import { type Post, allPosts } from 'contentlayer/generated';
 import { compareDesc } from 'date-fns';
+
+import { type Post, allPosts } from 'contentlayer/generated';
+
+import type { ReducedPost } from '@/lib/types';
 
 export const reducePost = ({ body: _, _raw, _id, ...post }: Post): ReducedPost => post;
 
