@@ -2,13 +2,13 @@ import Image from 'next/image';
 
 import { type Post, allPosts } from 'contentlayer/generated';
 
-import type { GetStaticPaths, GetStaticProps } from 'next';
-
 import * as Layout from '@/components/layout';
 import { allPostTitle } from '@/utils/blogDataset';
 
+import type { GetStaticPaths, GetStaticProps } from 'next';
+
 const Blog = ({ post }: { post: Post }) => {
-  console.log(post);
+  // console.log(post);
   return (
     <Layout.VStack gap='10px' width='100%' alignItems='center' maxWidth='700px'>
       <Layout.Flex position='relative' width='100%' maxWidth='700px' height='340px'>
