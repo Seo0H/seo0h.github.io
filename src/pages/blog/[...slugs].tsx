@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useMDXComponent } from 'next-contentlayer/hooks';
 
 import { type Post, allPosts } from 'contentlayer/generated';
 
@@ -8,7 +9,8 @@ import { allPostTitle } from '@/utils/blogDataset';
 import type { GetStaticPaths, GetStaticProps } from 'next';
 
 const Blog = ({ post }: { post: Post }) => {
-  // console.log(post);
+  const MDXContent = useMDXComponent(post.body.code);
+
   return (
     <Layout.VStack gap='10px' width='100%' alignItems='center' maxWidth='700px'>
       <Layout.Flex position='relative' width='100%' maxWidth='700px' height='340px'>
@@ -19,10 +21,9 @@ const Blog = ({ post }: { post: Post }) => {
           alt='img'
         />
       </Layout.Flex>
-      <Layout.VStack alignItems='flex-start'>
-        <h1>{post.title}</h1>
-        <h2>{post.description}</h2>
-        <p>{post.body.raw}</p>
+
+      <Layout.VStack alignItems='flex-start' width='100%'>
+        <MDXContent />
       </Layout.VStack>
     </Layout.VStack>
   );
@@ -30,7 +31,7 @@ const Blog = ({ post }: { post: Post }) => {
 
 export default Blog;
 
-export const getStaticPaths: GetStaticPaths = () => {
+export const getStaticPaths: GetStaticPaths = async () => {
   return {
     /* TODO ling as 에 /blog 붙여야 되는거 추후 수정 */
     paths: allPostTitle.map((post) => `/blog${post.url}`),
@@ -38,7 +39,7 @@ export const getStaticPaths: GetStaticPaths = () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slugs } = params as { slugs: string[] };
   const slug = `/${[...slugs].join('/')}`;
   const post = allPosts.find((post) => post.url === slug);

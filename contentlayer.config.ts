@@ -1,5 +1,10 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files';
 import readingTime from 'reading-time';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypePrettyCode from 'rehype-pretty-code';
+import rehypeSlug from 'rehype-slug';
+import remarkGfm from 'remark-gfm';
+import remarkToc from 'remark-toc';
 
 export const Post = defineDocumentType(() => ({
   name: 'Post',
@@ -24,4 +29,26 @@ export const Post = defineDocumentType(() => ({
   },
 }));
 
-export default makeSource({ contentDirPath: 'posts', documentTypes: [Post] });
+/** @type {import('rehype-pretty-code').Options} */
+const options = {};
+
+export default makeSource({
+  contentDirPath: 'posts',
+  documentTypes: [Post],
+  mdx: {
+    remarkPlugins: [remarkGfm, remarkToc],
+    rehypePlugins: [
+      rehypeSlug,
+      [rehypePrettyCode, options],
+      [
+        rehypeAutolinkHeadings,
+        {
+          properties: {
+            className: ['anchor'],
+            ariaLabel: 'anchor',
+          },
+        },
+      ],
+    ],
+  },
+});
