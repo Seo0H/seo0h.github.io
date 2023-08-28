@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
 
+import { styled } from 'styled-components';
+
 import * as Layout from '@/components/layout';
 
 const AppLayout = ({ children }: { children: ReactNode }) => {

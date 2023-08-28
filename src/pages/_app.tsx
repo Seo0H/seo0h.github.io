@@ -16,7 +16,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <GlobalStyles />
       <AppLayout>
         <Header />
-        <main className={fontPretendard.className}>
+        <main
+          className={fontPretendard.className}
+          style={{ display: 'flex', justifyContent: 'center' }}
+        >
           <Component {...pageProps} />
         </main>
       </AppLayout>
