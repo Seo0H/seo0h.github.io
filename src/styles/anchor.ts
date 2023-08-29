@@ -21,7 +21,7 @@ const anchor = css`
   h2,
   h3,
   h4 {
-    scroll-margin-top: 10px;
+    scroll-margin-top: 80px;
   }
 `;
 

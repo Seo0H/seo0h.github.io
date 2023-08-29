@@ -31,6 +31,10 @@ const GlobalStyles = createGlobalStyle`${css`
     background-color: ${cvar({ key: 'gray', idx: '100' })};
   }
 
+  :is(h1, h2, h3, h4, h5, h6) {
+    word-break: keep-all;
+  }
+
   h1 {
     color: ${cvar({ key: 'gray', idx: '500' })};
     font-size: 48px;
@@ -50,7 +54,8 @@ const GlobalStyles = createGlobalStyle`${css`
   }
 
   p,
-  time {
+  time,
+  span {
     color: ${cvar({ key: 'gray', idx: '300' })};
     font-size: 17px;
     font-weight: 400;

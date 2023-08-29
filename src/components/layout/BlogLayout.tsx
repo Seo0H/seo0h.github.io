@@ -18,7 +18,12 @@ const BlogLayout = ({ post }: BlogProps) => {
         />
       </Layout.Flex>
 
-      <Layout.HStack width='100%' justifyContent='space-between' margin='30px 0'>
+      <Layout.HStack
+        width='100%'
+        justifyContent='space-between'
+        alignItems='center'
+        margin='30px 0'
+      >
         <h1>{post.title}</h1>
         <Layout.VStack alignItems='flex-end'>
           <p>{post.formattedDate}</p>

@@ -32,6 +32,7 @@ const Logo = styled(Layout.VStack)`
 
 const Nav = styled.nav`
   position: sticky;
+  margin: auto;
   top: 0;
 
   z-index: ${zIndex.nav};
