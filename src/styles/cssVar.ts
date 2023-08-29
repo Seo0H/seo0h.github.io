@@ -6,6 +6,10 @@ const cssVar = {
   gray: ['#E5E5E5', '#C2C2C2', '#727B87', '#4E5968', '#333D4B'],
 } as const;
 
+export const display = {
+  tablet: '768px',
+};
+
 export const generatedCssVar = Object.entries(cssVar).reduce((prevCssVar, [key, val]) => {
   if (isGray(val)) {
     return `${prevCssVar}${val.reduce(getGrayCssVar, '')}`;

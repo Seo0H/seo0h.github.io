@@ -2,7 +2,6 @@ import Head from 'next/head';
 
 import Header from '@/components/common/header';
 import AppLayout from '@/components/layout/AppLayout';
-import { fontPretendard } from '@/lib/fonts';
 import GlobalStyles from '@/styles/globals';
 
 import type { AppProps } from 'next/app';
@@ -16,12 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <GlobalStyles />
       <AppLayout>
         <Header />
-        <main
-          className={fontPretendard.className}
-          style={{ display: 'flex', justifyContent: 'center' }}
-        >
-          <Component {...pageProps} />
-        </main>
+        <Component {...pageProps} />
       </AppLayout>
     </>
   );

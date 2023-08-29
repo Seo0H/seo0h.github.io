@@ -7,9 +7,11 @@ import { cvar } from '@/styles/cssVar';
 const Header = () => {
   return (
     <Nav>
-      <Logo padding='5px 10px' justifyContent='center' alignItems='center' width='fit-content'>
-        <Link href='/'>isSEO®</Link>
-      </Logo>
+      <Layout.Flex>
+        <Logo padding='5px 10px' justifyContent='center' alignItems='center' width='fit-content'>
+          <Link href='/'>isSEO®</Link>
+        </Logo>
+      </Layout.Flex>
       <hr />
     </Nav>
   );
@@ -30,11 +32,11 @@ const Logo = styled(Layout.VStack)`
 `;
 
 const Nav = styled.nav`
-  position: sticky;
   display: flex;
   flex-direction: column;
   align-content: center;
   justify-content: center;
   width: 100%;
+  max-width: 900px;
   height: 90px;
 `;
