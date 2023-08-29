@@ -8,6 +8,7 @@ import { Post } from 'contentlayer/generated';
 
 import * as Layout from '@/components/layout';
 import { fadeInUp } from '@/lib/animations';
+import { cvar, display } from '@/styles/cssVar';
 
 const BlogBox = ({ post }: { post: Post }) => {
   return (
@@ -18,22 +19,22 @@ const BlogBox = ({ post }: { post: Post }) => {
     >
       <Link href={`/blog/[...slugs]`} as={`/blog${post.url}`}>
         <ListBoxWrapper gap='24px' alignItems='center'>
-          <Layout.Box position='relative' width='240px' height='240px'>
+          <ImgContainer position='relative' width='240px' height='240px' minWidth='80px'>
             <Image
               style={{ objectFit: 'cover', borderRadius: '10px' }}
               src={post.image}
               alt='img'
               fill
             />
-          </Layout.Box>
+          </ImgContainer>
 
-          <Layout.VStack gap='16px'>
+          <Layout.VStack gap='16px' style={{ wordBreak: 'keep-all', flex: '1' }}>
             <h2>{post.title}</h2>
             <p>{post.description}</p>
 
             <Layout.HStack gap='10px' alignItems='center'>
-              <time suppressHydrationWarning>{dayjs(post.date).format('YY.MM.DD')}</time>
-              <p>{`${post.readingTime} min read`}</p>
+              <time suppressHydrationWarning>{post.formattedDate}</time>
+              <p>{`${post.readingTime}분`}</p>
             </Layout.HStack>
           </Layout.VStack>
         </ListBoxWrapper>
@@ -51,5 +52,12 @@ const ListBoxWrapper = styled(Layout.HStack)`
 
   &:hover {
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+  }
+`;
+
+const ImgContainer = styled(Layout.Box)`
+  display: block;
+  @media (width < ${display.tablet}) {
+    display: none;
   }
 `;
