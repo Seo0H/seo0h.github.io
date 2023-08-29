@@ -10,6 +10,10 @@ export const display = {
   tablet: '768px',
 };
 
+export const zIndex = {
+  nav: 10,
+};
+
 export const generatedCssVar = Object.entries(cssVar).reduce((prevCssVar, [key, val]) => {
   if (isGray(val)) {
     return `${prevCssVar}${val.reduce(getGrayCssVar, '')}`;

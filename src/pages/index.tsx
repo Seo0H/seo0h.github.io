@@ -21,7 +21,7 @@ export default function Home({ posts }: { posts: Post[] }) {
         </motion.div>
 
         <motion.div variants={fadeIn}>
-          <Layout.VStack gap='10px' margin='0 0 100px 0'>
+          <Layout.VStack gap='10px' margin='0 0 50px 0'>
             <p>
               I am a front-end developer who loves design and coding.
               <br />

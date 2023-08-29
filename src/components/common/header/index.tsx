@@ -2,17 +2,16 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 import * as Layout from '@/components/layout';
-import { cvar } from '@/styles/cssVar';
+import { cvar, zIndex } from '@/styles/cssVar';
 
 const Header = () => {
   return (
     <Nav>
-      <Layout.Flex>
+      <Layout.Flex margin='auto' width='92%'>
         <Logo padding='5px 10px' justifyContent='center' alignItems='center' width='fit-content'>
           <Link href='/'>isSEO®</Link>
         </Logo>
       </Layout.Flex>
-      <hr />
     </Nav>
   );
 };
@@ -32,11 +31,23 @@ const Logo = styled(Layout.VStack)`
 `;
 
 const Nav = styled.nav`
+  position: sticky;
+  top: 0;
+
+  z-index: ${zIndex.nav};
+
   display: flex;
   flex-direction: column;
   align-content: center;
   justify-content: center;
+
   width: 100%;
   max-width: 900px;
-  height: 90px;
+  height: 60px;
+
+  background-color: rgb(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  border-bottom: solid 1px ${cvar({ key: 'gray', idx: '200' })};
+
+  margin-bottom: 10px;
 `;
