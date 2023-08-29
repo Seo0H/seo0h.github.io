@@ -1,6 +1,7 @@
 import { createGlobalStyle, css } from 'styled-components';
 import reset from 'styled-reset';
 
+import anchor from '@/styles/anchor';
 import { code } from '@/styles/code';
 import CssVar from '@/styles/cssVar';
 
@@ -8,20 +9,23 @@ import { cvar } from './cssVar';
 
 const GlobalStyles = createGlobalStyle`${css`
   ${reset}
-  ${CssVar}
-  ${code}
 
   html,
   body,
   #__next {
     min-width: 100%;
     min-height: 100%;
+    scroll-behavior: smooth;
   }
 
   * {
     /* MW touch highlight 제거 */
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
+
+  ${CssVar}
+  ${code}
+  ${anchor}
 
   ::selection {
     background-color: ${cvar({ key: 'gray', idx: '100' })};
@@ -62,31 +66,6 @@ const GlobalStyles = createGlobalStyle`${css`
 
   a {
     text-decoration: none;
-  }
-
-  /* anchor 관련 css */
-
-  .anchor {
-    visibility: hidden;
-    position: absolute;
-    margin-left: -1em;
-    padding-right: 0.5em;
-    cursor: pointer;
-  }
-
-  .anchor::before {
-    content: '#';
-  }
-
-  &:hover > .anchor {
-    visibility: visible;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4 {
-    scroll-margin-top: 10px;
   }
 
   .mdx > :is(h1, h2, h3, h4, h5, h6) {
