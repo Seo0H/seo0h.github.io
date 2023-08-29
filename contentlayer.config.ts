@@ -1,4 +1,5 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files';
+import dayjs from 'dayjs';
 import readingTime from 'reading-time';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypePrettyCode from 'rehype-pretty-code';
@@ -14,6 +15,7 @@ export const Post = defineDocumentType(() => ({
     title: { type: 'string', required: true },
     description: { type: 'string', required: true },
     date: { type: 'date', required: true },
+    draft: { type: 'boolean' },
     image: { type: 'string', default: '/img/default-thumbnail.png' },
   },
   computedFields: {
@@ -26,6 +28,7 @@ export const Post = defineDocumentType(() => ({
       type: 'number',
       resolve: (post) => post.body.raw.split(/\s+/gu).length,
     },
+    formattedDate: { type: 'string', resolve: (post) => dayjs(post.date).format('YY.MM.DD') },
   },
 }));
 
