@@ -8,7 +8,7 @@ import { Post } from 'contentlayer/generated';
 
 import * as Layout from '@/components/layout';
 import { fadeInUp } from '@/lib/animations';
-import { cvar, display } from '@/styles/cssVar';
+import { display } from '@/styles/cssVar';
 
 const BlogBox = ({ post }: { post: Post }) => {
   return (
