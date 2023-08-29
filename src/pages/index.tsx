@@ -4,7 +4,7 @@ import { useLiveReload } from 'next-contentlayer/hooks';
 
 import { Post } from 'contentlayer/generated';
 
-import BlogBox from '@/components/common/header/BlogBox';
+import BlogBox from '@/components/common/BlogBox';
 import * as Layout from '@/components/layout';
 import { fadeIn, staggerHalf } from '@/lib/animations';
 import { allPostTitle } from '@/utils/blogDataset';
