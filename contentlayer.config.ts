@@ -33,7 +33,9 @@ export const Post = defineDocumentType(() => ({
 }));
 
 /** @type {import('rehype-pretty-code').Options} */
-const options = {};
+const options = {
+  theme: 'poimandres',
+};
 
 export default makeSource({
   contentDirPath: 'posts',

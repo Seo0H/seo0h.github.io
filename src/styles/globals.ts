@@ -1,6 +1,7 @@
 import { createGlobalStyle, css } from 'styled-components';
 import reset from 'styled-reset';
 
+import { code } from '@/styles/code';
 import CssVar from '@/styles/cssVar';
 
 import { cvar } from './cssVar';
@@ -8,12 +9,22 @@ import { cvar } from './cssVar';
 const GlobalStyles = createGlobalStyle`${css`
   ${reset}
   ${CssVar}
+  ${code}
 
   html,
   body,
   #__next {
     min-width: 100%;
     min-height: 100%;
+  }
+
+  * {
+    /* MW touch highlight 제거 */
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+
+  ::selection {
+    background-color: ${cvar({ key: 'gray', idx: '100' })};
   }
 
   h1 {

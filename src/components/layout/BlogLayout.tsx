@@ -26,9 +26,9 @@ const BlogLayout = ({ post }: BlogProps) => {
         </Layout.VStack>
       </Layout.HStack>
 
-      <Layout.VStack alignItems='flex-start' width='100%' className='mdx'>
+      <Layout.Box width='100%' className='mdx'>
         <MDXContent />
-      </Layout.VStack>
+      </Layout.Box>
     </Layout.VStack>
   );
 };
