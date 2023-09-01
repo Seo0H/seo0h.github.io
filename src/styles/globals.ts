@@ -57,7 +57,7 @@ const GlobalStyles = createGlobalStyle`${css`
     color: ${cvar({ key: 'gray', idx: '300' })};
     font-size: 17px;
     font-weight: 400;
-    line-height: 140%;
+    line-height: 150%;
   }
 
   a {
