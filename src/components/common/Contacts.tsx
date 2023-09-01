@@ -1,7 +1,7 @@
 import ContactsIcon from '@/components/common/ContactsIcon';
 import LinkExternal from '@/components/common/LinkExternal';
 import { type ContactsKey, siteConfig } from '@/config';
-import { cvar } from '@/styles/cssVar';
+import cvar from '@/utils/cvarAutoComp';
 
 const Contacts = () => {
   return (

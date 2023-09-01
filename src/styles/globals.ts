@@ -1,11 +1,9 @@
 import { createGlobalStyle, css } from 'styled-components';
 import reset from 'styled-reset';
 
-import anchor from '@/styles/anchor';
-import { code } from '@/styles/code';
-import CssVar from '@/styles/cssVar';
-
-import { cvar } from './cssVar';
+import { globalColor } from '@/constants/styles';
+import cvar from '@/utils/cvarAutoComp';
+import generateCssVar from '@/utils/generateCssVar';
 
 const GlobalStyles = createGlobalStyle`${css`
   ${reset}
@@ -23,9 +21,9 @@ const GlobalStyles = createGlobalStyle`${css`
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 
-  ${CssVar}
-  ${code}
-  ${anchor}
+  :root {
+    ${generateCssVar(globalColor)}
+  }
 
   ::selection {
     background-color: ${cvar({ key: 'gray', idx: '100' })};
@@ -62,19 +60,8 @@ const GlobalStyles = createGlobalStyle`${css`
     line-height: 140%;
   }
 
-  hr {
-    width: 100%;
-    border: 0;
-    background-color: ${cvar({ key: 'gray', idx: '200' })};
-    height: 1px;
-  }
-
   a {
     text-decoration: none;
-  }
-
-  .mdx > :is(h1, h2, h3, h4, h5, h6) {
-    margin: 20px 0;
   }
 `}`;
 

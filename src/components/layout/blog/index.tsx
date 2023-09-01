@@ -2,13 +2,14 @@ import Image from 'next/image';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 
 import * as Layout from '@/components/layout';
+import { default as Style } from '@/components/layout/blog/style';
 import { BlogProps } from '@/lib/types';
 
 const BlogLayout = ({ post }: BlogProps) => {
   const MDXContent = useMDXComponent(post.body.code);
 
   return (
-    <Layout.VStack gap='10px' width='100%' alignItems='center' maxWidth='700px'>
+    <Style gap='10px' width='100%' alignItems='center' maxWidth='700px'>
       <Layout.Flex position='relative' width='100%' height='340px'>
         <Image
           src={post.image}
@@ -34,7 +35,7 @@ const BlogLayout = ({ post }: BlogProps) => {
       <Layout.VStack width='100%' className='mdx' gap='20px'>
         <MDXContent />
       </Layout.VStack>
-    </Layout.VStack>
+    </Style>
   );
 };
 

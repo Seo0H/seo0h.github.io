@@ -1,6 +1,6 @@
 import { allPosts } from 'contentlayer/generated';
 
-import BlogLayout from '@/components/layout/BlogLayout';
+import BlogLayout from '@/components/layout/blog';
 import { allPostTitle } from '@/utils/blogDataset';
 
 import type { BlogProps } from '@/lib/types';

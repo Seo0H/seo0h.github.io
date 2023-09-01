@@ -5,9 +5,9 @@ import { styled } from 'styled-components';
 import Contacts from '@/components/common/Contacts';
 import LinkExternal from '@/components/common/LinkExternal';
 import * as Layout from '@/components/layout';
-import { type ContactsKey, siteConfig } from '@/config';
+import { siteConfig } from '@/config';
 import { fontPretendard } from '@/lib/fonts';
-import { cvar } from '@/styles/cssVar';
+import cvar from '@/utils/cvarAutoComp';
 
 const AppLayout = ({ children }: { children: ReactNode }) => {
   return (

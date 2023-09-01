@@ -2,7 +2,8 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 import * as Layout from '@/components/layout';
-import { cvar, zIndex } from '@/styles/cssVar';
+import { zIndex } from '@/constants/styles';
+import cvar from '@/utils/cvarAutoComp';
 
 const Header = () => {
   return (

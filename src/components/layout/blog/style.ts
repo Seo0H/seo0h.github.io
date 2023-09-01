@@ -1,8 +1,9 @@
-import { css } from 'styled-components';
+import { css, styled } from 'styled-components';
 
-import { cvar } from '@/styles/cssVar';
+import * as Layout from '@/components/layout';
+import cvar from '@/utils/cvarAutoComp';
 
-export const code = css`
+const code = css`
   /* inline code style */
   p > code {
     display: inline-block;
@@ -66,3 +67,38 @@ export const code = css`
     border-left-color: ${cvar({ key: 'mainColor' })};
   }
 `;
+
+const anchor = css`
+  .anchor {
+    visibility: hidden;
+    position: absolute;
+    margin-left: -1em;
+    padding-right: 0.5em;
+    cursor: pointer;
+  }
+
+  .anchor::before {
+    content: '#';
+  }
+
+  &:hover > .anchor {
+    visibility: visible;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    scroll-margin-top: 80px;
+  }
+`;
+
+const BlogStyle = styled(Layout.VStack)`
+  width: 100%;
+  height: 100%;
+
+  ${code}
+  ${anchor}
+`;
+
+export default BlogStyle;

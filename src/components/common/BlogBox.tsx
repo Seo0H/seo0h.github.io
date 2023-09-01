@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,8 +6,8 @@ import styled from 'styled-components';
 import { Post } from 'contentlayer/generated';
 
 import * as Layout from '@/components/layout';
+import { display } from '@/constants/styles';
 import { fadeInUp } from '@/lib/animations';
-import { display } from '@/styles/cssVar';
 
 const BlogBox = ({ post }: { post: Post }) => {
   return (
