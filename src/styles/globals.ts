@@ -25,6 +25,16 @@ const GlobalStyles = createGlobalStyle`${css`
     ${generateCssVar(globalColor)}
   }
 
+  a {
+    text-decoration: none;
+  }
+
+  button {
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
   ::selection {
     background-color: ${cvar({ key: 'gray', idx: '100' })};
   }
@@ -51,6 +61,12 @@ const GlobalStyles = createGlobalStyle`${css`
     font-weight: 700;
   }
 
+  h5 {
+    color: ${cvar({ key: 'gray', idx: '500' })};
+    font-size: 20px;
+    font-weight: 600;
+  }
+
   p,
   time,
   span {
@@ -60,9 +76,7 @@ const GlobalStyles = createGlobalStyle`${css`
     line-height: 150%;
   }
 
-  a {
-    text-decoration: none;
-  }
+
 `}`;
 
 export default GlobalStyles;

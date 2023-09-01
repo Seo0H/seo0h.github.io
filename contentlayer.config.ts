@@ -1,4 +1,4 @@
-import { defineDocumentType, makeSource } from 'contentlayer/source-files';
+import { type FieldDefs, defineDocumentType, makeSource } from 'contentlayer/source-files';
 import dayjs from 'dayjs';
 import readingTime from 'reading-time';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -7,17 +7,20 @@ import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 import remarkToc from 'remark-toc';
 
+const fields: FieldDefs = {
+  title: { type: 'string', required: true },
+  description: { type: 'string', required: true },
+  date: { type: 'date', required: true },
+  tag: { type: 'string', required: true },
+  draft: { type: 'boolean' },
+  image: { type: 'string', default: '/img/default-thumbnail.png' },
+};
+
 export const Post = defineDocumentType(() => ({
   name: 'Post',
   filePathPattern: `**/*.mdx`,
   contentType: 'mdx',
-  fields: {
-    title: { type: 'string', required: true },
-    description: { type: 'string', required: true },
-    date: { type: 'date', required: true },
-    draft: { type: 'boolean' },
-    image: { type: 'string', default: '/img/default-thumbnail.png' },
-  },
+  fields,
   computedFields: {
     url: { type: 'string', resolve: (post) => `/${post._raw.flattenedPath}` },
     readingTime: {
