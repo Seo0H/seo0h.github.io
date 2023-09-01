@@ -31,7 +31,7 @@ const BlogLayout = ({ post }: BlogProps) => {
           <p>{post.readingTime} 분</p>
         </Layout.VStack>
       </Layout.HStack>
-
+      <hr />
       <Layout.VStack width='100%' className='mdx' gap='20px'>
         <MDXContent />
       </Layout.VStack>

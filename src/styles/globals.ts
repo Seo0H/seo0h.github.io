@@ -75,8 +75,6 @@ const GlobalStyles = createGlobalStyle`${css`
     font-weight: 400;
     line-height: 150%;
   }
-
-
 `}`;
 
 export default GlobalStyles;

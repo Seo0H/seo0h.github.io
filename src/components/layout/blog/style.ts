@@ -99,6 +99,28 @@ const BlogStyle = styled(Layout.VStack)`
 
   ${code}
   ${anchor}
+
+  .mdx > :is(h1, h2, h3, h4, h5) {
+    margin: 20px 0 10px 0;
+  }
+
+  a {
+    color: ${cvar({ key: 'gray', idx: '500' })};
+    font-weight: 600;
+    text-decoration-line: underline;
+    line-height: 1.5;
+
+    &::before {
+      content: '- ';
+    }
+  }
+
+  hr {
+    width:100%;
+    border: 0;
+    height: 1px;
+    background: ${cvar({ key: 'gray', idx: '100' })};
+  }
 `;
 
 export default BlogStyle;
