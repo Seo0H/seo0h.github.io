@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { Post } from 'contentlayer/generated';
 
+import FilterTag from '@/components/FilterTag';
 import * as Layout from '@/components/layout';
 import { display } from '@/constants/styles';
 import { fadeInUp, hover, tab } from '@/lib/animations';
@@ -23,15 +24,19 @@ const BlogBox = ({ post }: { post: Post }) => {
             />
           </ImgContainer>
 
-          <Layout.VStack gap='16px' style={{ wordBreak: 'keep-all', flex: '1' }}>
-            <h2>{post.title}</h2>
-            <p>{post.description}</p>
+          <ResVStack gap='18px' style={{ wordBreak: 'keep-all', flex: '1' }}>
+            <ResH2>{post.title}</ResH2>
+            <Layout.VStack>
+              <p>{post.description}</p>
 
-            <Layout.HStack gap='10px' alignItems='center'>
-              <time suppressHydrationWarning>{post.formattedDate}</time>
-              <p>{`${post.readingTime}분`}</p>
-            </Layout.HStack>
-          </Layout.VStack>
+              <Layout.HStack alignItems='flex-end' justifyContent='space-between'>
+                <Layout.HStack gap='10px' alignItems='center'>
+                  <MiniP suppressHydrationWarning>{post.formattedDate}</MiniP>
+                  <MiniP>{`${post.readingTime}분`}</MiniP>
+                </Layout.HStack>
+              </Layout.HStack>
+            </Layout.VStack>
+          </ResVStack>
         </ListBoxWrapper>
       </Link>
     </motion.div>
@@ -48,11 +53,37 @@ const ListBoxWrapper = styled(Layout.HStack)`
   &:hover {
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
   }
+
+  @media (width < ${display.tablet}) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+`;
+
+const ResH2 = styled.h2`
+  @media (width < ${display.tablet}) {
+    margin: 10px 0;
+  }
+`;
+
+const MiniP = styled.p`
+  @media (width < ${display.tablet}) {
+    font-size: 14px;
+  }
 `;
 
 const ImgContainer = styled(Layout.Box)`
   display: block;
+
   @media (width < ${display.tablet}) {
-    display: none;
+    width: 100%;
+    min-height: 120px;
+  }
+`;
+
+const ResVStack = styled(Layout.VStack)`
+  @media (width <${display.tablet}) {
+    gap: 5px;
   }
 `;

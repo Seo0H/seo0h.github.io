@@ -1,7 +1,7 @@
 import { createGlobalStyle, css } from 'styled-components';
 import reset from 'styled-reset';
 
-import { globalColor } from '@/constants/styles';
+import { display, globalColor } from '@/constants/styles';
 import cvar from '@/utils/cvarAutoComp';
 import generateCssVar from '@/utils/generateCssVar';
 
@@ -47,12 +47,20 @@ const GlobalStyles = createGlobalStyle`${css`
     color: ${cvar({ key: 'gray', idx: '500' })};
     font-size: 48px;
     font-weight: 700;
+
+    @media (width < ${display.tablet}) {
+      font-size: 33px;
+    }
   }
 
   h2 {
     color: ${cvar({ key: 'gray', idx: '500' })};
     font-size: 36px;
     font-weight: 700;
+
+    @media (width < ${display.tablet}) {
+      font-size: 28px;
+    }
   }
 
   h3 {

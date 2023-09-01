@@ -4,17 +4,18 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { styled } from 'styled-components';
 
+import { display } from '@/constants/styles';
 import { hover, tab } from '@/lib/animations';
 import cvar from '@/utils/cvarAutoComp';
 
 const FilterTag = ({
   children,
-  $isSelected,
+  $isSelected = false,
   onClick,
 }: {
   children: ReactNode;
-  $isSelected: boolean;
-  onClick: () => void;
+  $isSelected?: boolean;
+  onClick?: () => void;
 }) => {
   return (
     <StyledFilleterBtn
@@ -32,7 +33,8 @@ export default FilterTag;
 
 const StyledFilleterBtn = styled(motion.button)<{ $isSelected: boolean }>`
   /* layout */
-  display: inline-flex;
+  display: flex;
+  width: fit-content;
   padding: 5px 20px;
   justify-content: center;
   align-items: center;
@@ -46,11 +48,12 @@ const StyledFilleterBtn = styled(motion.button)<{ $isSelected: boolean }>`
   border-radius: 20px;
   border: 1px solid var(--select-color);
 
-  &:hover {
-    box-shadow: 0 0 0 1px var(--select-color) inset;
-  }
-
   font-size: 18px;
   font-weight: ${({ $isSelected }) => ($isSelected ? 600 : 500)};
   color: var(--select-color);
+
+  @media (width < ${display.tablet}) {
+    padding: 4px 12px;
+    font-size: 14px;
+  }
 `;
