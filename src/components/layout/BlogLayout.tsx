@@ -31,9 +31,9 @@ const BlogLayout = ({ post }: BlogProps) => {
         </Layout.VStack>
       </Layout.HStack>
 
-      <Layout.Box width='100%' className='mdx'>
+      <Layout.VStack width='100%' className='mdx' gap='20px'>
         <MDXContent />
-      </Layout.Box>
+      </Layout.VStack>
     </Layout.VStack>
   );
 };

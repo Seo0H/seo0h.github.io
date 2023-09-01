@@ -3,20 +3,34 @@ import { css } from 'styled-components';
 import { cvar } from '@/styles/cssVar';
 
 export const code = css`
+  /* inline code style */
+  p > code {
+    display: inline-block;
+    border-radius: 1rem;
+    padding: 0 0.5rem;
+
+    font-family: Consolas;
+    font-weight: bold;
+
+    background-color: ${cvar({ key: 'gray', idx: '100' })};
+  }
+
+  /* code block style */
   pre {
     border-radius: 5px;
-    padding: 10px 0;
-    background-color: ${cvar({ key: 'gray', idx: '100' })};
+    padding: 10px -1px;
 
     font-family: Consolas;
     overflow-x: auto;
+
+    background-color: ${cvar({ key: 'gray', idx: '100' })};
 
     ::selection {
       background-color: ${cvar({ key: 'gray', idx: '500' })};
     }
   }
 
-  code {
+  pre > code {
     counter-reset: line;
     display: grid;
     line-height: 2;
