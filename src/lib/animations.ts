@@ -44,3 +44,6 @@ export const fadeInUp: Variants = {
     willChange: 'opacity, transform',
   },
 };
+
+export const hover = { scale: 1.01, transformOrigin: 'center' };
+export const tab = { scale: 0.99 };

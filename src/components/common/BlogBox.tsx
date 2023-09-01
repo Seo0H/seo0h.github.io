@@ -7,15 +7,11 @@ import { Post } from 'contentlayer/generated';
 
 import * as Layout from '@/components/layout';
 import { display } from '@/constants/styles';
-import { fadeInUp } from '@/lib/animations';
+import { fadeInUp, hover, tab } from '@/lib/animations';
 
 const BlogBox = ({ post }: { post: Post }) => {
   return (
-    <motion.div
-      variants={fadeInUp}
-      whileHover={{ scale: 1.01, transformOrigin: 'center' }}
-      whileTap={{ scale: 0.99 }}
-    >
+    <motion.div variants={fadeInUp} whileHover={hover} whileTap={tab}>
       <Link href={`/blog/[...slugs]`} as={`/blog${post.url}`}>
         <ListBoxWrapper gap='24px' alignItems='center'>
           <ImgContainer position='relative' width='240px' height='240px' minWidth='80px'>
