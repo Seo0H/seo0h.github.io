@@ -58,15 +58,17 @@ export default function Home({ posts }: { posts: Post[] }) {
           <FilleterBtn onClick={() => handleTagFilter('ALL')} $isSelected={selectedTag === 'ALL'}>
             ALL
           </FilleterBtn>
-          {posts.map((post) => (
-            <FilleterBtn
-              key={crypto.randomUUID()}
-              onClick={() => handleTagFilter(post.tag)}
-              $isSelected={selectedTag === post.tag}
-            >
-              {post.tag}
-            </FilleterBtn>
-          ))}
+          {posts.map((post) =>
+            post.tag === undefined ? null : (
+              <FilleterBtn
+                key={crypto.randomUUID()}
+                onClick={() => handleTagFilter(post.tag || '')}
+                $isSelected={selectedTag === post.tag}
+              >
+                {post.tag}
+              </FilleterBtn>
+            ),
+          )}
         </Layout.HStack>
       </motion.section>
 

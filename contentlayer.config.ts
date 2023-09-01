@@ -11,7 +11,7 @@ const fields: FieldDefs = {
   title: { type: 'string', required: true },
   description: { type: 'string', required: true },
   date: { type: 'date', required: true },
-  tag: { type: 'string', required: true },
+  tag: { type: 'string' },
   draft: { type: 'boolean' },
   image: { type: 'string', default: '/img/default-thumbnail.png' },
 };
