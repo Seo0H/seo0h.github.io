@@ -14,6 +14,8 @@ const GlobalStyles = createGlobalStyle`${css`
     min-width: 100%;
     min-height: 100%;
     scroll-behavior: smooth;
+
+    font-family: 'Pretendard Variable';
   }
 
   * {

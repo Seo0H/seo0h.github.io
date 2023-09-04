@@ -50,6 +50,8 @@ const Nav = styled.nav`
 
   background-color: rgb(255, 255, 255, 0.8);
   backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px); // for safari
+
   border-bottom: solid 1px ${cvar({ key: 'gray', idx: '200' })};
 
   margin-bottom: 10px;
