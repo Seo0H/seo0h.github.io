@@ -13,7 +13,6 @@ import { fadeIn, staggerHalf } from '@/lib/animations';
 import { allPostTitle } from '@/utils/blogDataset';
 
 export default function Home({ posts }: { posts: Post[] }) {
-  useLiveReload();
   const [filteredPosts, setFilteredPosts] = useState(posts);
   const [selectedTag, setSelectedTag] = useState('ALL');
 
