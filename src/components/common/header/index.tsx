@@ -1,14 +1,16 @@
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import styled from 'styled-components';
 
 import MainLogo from '@/assets/icons/MainLogo';
 import * as Layout from '@/components/layout';
 import { zIndex } from '@/constants/styles';
+import { fadeIn } from '@/lib/animations';
 import cvar from '@/utils/cvarAutoComp';
 
 const Header = () => {
   return (
-    <Nav>
+    <Nav variants={fadeIn} initial='initial' animate='animate'>
       <Layout.Flex margin='auto' width='92%'>
         <Link href='/'>
           <MainLogo />
@@ -20,7 +22,7 @@ const Header = () => {
 
 export default Header;
 
-const Nav = styled.nav`
+const Nav = styled(motion.nav)`
   position: sticky;
   margin: auto;
   top: 0;
