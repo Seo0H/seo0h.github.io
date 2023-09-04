@@ -1,3 +1,12 @@
 {
-  "cSpell.words": ["contentlayer"]
+  "cSpell.words": ["contentlayer"],
+  "[mdx]": {
+    "editor.wordWrap": "on"
+  },
+  "pasteImage.defaultName": "YYMMDD-HHmmss",
+  "pasteImage.basePath": "${projectRoot}/public",
+  "pasteImage.path": "${projectRoot}/public/posts/${currentFileNameWithoutExt}",
+  "pasteImage.forceUnixStyleSeparator": true,
+  "pasteImage.insertPattern": "![${imageFileNameWithoutExt}](${imageFilePath})",
+  "pasteImage.prefix": "/"
 }
