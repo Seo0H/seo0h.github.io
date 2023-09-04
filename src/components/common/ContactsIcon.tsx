@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 import type { ComponentProps } from 'react';
 
-import Github from '@/assets/fonts/icons/Github';
-import Mail from '@/assets/fonts/icons/Mail';
+import Github from '@/assets/icons/Github';
+import Mail from '@/assets/icons/Mail';
 
 import type { ContactsKey } from '@/config';
 
