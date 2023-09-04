@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import * as Layout from '@/components/layout';
 import { zIndex } from '@/constants/styles';
+import { consolas } from '@/styles/fonts';
 import cvar from '@/utils/cvarAutoComp';
 
 const Header = () => {
@@ -10,7 +11,9 @@ const Header = () => {
     <Nav>
       <Layout.Flex margin='auto' width='92%'>
         <Logo padding='5px 10px' justifyContent='center' alignItems='center' width='fit-content'>
-          <Link href='/'>isSEO®</Link>
+          <Link href='/' style={consolas.style}>
+            isSEO®
+          </Link>
         </Logo>
       </Layout.Flex>
     </Nav>
@@ -25,9 +28,7 @@ const Logo = styled(Layout.VStack)`
 
   a {
     color: #fff;
-    font-family: Consolas;
     font-size: 24px;
-    font-weight: 400;
   }
 `;
 

@@ -6,19 +6,11 @@ import Contacts from '@/components/common/Contacts';
 import LinkExternal from '@/components/common/LinkExternal';
 import * as Layout from '@/components/layout';
 import { siteConfig } from '@/config';
-import { fontPretendard } from '@/lib/fonts';
 import cvar from '@/utils/cvarAutoComp';
 
 const AppLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <Layout.VStack
-      maxWidth='920px'
-      margin='auto'
-      width='92%'
-      height='100%'
-      alignItems='center'
-      className={fontPretendard.className}
-    >
+    <Layout.VStack maxWidth='920px' margin='auto' width='92%' height='100%' alignItems='center'>
       {children}
 
       <Footer>

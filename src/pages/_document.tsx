@@ -26,14 +26,7 @@ export default class MyDocument extends Document {
   render(): JSX.Element {
     return (
       <Html lang='ko'>
-        <Head>
-          <link href='https://fonts.cdnfonts.com/css/consola-mono' rel='stylesheet' />
-          <link
-            rel='stylesheet'
-            as='style'
-            href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable-dynamic-subset.css'
-          />
-        </Head>
+        <Head />
         <body>
           <Main />
           <NextScript />
