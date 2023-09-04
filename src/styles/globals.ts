@@ -8,6 +8,18 @@ import generateCssVar from '@/utils/generateCssVar';
 const GlobalStyles = createGlobalStyle`${css`
   ${reset}
 
+  @font-face {
+    font-family: 'Pretendard Variable';
+    src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable-dynamic-subset.css');
+    font-display: block;
+  }
+
+  @font-face {
+    font-family: 'Consolas';
+    src: url('https://fonts.cdnfonts.com/css/consola-mono');
+    font-display: block;
+  }
+
   html,
   body,
   #__next {

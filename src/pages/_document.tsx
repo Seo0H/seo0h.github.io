@@ -28,8 +28,16 @@ export default class MyDocument extends Document {
       <Html lang='ko'>
         <Head>
           <link
-            rel='stylesheet'
-            as='style'
+            rel='preload'
+            as='font'
+            type='font'
+            crossOrigin=''
+            href='https://fonts.cdnfonts.com/css/consola-mono'
+          />
+          <link
+            rel='preload'
+            as='font'
+            type='font'
             crossOrigin=''
             href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable-dynamic-subset.css'
           />
