@@ -116,10 +116,28 @@ const BlogStyle = styled(Layout.VStack)`
   }
 
   hr {
-    width:100%;
+    width: 100%;
     border: 0;
     height: 1px;
     background: ${cvar({ key: 'gray', idx: '100' })};
+  }
+
+  strong {
+    font-weight: 800;
+  }
+
+  img {
+    display: block;
+    margin: 5px auto;
+
+    border-radius: 10px;
+    border: 1px solid ${cvar({ key: 'gray', idx: '100' })};
+  }
+
+  .alt {
+    display: block;
+    text-align: center;
+    font-size: small;
   }
 `;
 

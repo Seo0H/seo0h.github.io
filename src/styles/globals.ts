@@ -61,6 +61,7 @@ const GlobalStyles = createGlobalStyle`${css`
     color: ${cvar({ key: 'gray', idx: '500' })};
     font-size: 48px;
     font-weight: 700;
+    line-height: 1.2;
 
     @media (width < ${display.tablet}) {
       font-size: 33px;
@@ -71,6 +72,7 @@ const GlobalStyles = createGlobalStyle`${css`
     color: ${cvar({ key: 'gray', idx: '500' })};
     font-size: 36px;
     font-weight: 700;
+    line-height: 1.2;
 
     @media (width < ${display.tablet}) {
       font-size: 28px;
