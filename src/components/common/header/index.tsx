@@ -1,36 +1,24 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 
+import MainLogo from '@/assets/icons/MainLogo';
 import * as Layout from '@/components/layout';
 import { zIndex } from '@/constants/styles';
-import { consolas } from '@/styles/fonts';
 import cvar from '@/utils/cvarAutoComp';
 
 const Header = () => {
   return (
     <Nav>
       <Layout.Flex margin='auto' width='92%'>
-        <Logo padding='5px 10px' justifyContent='center' alignItems='center' width='fit-content'>
-          <Link href='/' style={consolas.style}>
-            isSEO®
-          </Link>
-        </Logo>
+        <Link href='/'>
+          <MainLogo />
+        </Link>
       </Layout.Flex>
     </Nav>
   );
 };
 
 export default Header;
-
-const Logo = styled(Layout.VStack)`
-  background: ${cvar({ key: 'mainColor' })};
-  border-radius: 5px;
-
-  a {
-    color: #fff;
-    font-size: 24px;
-  }
-`;
 
 const Nav = styled.nav`
   position: sticky;
