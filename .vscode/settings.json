@@ -8,5 +8,8 @@
   "pasteImage.path": "${projectRoot}/public/posts/${currentFileNameWithoutExt}",
   "pasteImage.forceUnixStyleSeparator": true,
   "pasteImage.insertPattern": "![${imageFileNameWithoutExt}](${imageFilePath})",
-  "pasteImage.prefix": "/"
+  "pasteImage.prefix": "/",
+  "emojisense.languages": {
+    "mdx": true
+  }
 }
