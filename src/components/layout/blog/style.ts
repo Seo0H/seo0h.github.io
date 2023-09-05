@@ -22,6 +22,7 @@ const code = css`
     border-radius: 5px;
     padding: 20px;
     background-color: #f0f0f0;
+    white-space: break-spaces;
   }
 
   /* code block style */
