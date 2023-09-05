@@ -61,7 +61,7 @@ const GlobalStyles = createGlobalStyle`${css`
     color: ${cvar({ key: 'gray', idx: '500' })};
     font-size: 48px;
     font-weight: 700;
-    line-height: 1.2;
+    line-height: 1.4;
 
     @media (width < ${display.tablet}) {
       font-size: 33px;
@@ -72,7 +72,7 @@ const GlobalStyles = createGlobalStyle`${css`
     color: ${cvar({ key: 'gray', idx: '500' })};
     font-size: 36px;
     font-weight: 700;
-    line-height: 1.2;
+    line-height: 1.4;
 
     @media (width < ${display.tablet}) {
       font-size: 28px;
@@ -83,6 +83,7 @@ const GlobalStyles = createGlobalStyle`${css`
     color: ${cvar({ key: 'gray', idx: '500' })};
     font-size: 32px;
     font-weight: 700;
+    line-height: 1.4;
 
     @media (width < ${display.tablet}) {
       font-size: 24px;
@@ -93,6 +94,7 @@ const GlobalStyles = createGlobalStyle`${css`
     color: ${cvar({ key: 'gray', idx: '500' })};
     font-size: 26px;
     font-weight: 600;
+    line-height: 1.4;
 
     @media (width < ${display.tablet}) {
       font-size: 20px;
@@ -103,12 +105,13 @@ const GlobalStyles = createGlobalStyle`${css`
     color: ${cvar({ key: 'gray', idx: '500' })};
     font-size: 20px;
     font-weight: 600;
+    line-height: 1.4;
   }
 
   p,
   time,
   span {
-    color: ${cvar({ key: 'gray', idx: '300' })};
+    color: ${cvar({ key: 'gray', idx: '400' })};
     font-size: 17px;
     font-weight: 400;
     line-height: 150%;

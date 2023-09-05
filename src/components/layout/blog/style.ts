@@ -1,6 +1,7 @@
 import { css, styled } from 'styled-components';
 
 import * as Layout from '@/components/layout';
+import { display } from '@/constants/styles';
 import cvar from '@/utils/cvarAutoComp';
 
 const code = css`
@@ -79,19 +80,23 @@ const code = css`
 
 const anchor = css`
   .anchor {
-    visibility: hidden;
-    position: absolute;
+    position: inherit;
     margin-left: -1em;
+    margin-bottom: 1em;
     padding-right: 0.5em;
+
     cursor: pointer;
+    line-height: inherit;
+    text-decoration: none;
   }
 
   .anchor::before {
     content: '#';
-  }
+    color: ${cvar({ key: 'gray', idx: '200' })};
 
-  &:hover > .anchor {
-    visibility: visible;
+    @media (width < ${display.tablet}) {
+      visibility: hidden;
+    }
   }
 
   h1,
@@ -154,8 +159,8 @@ const BlogStyle = styled(Layout.VStack)`
     font-weight: bold;
   }
 
-  .mdx > :is(h1, h2, h3, h4, h5) {
-    margin: 20px 0 10px 0;
+  .mdx > :is(h1, h2) {
+    margin-top: 20px;
   }
 
   hr {
