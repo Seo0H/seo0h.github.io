@@ -83,6 +83,20 @@ const GlobalStyles = createGlobalStyle`${css`
     color: ${cvar({ key: 'gray', idx: '500' })};
     font-size: 32px;
     font-weight: 700;
+
+    @media (width < ${display.tablet}) {
+      font-size: 24px;
+    }
+  }
+
+  h4 {
+    color: ${cvar({ key: 'gray', idx: '500' })};
+    font-size: 26px;
+    font-weight: 600;
+
+    @media (width < ${display.tablet}) {
+      font-size: 20px;
+    }
   }
 
   h5 {

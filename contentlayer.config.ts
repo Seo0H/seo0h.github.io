@@ -1,3 +1,4 @@
+import toc from '@jsdevtools/rehype-toc';
 import { type FieldDefs, defineDocumentType, makeSource } from 'contentlayer/source-files';
 import dayjs from 'dayjs';
 import readingTime from 'reading-time';
@@ -11,7 +12,7 @@ const fields: FieldDefs = {
   title: { type: 'string', required: true },
   description: { type: 'string', required: true },
   date: { type: 'date', required: true },
-  tag: { type: 'string' },
+  tag: { type: 'string', default: 'Daily' },
   draft: { type: 'boolean' },
   image: { type: 'string', default: '/img/default-thumbnail.png' },
 };
@@ -57,6 +58,7 @@ export default makeSource({
           },
         },
       ],
+      [toc, { headings: ['h2', 'h3', 'h4'] }],
     ],
   },
 });

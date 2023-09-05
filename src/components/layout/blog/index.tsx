@@ -4,6 +4,7 @@ import { useMDXComponent } from 'next-contentlayer/hooks';
 import * as Layout from '@/components/layout';
 import { default as Style } from '@/components/layout/blog/style';
 import CustomImg from '@/components/mdx/CustomImg';
+import CustomLink from '@/components/mdx/CustomLink';
 import { display } from '@/constants/styles';
 import { BlogProps } from '@/lib/types';
 import useWindowSize from '@/lib/useWindowSize';
@@ -12,8 +13,9 @@ import isMobile from '@/utils/isMobile';
 
 import type { MDXComponents } from 'mdx/types';
 
-const altComponents: MDXComponents = {
+const customComponents: MDXComponents = {
   img: CustomImg,
+  a: CustomLink,
 };
 
 const BlogLayout = ({ post }: BlogProps) => {
@@ -60,7 +62,8 @@ const BlogLayout = ({ post }: BlogProps) => {
 
       <hr />
       <Layout.VStack width='100%' className='mdx' gap='20px'>
-        <MDXContent components={altComponents} />
+        <h2>Table Of Contents</h2>
+        <MDXContent components={customComponents} />
       </Layout.VStack>
     </Style>
   );

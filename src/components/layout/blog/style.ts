@@ -5,21 +5,29 @@ import cvar from '@/utils/cvarAutoComp';
 
 const code = css`
   /* inline code style */
-  p > code {
-    display: inline-block;
+  p code {
+    display: inline;
     border-radius: 1rem;
-    padding: 0 0.5rem;
+    padding: 0.1rem 0.6rem;
 
     font-family: Consolas;
     font-weight: bold;
+    word-break: break-all;
 
     background-color: ${cvar({ key: 'gray', idx: '100' })};
   }
 
-  /* code block style */
+  /* callout */
   pre {
     border-radius: 5px;
-    padding: 10px -1px;
+    padding: 20px;
+    background-color: #f0f0f0;
+  }
+
+  /* code block style */
+  [data-rehype-pretty-code-fragment] pre {
+    border-radius: 5px;
+    padding: 10px 1px;
 
     font-family: Consolas;
     overflow-x: auto;
@@ -93,39 +101,23 @@ const anchor = css`
   }
 `;
 
-const BlogStyle = styled(Layout.VStack)`
-  width: 100%;
-  height: 100%;
-
-  ${code}
-  ${anchor}
-
-  .mdx > :is(h1, h2, h3, h4, h5) {
-    margin: 20px 0 10px 0;
-  }
-
-  a {
-    color: ${cvar({ key: 'gray', idx: '500' })};
-    font-weight: 600;
-    text-decoration-line: underline;
-    line-height: 1.5;
-
-    &::before {
+const toc = css`
+  .toc {
+    :is(a)::before {
       content: '- ';
     }
-  }
 
-  hr {
-    width: 100%;
-    border: 0;
-    height: 1px;
-    background: ${cvar({ key: 'gray', idx: '100' })};
-  }
+    li li {
+      text-indent: 1rem;
+    }
 
-  strong {
-    font-weight: 800;
+    li li li {
+      text-indent: 2rem;
+    }
   }
+`;
 
+const img = css`
   img {
     display: block;
     margin: 5px auto;
@@ -139,6 +131,47 @@ const BlogStyle = styled(Layout.VStack)`
     text-align: center;
     font-size: small;
   }
+`;
+
+const BlogStyle = styled(Layout.VStack)`
+  width: 100%;
+  height: 100%;
+  color: ${cvar({ key: 'gray', idx: '300' })};
+
+  a {
+    color: inherit;
+    font-weight: 600;
+    text-decoration-line: underline;
+    line-height: 1.8;
+  }
+
+  li:not(.toc *) {
+    &::before {
+      content: '- ';
+    }
+
+    font-weight: bold;
+  }
+
+  .mdx > :is(h1, h2, h3, h4, h5) {
+    margin: 20px 0 10px 0;
+  }
+
+  hr {
+    width: 100%;
+    border: 0;
+    height: 1px;
+    background: ${cvar({ key: 'gray', idx: '100' })};
+  }
+
+  strong {
+    font-weight: 800;
+  }
+
+  ${code}
+  ${anchor}
+  ${toc}
+  ${img}
 `;
 
 export default BlogStyle;
