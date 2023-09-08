@@ -10,9 +10,9 @@ import FilleterBtn from '@/components/FilterTag';
 import BlogBox from '@/components/common/BlogBox';
 import * as Layout from '@/components/layout';
 import { fadeIn, staggerHalf } from '@/lib/animations';
-import { allPostTitle } from '@/utils/blogDataset';
+import { TagList, cleanAllPost } from '@/utils/blogDataset';
 
-export default function Home({ posts }: { posts: Post[] }) {
+export default function Home({ posts, tags }: { posts: Post[]; tags: string[] }) {
   const [filteredPosts, setFilteredPosts] = useState(posts);
   const [selectedTag, setSelectedTag] = useState('ALL');
 
@@ -69,6 +69,21 @@ export default function Home({ posts }: { posts: Post[] }) {
             ),
           )}
         </Layout.HStack>
+
+        <Layout.HStack margin='0 0 15px 0' gap='10px'>
+          <FilleterBtn onClick={() => handleTagFilter('ALL')} $isSelected={selectedTag === 'ALL'}>
+            ALL
+          </FilleterBtn>
+          {tags.map((tag) => (
+            <FilleterBtn
+              key={crypto.randomUUID()}
+              onClick={() => handleTagFilter(tag || '')}
+              $isSelected={selectedTag === tag}
+            >
+              {tag}
+            </FilleterBtn>
+          ))}
+        </Layout.HStack>
       </motion.section>
 
       <motion.section variants={staggerHalf} initial='initial' animate='animate'>
@@ -85,5 +100,5 @@ export default function Home({ posts }: { posts: Post[] }) {
 }
 
 export const getStaticProps: GetStaticProps = () => {
-  return { props: { posts: allPostTitle } };
+  return { props: { posts: cleanAllPost, tags: TagList } };
 };
