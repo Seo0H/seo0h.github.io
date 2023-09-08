@@ -9,9 +9,11 @@ import { CrosshatchTag } from '@/components/common/Tag';
 import * as Layout from '@/components/layout';
 import { display } from '@/constants/styles';
 import { fadeInUp, hover, tab } from '@/lib/animations';
-import { getTag } from '@/utils/blogDataset';
+import useTag from '@/lib/useTag';
 
 const BlogBox = ({ post }: { post: Post }) => {
+  const { tag } = useTag(post);
+
   return (
     <motion.div variants={fadeInUp} whileHover={hover} whileTap={tab}>
       <Link href={`/blog/[...slugs]`} as={`/blog${post.url}`}>
@@ -27,7 +29,7 @@ const BlogBox = ({ post }: { post: Post }) => {
 
           <ResVStack gap='18px' style={{ wordBreak: 'keep-all', flex: '1' }}>
             <Layout.VStack>
-              <CrosshatchTag>{getTag(post)}</CrosshatchTag>
+              <CrosshatchTag>{tag}</CrosshatchTag>
               <ResH2>{post.title}</ResH2>
               <p>{post.description}</p>
             </Layout.VStack>

@@ -14,6 +14,3 @@ export const cleanAllPost = allPosts
 export const TagList = allPosts
   .map((post) => post._raw.sourceFileDir.split('/')[1])
   .filter((tag) => tag !== undefined);
-
-// ex. /2023/some-tag/title -> ['', 2023, some-tag, title]
-export const getTag = (post: Post) => post.url.split('/')[2] || null;

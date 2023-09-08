@@ -7,8 +7,8 @@ import { default as Style } from '@/components/layout/blog/style';
 import CustomImg from '@/components/mdx/CustomImg';
 import CustomLink from '@/components/mdx/CustomLink';
 import { BlogProps } from '@/lib/types';
+import useTag from '@/lib/useTag';
 import useWindowSize from '@/lib/useWindowSize';
-import { getTag } from '@/utils/blogDataset';
 import cvar from '@/utils/cvarAutoComp';
 import isMobile from '@/utils/isMobile';
 
@@ -22,6 +22,7 @@ const customComponents: MDXComponents = {
 const BlogLayout = ({ post }: BlogProps) => {
   const MDXContent = useMDXComponent(post.body.code);
   const { width } = useWindowSize();
+  const { tag } = useTag(post);
 
   return (
     <Style gap='10px' width='100%' alignItems='center' maxWidth='700px'>
@@ -37,7 +38,7 @@ const BlogLayout = ({ post }: BlogProps) => {
       {isMobile(width) ? (
         <Layout.VStack width='100%' gap='5px' margin='20px 0 10px 0'>
           <Layout.VStack>
-            <CrosshatchTag>{getTag(post)}</CrosshatchTag>
+            <CrosshatchTag>{tag}</CrosshatchTag>
             <h1>{post.title}</h1>
           </Layout.VStack>
 
@@ -58,7 +59,7 @@ const BlogLayout = ({ post }: BlogProps) => {
       ) : (
         <Layout.VStack width='100%' gap='10px' margin='20px 0'>
           <Layout.VStack>
-            <CrosshatchTag>{getTag(post)}</CrosshatchTag>
+            <CrosshatchTag>{tag}</CrosshatchTag>
             <Layout.HStack width='100%' justifyContent='space-between' alignItems='center'>
               <h1>{post.title}</h1>
 
