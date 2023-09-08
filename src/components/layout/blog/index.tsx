@@ -1,13 +1,14 @@
 import Image from 'next/image';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 
+import { CrosshatchTag } from '@/components/common/Tag';
 import * as Layout from '@/components/layout';
 import { default as Style } from '@/components/layout/blog/style';
 import CustomImg from '@/components/mdx/CustomImg';
 import CustomLink from '@/components/mdx/CustomLink';
-import { display } from '@/constants/styles';
 import { BlogProps } from '@/lib/types';
 import useWindowSize from '@/lib/useWindowSize';
+import { getTag } from '@/utils/blogDataset';
 import cvar from '@/utils/cvarAutoComp';
 import isMobile from '@/utils/isMobile';
 
@@ -34,29 +35,48 @@ const BlogLayout = ({ post }: BlogProps) => {
       </Layout.Flex>
 
       {isMobile(width) ? (
-        <Layout.HStack
-          width='100%'
-          justifyContent='space-between'
-          alignItems='center'
-          margin='30px 0'
-        >
-          <h1>{post.title}</h1>
-          <h5 style={{ color: cvar({ key: 'gray', idx: '300' }) }}>{post.description}</h5>
-
-          <Layout.VStack alignItems='flex-end'>
-            <p>{post.formattedDate}</p>
-            <p>{post.readingTime} 분</p>
+        <Layout.VStack width='100%' gap='5px' margin='20px 0 10px 0'>
+          <Layout.VStack>
+            <CrosshatchTag>{getTag(post)}</CrosshatchTag>
+            <h1>{post.title}</h1>
           </Layout.VStack>
-        </Layout.HStack>
-      ) : (
-        <Layout.VStack width='100%' gap='20px' margin='20px 0 10px 0'>
-          <h1>{post.title}</h1>
-          <h5 style={{ color: cvar({ key: 'gray', idx: '300' }) }}>{post.description}</h5>
 
-          <Layout.HStack gap='10px' alignItems='center'>
-            <p>{post.formattedDate}</p>
-            <p>{post.readingTime}분</p>
+          <h5 style={{ color: cvar({ key: 'gray', idx: '300' }), fontWeight: '300' }}>
+            {post.description}
+          </h5>
+
+          <Layout.HStack
+            gap='10px'
+            margin='10px 0 0 0'
+            alignItems='center'
+            style={{ fontWeight: '300' }}
+          >
+            <p style={{ color: 'inherit', fontWeight: 'inherit' }}>{post.formattedDate}</p>
+            <p style={{ color: 'inherit', fontWeight: 'inherit' }}>{post.readingTime}분</p>
           </Layout.HStack>
+        </Layout.VStack>
+      ) : (
+        <Layout.VStack width='100%' gap='10px' margin='20px 0'>
+          <Layout.VStack>
+            <CrosshatchTag>{getTag(post)}</CrosshatchTag>
+            <Layout.HStack width='100%' justifyContent='space-between' alignItems='center'>
+              <h1>{post.title}</h1>
+
+              <Layout.VStack alignItems='flex-end'>
+                <p>{post.formattedDate}</p>
+                <p>{post.readingTime} 분</p>
+              </Layout.VStack>
+            </Layout.HStack>
+          </Layout.VStack>
+
+          <h5
+            style={{
+              color: cvar({ key: 'gray', idx: '300' }),
+              fontWeight: '300',
+            }}
+          >
+            {post.description}
+          </h5>
         </Layout.VStack>
       )}
 

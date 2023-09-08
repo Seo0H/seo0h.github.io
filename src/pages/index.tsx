@@ -6,7 +6,7 @@ import { useLiveReload } from 'next-contentlayer/hooks';
 
 import { Post } from 'contentlayer/generated';
 
-import FilleterBtn from '@/components/FilterTag';
+import FilterTagBtn from '@/components/FilterTagBtn';
 import BlogBox from '@/components/common/BlogBox';
 import * as Layout from '@/components/layout';
 import { fadeIn, staggerHalf } from '@/lib/animations';
@@ -54,17 +54,17 @@ export default function Home({ posts, tags }: { posts: Post[]; tags: string[] })
 
       <motion.section variants={fadeIn} initial='initial' animate='animate'>
         <Layout.HStack margin='0 0 15px 0' gap='10px'>
-          <FilleterBtn onClick={() => handleTagFilter('ALL')} $isSelected={selectedTag === 'ALL'}>
+          <FilterTagBtn onClick={() => handleTagFilter('ALL')} $isSelected={selectedTag === 'ALL'}>
             ALL
-          </FilleterBtn>
+          </FilterTagBtn>
           {tags.map((tag) => (
-            <FilleterBtn
+            <FilterTagBtn
               key={crypto.randomUUID()}
               onClick={() => handleTagFilter(tag || '')}
               $isSelected={selectedTag === tag}
             >
               {tag}
-            </FilleterBtn>
+            </FilterTagBtn>
           ))}
         </Layout.HStack>
       </motion.section>

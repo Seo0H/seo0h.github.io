@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import MainLogo from '@/assets/icons/MainLogo';
 import * as Layout from '@/components/layout';
-import { zIndex } from '@/constants/styles';
+import { display, zIndex } from '@/constants/styles';
 import { fadeIn } from '@/lib/animations';
 import cvar from '@/utils/cvarAutoComp';
 
@@ -13,7 +13,7 @@ const Header = () => {
     <Nav variants={fadeIn} initial='initial' animate='animate'>
       <Layout.Flex margin='auto' width='92%'>
         <Link href='/'>
-          <MainLogo />
+          <ResMainLogo />
         </Link>
       </Layout.Flex>
     </Nav>
@@ -45,4 +45,10 @@ const Nav = styled(motion.nav)`
   border-bottom: solid 1px ${cvar({ key: 'gray', idx: '200' })};
 
   margin-bottom: 10px;
+`;
+
+const ResMainLogo = styled(MainLogo)`
+  @media (width < ${display.tablet}) {
+    width: 80%;
+  }
 `;

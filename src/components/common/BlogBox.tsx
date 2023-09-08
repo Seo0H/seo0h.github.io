@@ -5,10 +5,11 @@ import styled from 'styled-components';
 
 import { Post } from 'contentlayer/generated';
 
-import FilterTag from '@/components/FilterTag';
+import { CrosshatchTag } from '@/components/common/Tag';
 import * as Layout from '@/components/layout';
 import { display } from '@/constants/styles';
 import { fadeInUp, hover, tab } from '@/lib/animations';
+import { getTag } from '@/utils/blogDataset';
 
 const BlogBox = ({ post }: { post: Post }) => {
   return (
@@ -25,10 +26,13 @@ const BlogBox = ({ post }: { post: Post }) => {
           </ImgContainer>
 
           <ResVStack gap='18px' style={{ wordBreak: 'keep-all', flex: '1' }}>
-            <ResH2>{post.title}</ResH2>
             <Layout.VStack>
+              <CrosshatchTag>{getTag(post)}</CrosshatchTag>
+              <ResH2>{post.title}</ResH2>
               <p>{post.description}</p>
+            </Layout.VStack>
 
+            <Layout.VStack>
               <Layout.HStack alignItems='flex-end' justifyContent='space-between'>
                 <Layout.HStack gap='10px' alignItems='center'>
                   <MiniP suppressHydrationWarning>{post.formattedDate}</MiniP>
@@ -58,18 +62,20 @@ const ListBoxWrapper = styled(Layout.HStack)`
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+    padding-bottom: 10px;
   }
 `;
 
 const ResH2 = styled.h2`
   @media (width < ${display.tablet}) {
-    margin: 10px 0;
+    margin: 0px;
   }
 `;
 
 const MiniP = styled.p`
   @media (width < ${display.tablet}) {
     font-size: 14px;
+    margin-top: 10px;
   }
 `;
 
@@ -84,6 +90,6 @@ const ImgContainer = styled(Layout.Box)`
 
 const ResVStack = styled(Layout.VStack)`
   @media (width <${display.tablet}) {
-    gap: 5px;
+    gap: 0px;
   }
 `;
