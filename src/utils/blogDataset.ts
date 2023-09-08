@@ -12,5 +12,5 @@ export const cleanAllPost = allPosts
   .sort((a, b) => compareDesc(new Date(a.date).getTime(), new Date(b.date).getTime()));
 
 export const TagList = allPosts
-  .map((post) => post._raw.sourceFileDir.split('/')[1])
+  .map((post) => post.url.split('/')[2])
   .filter((tag) => tag !== undefined);
