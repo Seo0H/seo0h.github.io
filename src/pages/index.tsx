@@ -10,9 +10,9 @@ import FilleterBtn from '@/components/FilterTag';
 import BlogBox from '@/components/common/BlogBox';
 import * as Layout from '@/components/layout';
 import { fadeIn, staggerHalf } from '@/lib/animations';
-import { allPostTitle } from '@/utils/blogDataset';
+import { TagList, cleanAllPost } from '@/utils/blogDataset';
 
-export default function Home({ posts }: { posts: Post[] }) {
+export default function Home({ posts, tags }: { posts: Post[]; tags: string[] }) {
   const [filteredPosts, setFilteredPosts] = useState(posts);
   const [selectedTag, setSelectedTag] = useState('ALL');
 
@@ -21,7 +21,7 @@ export default function Home({ posts }: { posts: Post[] }) {
       setFilteredPosts(posts);
       setSelectedTag('ALL');
     } else {
-      setFilteredPosts(posts.filter((post) => post.tag === tagName));
+      setFilteredPosts(posts.filter((post) => post.url.includes(tagName)));
       setSelectedTag(tagName);
     }
   };
@@ -57,17 +57,15 @@ export default function Home({ posts }: { posts: Post[] }) {
           <FilleterBtn onClick={() => handleTagFilter('ALL')} $isSelected={selectedTag === 'ALL'}>
             ALL
           </FilleterBtn>
-          {posts.map((post) =>
-            post.tag === undefined ? null : (
-              <FilleterBtn
-                key={crypto.randomUUID()}
-                onClick={() => handleTagFilter(post.tag || '')}
-                $isSelected={selectedTag === post.tag}
-              >
-                {post.tag}
-              </FilleterBtn>
-            ),
-          )}
+          {tags.map((tag) => (
+            <FilleterBtn
+              key={crypto.randomUUID()}
+              onClick={() => handleTagFilter(tag || '')}
+              $isSelected={selectedTag === tag}
+            >
+              {tag}
+            </FilleterBtn>
+          ))}
         </Layout.HStack>
       </motion.section>
 
@@ -85,5 +83,5 @@ export default function Home({ posts }: { posts: Post[] }) {
 }
 
 export const getStaticProps: GetStaticProps = () => {
-  return { props: { posts: allPostTitle } };
+  return { props: { posts: cleanAllPost, tags: TagList } };
 };
