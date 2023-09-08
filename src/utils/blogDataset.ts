@@ -8,9 +8,8 @@ export const reducePost = ({ body: _, _raw, _id, ...post }: Post): ReducedPost =
 
 export const cleanAllPost = allPosts
   .filter((post) => post.draft !== true)
-  .map(reducePost)
   .sort((a, b) => compareDesc(new Date(a.date).getTime(), new Date(b.date).getTime()));
 
 export const TagList = allPosts
-  .map((post) => post.url.split('/')[2])
+  .map((post) => post._raw.sourceFileDir.split('/')[1])
   .filter((tag) => tag !== undefined);
