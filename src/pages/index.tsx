@@ -21,7 +21,7 @@ export default function Home({ posts, tags }: { posts: Post[]; tags: string[] })
       setFilteredPosts(posts);
       setSelectedTag('ALL');
     } else {
-      setFilteredPosts(posts.filter((post) => post.tag === tagName));
+      setFilteredPosts(posts.filter((post) => post.url.includes(tagName)));
       setSelectedTag(tagName);
     }
   };
@@ -53,23 +53,6 @@ export default function Home({ posts, tags }: { posts: Post[]; tags: string[] })
       </motion.section>
 
       <motion.section variants={fadeIn} initial='initial' animate='animate'>
-        <Layout.HStack margin='0 0 15px 0' gap='10px'>
-          <FilleterBtn onClick={() => handleTagFilter('ALL')} $isSelected={selectedTag === 'ALL'}>
-            ALL
-          </FilleterBtn>
-          {posts.map((post) =>
-            post.tag === undefined ? null : (
-              <FilleterBtn
-                key={crypto.randomUUID()}
-                onClick={() => handleTagFilter(post.tag || '')}
-                $isSelected={selectedTag === post.tag}
-              >
-                {post.tag}
-              </FilleterBtn>
-            ),
-          )}
-        </Layout.HStack>
-
         <Layout.HStack margin='0 0 15px 0' gap='10px'>
           <FilleterBtn onClick={() => handleTagFilter('ALL')} $isSelected={selectedTag === 'ALL'}>
             ALL
