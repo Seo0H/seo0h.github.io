@@ -12,7 +12,9 @@ import * as Layout from '@/components/layout';
 import { fadeIn, staggerHalf } from '@/lib/animations';
 import { TagList, cleanAllPost } from '@/utils/blogDataset';
 
-export default function Home({ posts, tags }: { posts: Post[]; tags: string[] }) {
+import type { ReducedPost } from '@/lib/types';
+
+export default function Home({ posts }: { posts: ReducedPost[] }) {
   const [filteredPosts, setFilteredPosts] = useState(posts);
   const [selectedTag, setSelectedTag] = useState('ALL');
 
@@ -57,13 +59,13 @@ export default function Home({ posts, tags }: { posts: Post[]; tags: string[] })
           <FilterTagBtn onClick={() => handleTagFilter('ALL')} $isSelected={selectedTag === 'ALL'}>
             ALL
           </FilterTagBtn>
-          {tags.map((tag) => (
+          {posts.map((post) => (
             <FilterTagBtn
               key={crypto.randomUUID()}
-              onClick={() => handleTagFilter(tag || '')}
-              $isSelected={selectedTag === tag}
+              onClick={() => handleTagFilter(post.tag || '')}
+              $isSelected={selectedTag === post.tag}
             >
-              {tag}
+              {post.tag}
             </FilterTagBtn>
           ))}
         </Layout.HStack>
