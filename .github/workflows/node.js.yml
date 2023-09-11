@@ -19,6 +19,12 @@ jobs:
         with:
           node-version: '18.x'
 
+      - name: Generate Environment Variables File for Production
+        run: |
+          echo "NEXT_PUBLIC_GA_ID=$NEXT_PUBLIC_GA_ID" >> .env.production
+        env:
+          NEXT_PUBLIC_GA_ID: ${{ secrets.NEXT_PUBLIC_GA_ID }}
+
       - name: Installing my packages
         run: npm ci
 
