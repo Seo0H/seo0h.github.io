@@ -116,6 +116,12 @@ const GlobalStyles = createGlobalStyle`${css`
     font-size: 17px;
     font-weight: 400;
     line-height: 150%;
+
+    white-space: pre-line;
+
+    @media (width < ${display.tablet}) {
+      white-space: normal;
+    }
   }
 `}`;
 
