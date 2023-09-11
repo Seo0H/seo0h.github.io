@@ -1,16 +1,13 @@
 import { useState } from 'react';
 
-import { Variant, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { GetStaticProps } from 'next';
-import { useLiveReload } from 'next-contentlayer/hooks';
-
-import { Post } from 'contentlayer/generated';
 
 import FilterTagBtn from '@/components/FilterTagBtn';
 import BlogBox from '@/components/common/BlogBox';
 import * as Layout from '@/components/layout';
 import { fadeIn, staggerHalf } from '@/lib/animations';
-import { TagList, cleanAllPost } from '@/utils/blogDataset';
+import { cleanAllPost } from '@/utils/blogDataset';
 
 import type { ReducedPost } from '@/lib/types';
 
@@ -85,5 +82,5 @@ export default function Home({ posts }: { posts: ReducedPost[] }) {
 }
 
 export const getStaticProps: GetStaticProps = () => {
-  return { props: { posts: cleanAllPost, tags: TagList } };
+  return { props: { posts: cleanAllPost } };
 };

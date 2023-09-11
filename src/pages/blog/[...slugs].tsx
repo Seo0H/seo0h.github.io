@@ -1,5 +1,3 @@
-import { allPosts } from 'contentlayer/generated';
-
 import BlogLayout from '@/components/layout/blog';
 import { cleanAllPost } from '@/utils/blogDataset';
 
@@ -16,7 +14,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slugs } = params as { slugs: string[] };
   const slug = `/${[...slugs].join('/')}`;
-  const post = allPosts.find((post) => post.url === slug);
+  const post = cleanAllPost.find((post) => post.url === slug);
 
   return { props: { post } };
 };
