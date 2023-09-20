@@ -10,19 +10,19 @@ import cvar from '@/utils/cvarAutoComp';
 
 const Header = () => {
   return (
-    <Nav variants={fadeIn} initial='initial' animate='animate'>
-      <Layout.Flex margin='auto' width='92%'>
+    <HeaderWrapper variants={fadeIn} initial='initial' animate='animate'>
+      <Nav>
         <Link href='/'>
           <ResMainLogo />
         </Link>
-      </Layout.Flex>
-    </Nav>
+      </Nav>
+    </HeaderWrapper>
   );
 };
 
 export default Header;
 
-const Nav = styled(motion.nav)`
+const HeaderWrapper = styled(motion.header)`
   position: sticky;
   margin: auto;
   top: 0;
@@ -47,7 +47,14 @@ const Nav = styled(motion.nav)`
   margin-bottom: 10px;
 `;
 
+const Nav = styled.nav`
+  display: flex;
+  margin: auto;
+  width: 92%;
+`;
+
 const ResMainLogo = styled(MainLogo)`
+  width: 100%;
   @media (width < ${display.tablet}) {
     width: 80%;
   }
