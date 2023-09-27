@@ -115,13 +115,7 @@ const GlobalStyles = createGlobalStyle`${css`
     color: ${cvar({ key: 'gray', idx: '400' })};
     font-size: 17px;
     font-weight: 400;
-    line-height: 150%;
-
-    white-space: pre-line;
-
-    @media (width < ${display.tablet}) {
-      white-space: normal;
-    }
+    line-height: 170%;
   }
 `}`;
 

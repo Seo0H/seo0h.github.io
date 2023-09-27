@@ -6,33 +6,30 @@ import cvar from '@/utils/cvarAutoComp';
 
 const code = css`
   /* inline code style */
-  p code {
-    display: inline;
-    border-radius: 1rem;
-    padding: 0.1rem 0.6rem;
+  p,
+  ol {
+    code {
+      display: inline;
+      border-radius: 0.4rem;
+      padding: 0.1rem 0.6rem;
 
-    font-family: Consolas;
-    font-weight: bold;
-    word-break: break-all;
+      font-family: Consolas;
+      font-style: italic;
+      word-break: break-all;
 
-    background-color: ${cvar({ key: 'gray', idx: '100' })};
-  }
-
-  /* callout */
-  pre {
-    border-radius: 5px;
-    padding: 20px;
-    background-color: #f0f0f0;
-    white-space: break-spaces;
+      color: ${cvar({ key: 'gray', idx: '300' })};
+      background-color: ${cvar({ key: 'gray', idx: '100' })};
+    }
   }
 
   /* code block style */
   [data-rehype-pretty-code-fragment] pre {
     border-radius: 5px;
-    padding: 10px 1px;
+    padding: 16px 1px;
+
+    margin: 5px 0;
 
     font-family: Consolas;
-    overflow-x: auto;
 
     background-color: ${cvar({ key: 'gray', idx: '100' })};
 
@@ -76,6 +73,36 @@ const code = css`
     background: #c8c8ff1a;
     border-left-color: ${cvar({ key: 'mainColor' })};
   }
+
+  [data-rehype-pretty-code-caption] {
+    display: block;
+    text-align: center;
+    font-size: small;
+  }
+`;
+
+const callout = css`
+  /* callout */
+  pre {
+    overflow-x: auto;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: ${cvar({ key: 'gray', idx: '300' })};
+      border-radius: 10px;
+    }
+  }
+
+  /* callout */
+  blockquote {
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #f0f0f0;
+  }
 `;
 
 const anchor = css`
@@ -109,16 +136,13 @@ const anchor = css`
 
 const toc = css`
   .toc {
-    :is(a)::before {
-      content: '- ';
-    }
-
-    li li {
+    ol ol {
       text-indent: 1rem;
+      list-style-type: lower-latin;
     }
 
-    li li li {
-      text-indent: 2rem;
+    ol ol ol {
+      display: none;
     }
   }
 `;
@@ -139,6 +163,39 @@ const img = css`
   }
 `;
 
+const marker = css`
+  /* number */
+  ol {
+    list-style-position: inside;
+    list-style-type: decimal;
+
+    color: ${cvar({ key: 'gray', idx: '400' })};
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 170%;
+  }
+
+  /* 기본 ul */
+  ul {
+    list-style-position: inside;
+    list-style-type: '✦ ';
+
+    color: ${cvar({ key: 'gray', idx: '400' })};
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 170%;
+
+    margin-bottom: 0.5rem;
+  }
+
+  /* 번호 + 들여쓰기 */
+  li {
+    ul {
+      list-style-type: none;
+    }
+  }
+`;
+
 const BlogStyle = styled(Layout.VStack)`
   width: 100%;
   height: 100%;
@@ -149,14 +206,6 @@ const BlogStyle = styled(Layout.VStack)`
     font-weight: 600;
     text-decoration-line: underline;
     line-height: 1.8;
-  }
-
-  li:not(.toc *) {
-    &::before {
-      content: '- ';
-    }
-
-    font-weight: bold;
   }
 
   .mdx > :is(h1, h2) {
@@ -175,6 +224,8 @@ const BlogStyle = styled(Layout.VStack)`
   }
 
   ${code}
+  ${callout}
+  ${marker}
   ${anchor}
   ${toc}
   ${img}

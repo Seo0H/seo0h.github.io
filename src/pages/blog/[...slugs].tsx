@@ -1,5 +1,5 @@
 import BlogLayout from '@/components/layout/blog';
-import { cleanAllPost } from '@/utils/blogDataset';
+import { cleanAllPost } from '@/constants/blogDataset';
 
 import type { BlogProps } from '@/lib/types';
 import type { GetStaticPaths, GetStaticProps } from 'next';
