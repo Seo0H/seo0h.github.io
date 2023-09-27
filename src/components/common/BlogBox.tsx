@@ -31,7 +31,7 @@ const BlogBox = ({ post }: { post: ReducedPost }) => {
             <Layout.VStack>
               <CrosshatchTag>{post.tag}</CrosshatchTag>
               <ResH2>{post.title}</ResH2>
-              <p>{post.description}</p>
+              <P>{post.description}</P>
             </Layout.VStack>
 
             <Layout.VStack>
@@ -69,8 +69,9 @@ const ListBoxWrapper = styled(Layout.HStack)`
 `;
 
 const ResH2 = styled.h2`
+  line-height: 1.2;
   @media (width < ${display.tablet}) {
-    margin: 0px;
+    margin: 5px 0;
   }
 `;
 
@@ -94,4 +95,8 @@ const ResVStack = styled(Layout.VStack)`
   @media (width <${display.tablet}) {
     gap: 0px;
   }
+`;
+
+const P = styled.p`
+  line-height: 1.4;
 `;
