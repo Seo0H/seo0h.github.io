@@ -24,7 +24,8 @@ const GlobalStyles = createGlobalStyle`${css`
   body,
   #__next {
     min-width: 100%;
-    min-height: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
 
     width: 100%;
     height: fit-content;
