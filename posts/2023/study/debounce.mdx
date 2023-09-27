@@ -1,0 +1,108 @@
+---
+title: '디바운스 적용하기'
+description: '사용자 입력에 컴퓨터의 속도를 맞추는 디바운스를 적용해보자.'
+draft: false
+image: '/img/2023/study/thumbnail.png'
+date: 2023-09-28 00:12:26
+---
+
+## 문제 상황
+
+![모든 이벤트를 검색해 보여주는 문제상황](/posts/debounce/gif.gif)
+
+> **⚒️ 문제 정의** <br />
+> 검색 창의 자동완성이 입력되는 이벤트를 감지하는대로 자동완성 api를 호출하기 때문에, 버벅거리는듯 자동완성 탭이 보여진다. 해당 이슈 수정을 위해 디바운스 적용 필요하다.
+
+ 위의 gif 처럼 모든 이벤트에 대해 api 호출을 날려 자동완성을 받아오는 현상이 있었고, 이를 디바운스를 적용해 고치기로 하였다. 해당 자동완성 부분이 커스텀 hook으로 로직이 분리되어 있어, 팀원과 상의 후 해당 hook에서 디바운스를 적용하기로 결정했다.
+
+## 첫번째 시도 : useEffect와 debounce
+```tsx caption="useEffect안에서 적용된 debounce"
+useEffect(() => {
+	debounce(() => setDebouncedParams(params), 10000)
+}, [params]);
+```
+
+```tsx caption="debounce 구현 코드"
+export default function debounce(fn, delay) {
+  let timeout;
+
+  return (...args):  => {
+    let result;
+    if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      result = fn(...args);
+    }, delay);
+
+    return result;
+  };
+}
+```
+
+### 코드 절차 설명
+
+처음 시도에는 debounce 함수를 따로 구현해 커스텀 훅 안의 useEffect에서 사용해야 한다고 생각했다. 처음에 시도했던 것의 절차는 아래와 같다.
+
+1. **debounce 함수 호출.**
+	- 이 때, fn은 실행하려는 함수(예: fetchData)이며, delay는 디바운스 지연 시간(밀리초)
+2. **timeout 선언**
+	- 타이머 ID를 저장하기 위한 변수로써 선언
+3. **return문 내부에 있는 익명 함수가 반환.**
+	- 이 함수는 `...args`를 인수로 받으며 `...args`는 실행하려는 함수 fn의 인수.
+4. **익명 함수가 호출되면, result 변수가 선언**
+	- 이 변수는 함수 fn의 실행 결과를 저장할 목적으로 사용
+5. **timeout이 이미 존재한다면, clearTimeout(timeout)를 호출**
+	- 이전 타이머를 제거 후 최신 타이머로 교체 목적
+6. **새로운 setTimeout 함수가 실행**
+	- 디바운스 지연 시간(delay) 이후에 내부 콜백 함수가 실행
+7. **내부 콜백 함수가 실행되면, 원래 함수인 fn(...args)가 호출**
+	- 결과가 result 변수에 저장
+8. **마지막으로, result를 반환**
+	- 이것은 디바운스된 함수(fetchData 등)의 실행 결과
+
+---
+
+### 첫번째 시도의 문제점
+
+**그러나..** 이 함수를 set func에 적용하기 위해 나의 예시처럼 작성하게 된다면 **아래와 같은 부작용**이 생긴다.
+
+-  **`useEffect` 함수는 컴포넌트가 렌더링되거나 의존성 배열이 변화될 때마다 호출됨**
+	- `useEffect` 내에서 `debounce` 함수를 호출하면, 매 렌더링마다 새로운 디바운스 함수가 생성되기에 이로 인해 **디바운스 효과가 사실상 동작하지 않게 된다**. 결국 모든 이벤트에 대해 각각의 debounce 함수가 호출되고, 순차적으로 timeout이 실행되기 때문이다.
+
+## 두번째 시도 : 커스텀 hook 생명 주기에 정렬된 timeout 설정
+
+따라서, 일단 디바운스를 사용하는 곳이 저곳뿐이니, 각각 timeout을 설정 해 주기로 했다.
+
+```tsx caption="debounce 구현 코드"
+useEffect(() => {
+    if (!params) return;
+    let debounceLoadingSpinner: ReturnType<typeof setTimeout>;
+    let debounceParams: ReturnType<typeof setTimeout>;
+
+    try {
+      debounceLoadingSpinner = setTimeout(() => setState(STATE.LOADING), 500);
+      debounceParams = setTimeout(
+        () =>
+          fetchData().then(res => {
+            setAutoCmpList(makeAutoCmpList(res).slice(0, 8));
+            clearTimeout(debounceLoadingSpinner);
+            setState(STATE.SUCCESS);
+          }),
+        1000,
+      );
+    } catch (error) {
+      setState(STATE.ERROR);
+    }
+    return () => {
+      setAutoCmpList(['']); // 다시 검색했을때, 이전 검색 자동완성이 떠있는 것을 방지하기 위함
+      clearTimeout(debounceLoadingSpinner);
+      clearTimeout(debounceParams);
+    };
+  }, [params, mode]);
+```
+
+나의 경우 api호출을 하는 경우가 있어, `try-catch`문을 이용해 에러를 잡아주었다. 또한 `useEffect`내에서 timeout을 사용한 만큼, `useEffect clen-up 함수`를 설정해 컴포넌트가 언마운될때 실행할 기능을 추가해두었다. 자동완성 리스트도 클린업하여 이후 다시 자동완성 검색을 시도했을때 이전 자동완성 검색어가 잠시 보여지는것을 방지했다.
+
+## 📝 배운 점
+
+- **컴포넌트 생명 주기**의 중요성을 다시금 알게 되었다.
+- **useEffect의 clen-up 함수**의 중요성을 체감 한 리팩토링이였다.
