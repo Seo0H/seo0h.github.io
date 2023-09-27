@@ -3,7 +3,6 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 import MainLogo from '@/assets/icons/MainLogo';
-import * as Layout from '@/components/layout';
 import { display, zIndex } from '@/constants/styles';
 import { fadeIn } from '@/lib/animations';
 import cvar from '@/utils/cvarAutoComp';

@@ -47,7 +47,7 @@ export default function Home({ posts }: { posts: ReducedPost[] }) {
             <p>
               디자인과 코딩을 사랑하는 프론트엔드 개발자입니다.{' '}
               {`
-              이곳은 제가 메이킹을 하며 마주한경험들을 기록해 둔 공간입니다.`}
+              이곳은 제가 메이킹을 하며 마주한 경험들을 기록해 둔 공간입니다.`}
             </p>
           </Layout.VStack>
         </motion.div>

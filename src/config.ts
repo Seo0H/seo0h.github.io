@@ -1,7 +1,7 @@
 export const siteConfig = {
   url: 'https://seo0h.github.io',
-  title: 'Seo blog',
-  description: '',
+  title: 'Seo blog | 시오 블로그',
+  description: '시오의 개발 기록 블로그',
   copyright: 'Seo © All rights reserved.',
   since: 2023,
   googleAnalyticsId: '',
