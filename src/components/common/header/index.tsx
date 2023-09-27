@@ -52,7 +52,7 @@ const Nav = styled.nav`
   width: 92%;
   margin: auto;
 
-  svg {
+  a {
     width: 100%;
     @media (width < ${display.tablet}) {
       width: 80%;
