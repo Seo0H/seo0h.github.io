@@ -197,8 +197,6 @@ const marker = css`
 `;
 
 const BlogStyle = styled(Layout.VStack)`
-  width: 100%;
-  height: 100%;
   color: ${cvar({ key: 'gray', idx: '300' })};
 
   a {
