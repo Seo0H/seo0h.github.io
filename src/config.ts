@@ -11,10 +11,7 @@ export const siteConfig = {
     contacts: {
       email: 'seo0h9@gmail.com',
       github: 'Seo0H',
-      twitter: '',
-      linkedin: '',
-      youtube: '',
-      instagram: '',
+      instagram: 'maker.seo',
     },
   },
 } as const;

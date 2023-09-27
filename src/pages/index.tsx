@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { GetStaticProps } from 'next';
 
 import FilterTagBtn from '@/components/FilterTagBtn';
+import { PageSEO } from '@/components/SEO';
 import BlogBox from '@/components/common/BlogBox';
 import * as Layout from '@/components/layout';
 import { fadeIn, staggerHalf } from '@/lib/animations';
@@ -27,6 +28,7 @@ export default function Home({ posts }: { posts: ReducedPost[] }) {
 
   return (
     <Layout.Box padding='0 10px' margin='0 0 100px 0' width='92%'>
+      <PageSEO />
       <motion.section variants={staggerHalf} initial='initial' animate='animate'>
         <motion.div variants={fadeIn}>
           <Layout.Box margin='30px 0 25px 0'>
