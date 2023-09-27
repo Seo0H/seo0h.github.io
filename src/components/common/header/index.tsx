@@ -13,7 +13,7 @@ const Header = () => {
     <HeaderWrapper variants={fadeIn} initial='initial' animate='animate'>
       <Nav>
         <Link href='/'>
-          <ResMainLogo />
+          <MainLogo />
         </Link>
       </Nav>
     </HeaderWrapper>
@@ -24,8 +24,10 @@ export default Header;
 
 const HeaderWrapper = styled(motion.header)`
   position: sticky;
-  margin: auto;
   top: 0;
+
+  margin-bottom: 10px;
+  margin: auto;
 
   z-index: ${zIndex.nav};
 
@@ -43,19 +45,18 @@ const HeaderWrapper = styled(motion.header)`
   -webkit-backdrop-filter: blur(5px); // for safari
 
   border-bottom: solid 1px ${cvar({ key: 'gray', idx: '200' })};
-
-  margin-bottom: 10px;
 `;
 
 const Nav = styled.nav`
   display: flex;
-  margin: auto;
+  flex-direction: row;
   width: 92%;
-`;
+  margin: auto;
 
-const ResMainLogo = styled(MainLogo)`
-  width: 100%;
-  @media (width < ${display.tablet}) {
-    width: 80%;
+  svg {
+    width: 100%;
+    @media (width < ${display.tablet}) {
+      width: 80%;
+    }
   }
 `;
