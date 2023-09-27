@@ -2,7 +2,7 @@ import { NextSeo } from 'next-seo';
 
 import { siteConfig } from '@/config';
 
-const DEFAULT_OG_IMAGE_URL = `${siteConfig.url}/images/og-image.webp`;
+const DEFAULT_OG_IMAGE_URL = `${siteConfig.url}/images/og-image.jpg`;
 
 export const PageSEO = (props: {
   title?: string;
