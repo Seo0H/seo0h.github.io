@@ -7,7 +7,7 @@ const DEFAULT_OG_IMAGE_URL = `${siteConfig.url}/og/image.jpg`;
 const additionalLinks = [
   {
     rel: 'icon',
-    href: `${siteConfig.url}/og/favicon.ico`,
+    href: `${siteConfig.url}/og/favicon.png`,
   },
   {
     rel: `apple-touch-icon`,
