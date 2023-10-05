@@ -147,22 +147,6 @@ const toc = css`
   }
 `;
 
-const img = css`
-  img {
-    display: block;
-    margin: 5px auto;
-
-    border-radius: 10px;
-    border: 1px solid ${cvar({ key: 'gray', idx: '100' })};
-  }
-
-  .alt {
-    display: block;
-    text-align: center;
-    font-size: small;
-  }
-`;
-
 const marker = css`
   /* number */
   ol {
@@ -184,8 +168,6 @@ const marker = css`
     font-size: 17px;
     font-weight: 400;
     line-height: 170%;
-
-    margin-bottom: 0.5rem;
   }
 
   /* 번호 + 들여쓰기 */
@@ -226,7 +208,6 @@ const BlogStyle = styled(Layout.VStack)`
   ${marker}
   ${anchor}
   ${toc}
-  ${img}
 `;
 
 export default BlogStyle;
