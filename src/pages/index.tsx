@@ -54,7 +54,7 @@ export default function Home({ posts }: { posts: ReducedPost[] }) {
         </motion.div>
       </motion.section>
 
-      <motion.section variants={fadeIn} initial='initial' animate='animate'>
+      {/* <motion.section variants={fadeIn} initial='initial' animate='animate'>
         <Layout.HStack margin='0 0 15px 0' gap='10px'>
           <FilterTagBtn onClick={() => handleTagFilter('ALL')} $isSelected={selectedTag === 'ALL'}>
             ALL
@@ -69,7 +69,7 @@ export default function Home({ posts }: { posts: ReducedPost[] }) {
             </FilterTagBtn>
           ))}
         </Layout.HStack>
-      </motion.section>
+      </motion.section> */}
 
       <motion.section variants={staggerHalf} initial='initial' animate='animate'>
         <motion.div variants={staggerHalf}>
