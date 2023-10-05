@@ -1,0 +1,91 @@
+---
+title: '빌드 및 배포 환경 선택하기'
+description: '인터넷 세상에서는 나도 건물주?'
+draft: false
+image: '/img/2023/blog-making/thumbnail.png'
+date: 2023-10-05 15:04:05
+---
+
+## TLDR
+
+결론부터 말하자면, 이 블로그는 **Github Pages를 이용해 정적 배포**되었어요.
+
+> 1. 작성자가 저 혼자라는 점
+> 2. mdx를 이용해 블로그를 작성 예정이라는 것
+
+위와같은 특징을 고려해 선택하게 되었어요.
+
+---
+
+## 도입
+
+지난번 포스트에선어떤 기술을 사용해 블로그를 제작할지 정했다면, 이번 포스트에선 **어디에다 블로그를 올릴지에 대한 고민**을 작성해보고자 해요. 내 컴퓨터에서만 잠자고 있는 블로그는 아까우니까요.
+
+인터넷 세상을 현실 세계에 비유한다면, **웹사이트는 하나의 상가 건물**로 비유할 수 있을거에요. 그리고 우리가 작성한 **코드는 상가에서 홍보하거나 판매할 물건**이 될 수 있겠네요.
+
+저번 포스트에서 `Next js`라는 도구를 이용해 코드를 만들기로 정했으니 이번에는 우리 코드를 사람들에게 보여 줄 (비유하자면) 상가 입지를 선택해 볼 차례에요.
+
+
+## 현재 상태 파악하기
+
+> - **블로그 작성자** : 나 자신
+> - **글 작성 방식** : MDX 파일을 작성 후 배포될 코드에 반영
+
+배포 환경을 결정 전에 블로그 작성 환경을 정의해 봤어요. 개인 블로그의 특성상, 작성자는 오직 저 자신이고 글도 MDX를 이용해 작성 후 바로 코드에 반영할 예정이에요.
+
+따라서 유저의 정보를 저장할 데이터베이스나, 실시간으로 변하는 동적인 데이터를 처리할 **복잡한 서버 기능이 딱히 필요하지 않기 때문**에 선택할 배포 방식을 **정적 배포**로 좁히게 되었어요.
+
+> ❓**배포 종류가 더 존재하나요?** <br />
+>  Next js에서 선택 가능한 배포 전략은 다음과 같아요.
+> 1. 정적 호스팅 (Static hosting)
+> 2. 서버리스 (Serverless function)
+> 3. 도커나 Node.js를 이용한 서버 배포 <br />
+> 더 자세한 내용이 궁금하다면 [Deploying](https://nextjs.org/docs/app/building-your-application/deploying) 공식 문서를 참고해주세요.
+
+
+## 선택지 비교하기
+
+> - **대표적인 정적 배포 서비스 종류**
+> 1. [GitHub Pages](https://docs.github.com/ko/pages/quickstart)
+> 2. [AWS S3](https://aws.amazon.com/ko/blogs/korea/amazon-s3-amazon-cloudfront-a-match-made-in-the-cloud/)
+
+#### GitHub Pages 특징
+
+[`GitHub Pages`](https://docs.github.com/ko/pages/getting-started-with-github-pages/about-github-pages)는 GitHub의 저장소에서 정적 파일을 가져와 빌드 프로세스를 통해 파일을 실행하고 웹 사이트를 게시하는 정적 사이트 호스팅 서버에요.
+
+- **빌드 프로세스**
+    - 기본적으로 빌드는 변경 사항이 특정 분기에 push되면 빌드돼요. `GitHub Action`을 이용해 커스텀 워크플로우를 작성할 수도 있어요. 역시 빌드 생성은 기본적으로 Jekyll을 이용해 빌드되나, GitHub Action을 작성해 다른 서비스를 이용해 빌드 가능합니다.
+
+- **도메인**
+    - 기본 도메인은 `<username>.github.io` 로 제공되고 원한다면 커스텀 도메인을 설정할 수도 있어요.
+
+- **게시 불가 내용**
+    - 공식 문서를 읽어보니, 상업적 목적의 사이트나 기존에 존재하는 웹사이트의 복사본을 해당 기술로 만드는건 불가하다고 해요. 이렇게 보니 개인 개발 블로그나 포트폴리오, 또는 자신이 만든 기술에 대한 홍보 웹사이트 정도로 **사용할 수 있는 폭이 제한적**이네요.
+
+#### AWS S3 특징
+아마존에서 제공하는 클라우드 웹 스토리지 서비스에요. 스토리지이지만, 말 그대로 클라우드에 올라가 있기 때문에 정적으로 export된 Nextjs 파일을 웹에 호스팅 할 수 있어요.
+
+- **가격**
+    - aws 초기 가입자라면 1년간 프리티어로 무료로 사용 가능하지만, 그 이후에는 사용량에 따라 돈을 지불해야 해요.
+
+- **SSL 미적용**
+    - 기본적으로 제공되는 s3 버킷은 보안 프로토콜 적용이 되어있지 않아요. 따라서 아마존의 다른 서비스 (Route 53) 를 이용해 적용 해 주어야 해요.
+
+
+#### 비교 요약
+
+| 특징       | GitHub Pages           | AWS S3                           |
+| ---------- | ---------------------- | -------------------------------- |
+| **가격**   | 무료                   | 프리 티어 1년동안 무료           |
+| **SSL**    | 자동 적용              | Route 53를 이용한 추가 작업 필요 |
+| **도메인** | `<username>.github.io` | -                                |
+
+이렇게 보니,, 아무래도 `Github Pages`를 사용하는게 좋아보이죠? 무료이기도 하고, SSL도 자동 적용되어 배포되니까요. 블로그로 사용할 거라 정책에 위반되지도 않아요. 그렇지만 확실히 (Next.js와 밀접한 관련이 있는..) Vercel을 이용한 배포보다는 번거로운점이 있어요. Node.js 를 이용해 빌드되도록 Action 스크립트를 작성해주는 과정이 필요하기 때문이에요.
+
+따라서, 다음 포스트에서는 블로그 빌드를 위해 작성한 **Github Action 스크립트**에 대해 글을 써 보도록 할게요. 읽어주셔서 감사합니다 😄
+
+## 참고 자료
+
+- [Static websites on AWS — Designing Lift](https://medium.com/serverless-transformation/static-websites-on-aws-designing-lift-1db94574ba3b)
+- [nextJS 뭘로 배포할까?](https://www.taeny.dev/javascript/nextjs-with-deployment-platform#2153ab0a46394a418dd97ff805a9ddb2)
+- [AWS and Vercel: Accelerating innovation with serverless computing](https://vercel.com/blog/aws-and-vercel-accelerating-innovation-with-serverless-computing)
