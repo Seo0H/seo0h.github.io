@@ -7,6 +7,7 @@ import * as Layout from '@/components/layout';
 import { default as Style } from '@/components/layout/blog/style';
 import CustomImg from '@/components/mdx/CustomImg';
 import CustomLink from '@/components/mdx/CustomLink';
+import CustomTable from '@/components/mdx/CustomTable';
 import { BlogProps } from '@/lib/types';
 import useTag from '@/lib/useTag';
 import useWindowSize from '@/lib/useWindowSize';
@@ -18,6 +19,7 @@ import type { MDXComponents } from 'mdx/types';
 const customComponents: MDXComponents = {
   img: CustomImg,
   a: CustomLink,
+  table: CustomTable,
 };
 
 const BlogLayout = ({ post }: BlogProps) => {

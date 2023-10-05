@@ -6,20 +6,17 @@ import cvar from '@/utils/cvarAutoComp';
 
 const code = css`
   /* inline code style */
-  p,
-  ol {
-    code {
-      display: inline;
-      border-radius: 0.4rem;
-      padding: 0.1rem 0.6rem;
+  code {
+    display: inline;
+    border-radius: 0.4rem;
+    padding: 0.1rem 0.6rem;
 
-      font-family: Consolas;
-      font-style: italic;
-      word-break: break-all;
+    font-family: Consolas;
+    font-style: italic;
+    word-break: break-all;
 
-      color: ${cvar({ key: 'gray', idx: '300' })};
-      background-color: ${cvar({ key: 'gray', idx: '100' })};
-    }
+    color: ${cvar({ key: 'gray', idx: '300' })};
+    background-color: ${cvar({ key: 'gray', idx: '100' })};
   }
 
   /* code block style */
@@ -42,6 +39,7 @@ const code = css`
     counter-reset: line;
     display: grid;
     line-height: 2;
+    background-color: transparent;
 
     [data-line]::before {
       counter-increment: line;
@@ -168,6 +166,14 @@ const marker = css`
     font-size: 17px;
     font-weight: 400;
     line-height: 170%;
+
+    p {
+      display: inline-block;
+    }
+
+    li > ul {
+      margin: 0 0 0.5rem 1rem;
+    }
   }
 
   /* 번호 + 들여쓰기 */
