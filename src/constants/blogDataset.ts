@@ -17,3 +17,10 @@ function makeTag(post: Post) {
     ...post,
   };
 }
+
+export const AllTags = Array.from(
+  cleanAllPost.reduce<Set<string>>((acc, post) => {
+    acc.add(post.tag);
+    return acc;
+  }, new Set()),
+);

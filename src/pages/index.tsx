@@ -8,7 +8,7 @@ import { PageSEO } from '@/components/SEO';
 import BlogBox from '@/components/common/BlogBox';
 import * as Layout from '@/components/layout';
 import * as Style from '@/components/style';
-import { cleanAllPost } from '@/constants/blogDataset';
+import { cleanAllPost, AllTags } from '@/constants/blogDataset';
 import { fadeIn, staggerHalf } from '@/lib/animations';
 
 import type { ReducedPost } from '@/lib/types';
@@ -59,13 +59,13 @@ export default function Home({ posts }: { posts: ReducedPost[] }) {
           <FilterTagBtn onClick={() => handleTagFilter('ALL')} $isSelected={selectedTag === 'ALL'}>
             ALL
           </FilterTagBtn>
-          {posts.map((post) => (
+          {AllTags.map((tag) => (
             <FilterTagBtn
               key={crypto.randomUUID()}
-              onClick={() => handleTagFilter(post.tag || '')}
-              $isSelected={selectedTag === post.tag}
+              onClick={() => handleTagFilter(tag || '')}
+              $isSelected={selectedTag === tag}
             >
-              {post.tag}
+              {tag}
             </FilterTagBtn>
           ))}
         </Layout.HStack>
