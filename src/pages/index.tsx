@@ -13,7 +13,7 @@ import { fadeIn, staggerHalf } from '@/lib/animations';
 
 import type { ReducedPost } from '@/lib/types';
 
-export default function Home({ posts }: { posts: ReducedPost[] }) {
+export default function Home({ posts, tags }: { posts: ReducedPost[]; tags: string[] }) {
   const [filteredPosts, setFilteredPosts] = useState(posts);
   const [selectedTag, setSelectedTag] = useState('ALL');
 
@@ -54,12 +54,12 @@ export default function Home({ posts }: { posts: ReducedPost[] }) {
         </motion.div>
       </motion.section>
 
-      {/* <motion.section variants={fadeIn} initial='initial' animate='animate'>
+      <motion.section variants={fadeIn} initial='initial' animate='animate'>
         <Layout.HStack margin='0 0 15px 0' gap='10px'>
           <FilterTagBtn onClick={() => handleTagFilter('ALL')} $isSelected={selectedTag === 'ALL'}>
             ALL
           </FilterTagBtn>
-          {AllTags.map((tag) => (
+          {tags.map((tag) => (
             <FilterTagBtn
               key={crypto.randomUUID()}
               onClick={() => handleTagFilter(tag || '')}
@@ -69,7 +69,7 @@ export default function Home({ posts }: { posts: ReducedPost[] }) {
             </FilterTagBtn>
           ))}
         </Layout.HStack>
-      </motion.section> */}
+      </motion.section>
 
       <motion.section variants={staggerHalf} initial='initial' animate='animate'>
         <motion.div variants={staggerHalf}>
@@ -85,5 +85,5 @@ export default function Home({ posts }: { posts: ReducedPost[] }) {
 }
 
 export const getStaticProps: GetStaticProps = () => {
-  return { props: { posts: cleanAllPost } };
+  return { props: { posts: cleanAllPost, tags: AllTags } };
 };
