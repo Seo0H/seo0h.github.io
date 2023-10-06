@@ -96,10 +96,16 @@ const callout = css`
   }
 
   /* callout */
+  details,
   blockquote {
     border-radius: 5px;
     padding: 20px;
     background-color: #f0f0f0;
+    transition: all;
+  }
+
+  summary {
+    cursor: pointer;
   }
 `;
 
@@ -183,6 +189,8 @@ const marker = css`
     }
   }
 `;
+
+const toggle = css``;
 
 const BlogStyle = styled(Layout.VStack)`
   color: ${cvar({ key: 'gray', idx: '300' })};
