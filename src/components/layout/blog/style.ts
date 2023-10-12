@@ -12,7 +12,6 @@ const code = css`
     padding: 0.1rem 0.6rem;
 
     font-family: Consolas;
-    font-style: italic;
     word-break: break-all;
 
     color: ${cvar({ key: 'gray', idx: '300' })};

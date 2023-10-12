@@ -69,7 +69,7 @@ const ListBoxWrapper = styled(Layout.HStack)`
 `;
 
 const ResH2 = styled.h2`
-  line-height: 1.2;
+  line-height: 1.3;
   @media (width < ${display.tablet}) {
     margin: 5px 0;
   }
@@ -98,5 +98,6 @@ const ResVStack = styled(Layout.VStack)`
 `;
 
 const P = styled.p`
+  font-weight: 300;
   line-height: 1.4;
 `;
