@@ -9,8 +9,9 @@ const nextConfig = {
       displayName: true,
     },
     images: {
-      unoptimized: true
-  }
+      loader: 'akamai',
+      path: '',
+    },
   },
 };
 
