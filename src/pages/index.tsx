@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { GetStaticProps } from 'next';
 
+import BlogBox from '@/components/BlogBox';
 import FilterTagBtn from '@/components/FilterTagBtn';
 import { PageSEO } from '@/components/SEO';
-import BlogBox from '@/components/common/BlogBox';
 import * as Layout from '@/components/layout';
 import * as Style from '@/components/style';
 import { cleanAllPost, AllTags } from '@/constants/blogDataset';
