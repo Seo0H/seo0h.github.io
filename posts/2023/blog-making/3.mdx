@@ -1,16 +1,20 @@
 ---
 title: 'Next.js MDX 파싱하기'
-description: 'Contentlayer을 이용한 MDX Paring 환경 구축기'
-draft: true
+description: 'Contentlayer을 이용한 MDX 블로그 환경 구축기'
+draft: false
 image: '/img/2023/blog-making/thumbnail.png'
 date: 2023-10-12 19:32:17
 ---
+
+> ❗**설명은 필요 없고, 바로 소스코드를 보고싶다면?** <br />
+> 의도치않게 12분이나 되는 글을 작성해버렸네요. 😥 앞의 기술 선정 이유가 별로 궁금하시지 않으시면, [설치 및 초기 환경 세팅](#%EC%84%A4%EC%B9%98-%EB%B0%8F-%EC%B4%88%EA%B8%B0-%ED%99%98%EA%B2%BD-%EC%84%B8%ED%8C%85)을 클릭해주세요
 
 ## MDX?
 이 블로그 글은 [MDX](https://mdxjs.com/)로 작성되었어요. [마크다운(.md)](https://www.markdownguide.org/)으로 글을 작성하면, 가독성 있는 글을 빠르게 작성할 수 있기 때문에 많은 사람들이 선호하는 도구에요.
 
 그 중 MDX는 MD + JSX를 합친 단어로, JSX를 마크다운에서 작성할 수 있게 해줘요. 따라서 MDX를 이용해 글을 쓰면, 마크다운 형식으로 글을 작성하며 React 컴포넌트를 포함시킬 수 있어요.
 
+---
 ## MDX와 Next.js
 
 현재(23.10.12) [Next js의 공식문서의 MDX 챕터](https://nextjs.org/docs/pages/building-your-application/configuring/mdx)에서는
@@ -38,7 +42,9 @@ date: 2023-10-12 19:32:17
 
 각 페이지가 마크다운 그 자체가 되는 것이 좋지만 4번, **확장 가능성 때문에 포스트의 관심사를 다른 곳에 분리**하고 싶었고, 따라서 `contentlayer`를 사용하게 되었어요.
 
-### `next-mdx-remote` VS `contentlayer`
+---
+
+### next-mdx-remote VS contentlayer
 
 왜 `next-mdx-remote` 가 아닌 `contentlayer`를 사용하게 된 이유는 아래와 같아요.
 
@@ -62,14 +68,23 @@ description:'my-description'
 > 🔖 **주의사항** <br />
 > **Contentlayer는 아직 beta버전이에요**. 이 글 작성 기준(2023-10-12), 지원되는 프레임워크는 Next.js 뿐이며 지원되는 데이터 소스도 MDX 뿐이에요. 현재 실험적으로 노션으로 컨텐츠를 가져올 수 있어요.
 
-## 설치와 환경 세팅
+## 설치 및 초기 환경 세팅
 
-이제 본격적으로 설치 및 초기 환경 세팅을 해볼까요?
+이제 본격적으로 설치 및 초기 환경 세팅을 해볼까요? [Contentlayer의 공식 문서](https://contentlayer.dev/docs/getting-started-cddd76b7#2-define-content-schema)에도 자세히 나와있지만, 빠르게 설치와 초기 세팅을 하는 법이 궁금하시다면, 아래 토글을 눌러주세요.
+
+<details>
+   <summary> ✈️ **Contentlayer 빠르게 시작하기**</summary>
+       <div markdown="1">
+       <br />
+
+**1. 의존성 설치하기**
 
 ``` cmd
 npm install contentlayer next-contentlayer date-fns
 ```
+<br />
 
+**2. next config를 contentlayer로 래핑하기**
 ``` tsx
 // next.config.js
 const { withContentlayer } = require('next-contentlayer')
@@ -79,3 +94,198 @@ const nextConfig = { reactStrictMode: true, swcMinify: true }
 
 module.exports = withContentlayer(nextConfig)
 ```
+<br />
+
+**3. tsconfig 에 contentlayer 설정 추가하기**
+
+``` json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    //  ^^^^^^^^^^^
+    "paths": {
+      "contentlayer/generated": ["./.contentlayer/generated"]
+      // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".contentlayer/generated"
+    // ^^^^^^^^^^^^^^^^^^^^^^
+  ]
+}
+```
+<br />
+
+**4. gitignore에 contentlayer 추가하기**
+
+```shell
+# .gitignore
+
+# ...
+
+# contentlayer
+.contentlayer
+```
+
+       </div>
+</details>
+
+### 데이터 스키마 만들기
+기본 설정이 끝났다면, Contentlayer에서 제공하는 `defineDocumentType` API를 이용해 컨텐츠의 데이터 스키마를 만들어줍니다. 저의 경우, 포스트의 상단의 데이터 필드를 아래와 같은 식으로 짜주었어. 제가 사용한 필드 이외의 속성들이 궁금하다면, 공식문서인 [Field Types reference](https://contentlayer.dev/docs/reference/source-files/field-types-defe41e9) 해당 링크를 방문해보세요.
+
+``` ts caption="field type 정의"
+const fields: FieldDefs = {
+  title: { type: 'string', required: true },
+  description: { type: 'string', required: true }, // 한줄 요약
+  date: { type: 'date', required: true },
+  draft: { type: 'boolean' }, // 초고 판별 속성
+  image: { type: 'string', default: '/img/default-thumbnail.png' }, // 썸네일
+};
+```
+
+위 필드의 양식대로 mdx 포스트를 작성한다면 아래와 같은 mdx 헤더를 사용할 수 있어요.
+
+``` text caption="fields 표기 예시"
+---
+title: 'Next.js MDX 파싱하기'
+description: 'Contentlayer을 이용한 MDX 블로그 환경 구축기'
+draft: false
+image: '/img/2023/blog-making/thumbnail.png'
+date: 2023-10-12 19:32:17
+---
+```
+
+이렇게 만든 필드를 [`defineDocumentType`](https://contentlayer.dev/docs/reference/source-files/define-document-type-eb9db60e) 메소드에 인자로 넣어주어야 해요.
+
+``` ts
+const Post = defineDocumentType(() => ({
+  name: 'Post', // 필수. 해당 이름으로 문서의 type이 생성됨
+  filePathPattern: `**/*.mdx`,
+  contentType: 'mdx',
+  fields, // 위에서 만든 fildes
+  computedFields: {
+    url: { type: 'string', resolve: (post) => `/${post._raw.flattenedPath}` },
+    readingTime: {
+      type: 'string',
+      resolve: (post) => Math.ceil(readingTime(post.body.raw).minutes),
+    },
+    formattedDate: { type: 'string', resolve: (post) => dayjs(post.date).format('YY.MM.DD') },
+  },
+}));
+```
+**`computedFields` 를 이용해 콘텐츠 소스를 인자로 받아 계산해서 추가 필드를 만들 수도 있어요.** 저의 경우 현재 `url`, `readiingTime`, `formattedDate` 를  만들어 사용중이에요.([readingTime](https://www.npmjs.com/package/readingtime)과 [dayjs](https://www.npmjs.com/package/dayjs) 패키지를 이용했어요.)
+
+화면에 표시되는 메타 정보들이 추가로 필요한 경우, 이 기능을 이용하면 좋겠죠?
+
+```ts
+// contentlayer.config.ts
+export default makeSource({
+  contentDirPath: 'posts', // 필수. 콘텐츠 위치 경로
+  documentTypes: [Post], // 필수. 스키마 정의
+  mdx: {
+    // ... 추가 플러그인
+  },
+});
+```
+최종적으로 `contentlayer.config.ts` 에서 [`makeSource`](https://contentlayer.dev/docs/reference/source-files/make-source-a5ba4922)를 이용해 위에서 만든 스키마 객체를 넣어 default export 해주면 돼요.
+
+이제 빌드 시 자동으로 mdx 파일을 찾아 contentlayer가 파싱해준답니다. 동시에 .contentlayer 폴더가 생기는데 해당 폴더 안에 빌드 시마다 업데이트 된 정적 파일과 설정해 준 타입이 생성되게 돼요.
+
+## ➕ Mdx VS Code 세팅하기
+위의 글을 읽으며, 마크다운을 이용해 vs 코드 에디터로 글을 작성하는게 불편하다는 생각이 드실 수 있어요. 하지만, **코드 에디터인 만큼 개발자가 설정할 할 수 있는 요소들이 넘쳐난답니다.** 제가 사용중인 mdx 관련 설정을 알려드릴게요.
+
+### 1. 코드 스니펫 설정하기
+상단 메타 정보를 매번 작성하는게 너무 귀찮다는 생각이 들 수도 있어요. 왜냐면 저도 그랬거든요! 역시 [bepyan님 블로그](https://bepyan.github.io/)에서 참고한 것을 제 입맛대로 좀 바꾸어서 사용해봤어요.
+
+``` json caption=""
+// .vscode
+{
+"Post Matter": {
+    "prefix": ["---"],
+    "body": [
+      "---",
+      "title: '$1'",
+      "description: '$2'",
+      "draft: false",
+      "image: '$3",
+      "date: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
+      "---",
+      "",
+      "$0"
+    ],
+    "scope": "md,mdx"
+  }
+}
+```
+해당 코드 스니팻 문법은 [VS Code 공식문서 : Snippets in Visual Studio Code](https://code.visualstudio.com/docs/editor/userdefinedsnippets) 이 문서에 자세히 나와 있어요.
+
+### 2. 키 바인딩 설정하기
+추가로 마크다운과 같이 사용해보니 편했던 키 바인딩도 알려드릴게요. **키 바인딩은 각 프로젝트(폴더) 별로 오버라이딩 해서 사용하는 것은 불가능**하기 때문에, 전역적으로 설정해서 사용해야 해요. 하지만, 조건절을 이용해 특정 파일인 경우만 해당 키 바인딩을 활성화 할 수 있어요.
+
+참고로 키 바인딩은 vscode에서 `f1`을 누른 후 `기본 설정 : 바로 가기 키 열기 (JSON)` 을 누르면 설정 가능한 Json 문서가 열려요.
+
+1. **마크다운 캡션 링크 문법 키바인딩** <br />
+ `[caption](links)` 와 같은 캡션-링크 문법을 쉽게 만들어줘요.
+
+``` json caption="마크다운 링크 붙여넣기 문법 구현 키바인딩"
+// keybindings.json
+[
+  //...
+   {
+    "key": "ctrl+v",
+    "description": "Smart link paste that works in Markdown",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        {
+          "command": "editor.action.insertSnippet",
+          "args": {
+            "snippet": "[$TM_SELECTED_TEXT]($CLIPBOARD)"
+          }
+        }
+      ]
+    },
+    "when": "resourceFilename =~ /(.md)/ && editorHasSelection" // 파일이 마크다운 이면서, selection이 참인경우만 활성화
+  },
+]
+```
+2. **마크다운 캡션 볼드체 적용 키바인딩** <br />
+``` json caption=""
+// keybindings.json
+[
+  //...
+   {
+    "key": "ctrl+b",
+    "description": "bold text maker in markdown",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        {
+          "command": "editor.action.insertSnippet",
+          "args": {
+            "snippet": "**$TM_SELECTED_TEXT**"
+          }
+        }
+      ]
+    },
+    "when": "resourceFilename =~ /(.md)/ && editorHasSelection"
+  }
+]
+```
+VS코드 키 바인딩 문법은 [VS Code 공식 문서 : Key Bindings for Visual Studio Code](https://code.visualstudio.com/docs/getstarted/keybindings)에 들어가보면 더 자세히 나와있답니다.
+
+---
+
+글이 좀 길어졌네요. 12분 짜리의 글이라니,, 여기까지 읽어주셔서 감사합니다. 😄
+
+## 참고 문서
+
+- [Next js MDX Docs](https://nextjs.org/docs/pages/building-your-application/configuring/mdx)
+- [Contentlayer Docs](https://contentlayer.dev/)
+- [MDX Docs](https://mdxjs.com/)
+- [Markdwon Guide Docs](https://www.markdownguide.org/)
