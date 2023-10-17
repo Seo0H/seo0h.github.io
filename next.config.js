@@ -4,11 +4,6 @@ const { withContentlayer } = require('next-contentlayer');
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  images: {
-    unoptimized: true,
-    loader: 'akamai',
-    path: '',
-  },
   compiler: {
     styledComponents: {
       displayName: true,

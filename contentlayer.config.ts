@@ -27,10 +27,6 @@ export const Post = defineDocumentType(() => ({
       type: 'string',
       resolve: (post) => Math.ceil(readingTime(post.body.raw).minutes),
     },
-    wordCount: {
-      type: 'number',
-      resolve: (post) => post.body.raw.split(/\s+/gu).length,
-    },
     formattedDate: { type: 'string', resolve: (post) => dayjs(post.date).format('YY.MM.DD') },
   },
 }));
