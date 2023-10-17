@@ -1,6 +1,6 @@
 {
   "Post Matter": {
-    "prefix": ["matter", "---"],
+    "prefix": ["---"],
     "description": "Output a file header with the file name and date",
     "body": [
       "---",
@@ -25,4 +25,39 @@
     "description": "Output current Date YYYY-MM-DD",
     "body": "$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE"
   },
+  "Foldable Toggle" :{
+    "prefix":["toggle", ">>"],
+    "discription":"Output a Foldagble Toggle can click.",
+    "body": [
+      "<details>",
+      "   <summary>$0</summary>",
+      "       <div markdown=\"1\">",
+      "       </div>",
+      "</details>"
+    ],
+  },
+  "Plain Code block" : {
+    "prefix" : ["```"],
+    "discription":"Output a Coad block syntax with captions",
+    "body": [
+      "```",
+      "$0",
+      "```"
+    ],
+  },
+  "Code block Caption" : {
+    "prefix" : ["``` caption"],
+    "discription":"Output a Coad block syntax with captions",
+    "body": [
+      "``` caption=\"$0\"",
+      "```"
+    ],
+  },
+  "Add Caption" : {
+    "prefix" : ["caption"],
+    "discription":"Output a captions syntax",
+    "body": [
+      "caption=\"$0\"",
+    ],
+  }
 }
