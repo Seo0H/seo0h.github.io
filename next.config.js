@@ -8,6 +8,9 @@ const nextConfig = {
     styledComponents: {
       displayName: true,
     },
+    images: {
+      unoptimized: true
+  }
   },
 };
 
