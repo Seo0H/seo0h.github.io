@@ -11,10 +11,10 @@ import type { ReducedPost } from '@/lib/types';
 
 const BlogBox = ({ post }: { post: ReducedPost }) => {
   return (
-    <motion.div variants={fadeInUp} whileHover={hover} whileTap={tab}>
+    <motion.div variants={fadeInUp} whileTap={tab}>
       <Link href={`/blog/[...slugs]`} as={`/blog${post.url}`}>
         <Style.ListBoxWrapper gap='24px' alignItems='center'>
-          <Style.ImgContainer position='relative' width='240px' height='240px' minWidth='80px'>
+          <Style.ImgContainer position='relative' width='180px' height='180px' minWidth='80px'>
             <Image
               style={{ objectFit: 'cover', borderRadius: '10px' }}
               src={post.image}

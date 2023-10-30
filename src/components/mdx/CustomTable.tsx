@@ -36,7 +36,8 @@ const Table = styled.table`
 
   td,
   th {
-    padding: 0.5rem 0;
+    vertical-align: middle;
+    padding: 0.5rem;
   }
 
   tr {

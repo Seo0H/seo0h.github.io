@@ -5,7 +5,7 @@ import { display } from '@/constants/styles';
 
 export const ListBoxWrapper = styled(Layout.HStack)`
   cursor: pointer;
-  border-radius: 18px;
+  border-radius: 10px;
   border: 10px solid transparent;
 
   &:hover {
