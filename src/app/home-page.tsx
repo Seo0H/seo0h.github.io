@@ -1,14 +1,14 @@
+"use client"
+
 import { useState } from 'react';
 
 import { motion } from 'framer-motion';
-import { GetStaticProps } from 'next';
 
 import BlogBox from '@/components/BlogBox';
 import FilterTagBtn from '@/components/FilterTagBtn';
 import { PageSEO } from '@/components/SEO';
 import * as Layout from '@/components/layout';
 import * as Style from '@/components/style';
-import { cleanAllPost, AllTags } from '@/constants/blogDataset';
 import { fadeIn, staggerHalf } from '@/lib/animations';
 
 import type { ReducedPost } from '@/lib/types';
@@ -83,7 +83,3 @@ export default function Home({ posts, tags }: { posts: ReducedPost[]; tags: stri
     </Layout.Box>
   );
 }
-
-export const getStaticProps: GetStaticProps = () => {
-  return { props: { posts: cleanAllPost, tags: AllTags } };
-};
