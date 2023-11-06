@@ -16,4 +16,6 @@ export const siteConfig = {
   },
 } as const;
 
+export const DEFAULT_OG_IMAGE_URL = `${siteConfig.url}/og/image.jpg`;
+
 export type ContactsKey = keyof typeof siteConfig.author.contacts;

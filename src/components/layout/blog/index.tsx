@@ -1,7 +1,8 @@
+'use client';
+
 import Image from 'next/image';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 
-import { BlogSeo } from '@/components/SEO';
 import { CrosshatchTag } from '@/components/common/Tag';
 import * as Layout from '@/components/layout';
 import { default as Style } from '@/components/layout/blog/style';
@@ -9,7 +10,7 @@ import CustomImg from '@/components/mdx/CustomImg';
 import CustomLink from '@/components/mdx/CustomLink';
 import CustomTable from '@/components/mdx/CustomTable';
 import { BlogProps } from '@/lib/types';
-import useTag from '@/lib/useTag';
+import getTag from '@/lib/useTag';
 import useWindowSize from '@/lib/useWindowSize';
 import cvar from '@/utils/cvarAutoComp';
 import isMobile from '@/utils/isMobile';
@@ -25,18 +26,10 @@ const customComponents: MDXComponents = {
 const BlogLayout = ({ post }: BlogProps) => {
   const MDXContent = useMDXComponent(post.body.code);
   const { width } = useWindowSize();
-  const { tag } = useTag(post);
+  const { tag } = getTag(post);
 
   return (
     <Style gap='10px' width='100%' alignItems='center' maxWidth='700px'>
-      <BlogSeo
-        {...post}
-        tag={tag}
-        url={post.url}
-        summary={post.description}
-        images={[post.image]}
-      />
-
       <Layout.Flex position='relative' width='100%' height='340px'>
         <Image
           src={post.image}
