@@ -9,20 +9,18 @@ import getTag from '@/lib/useTag';
 
 import type { BlogProps } from '@/lib/types';
 
-export const generateStaticParams = async () => {
+type Props = { params: { slugs: string[] } };
+
+export const generateStaticParams = () => {
   return cleanAllPost.map((post) => `/blog${post.url}`);
 };
 
-const Blog = ({ params }: { params: { slugs: string[] } }) => {
-  const { post } = getPost(params);
+const Blog = (props: Props) => {
+  const { post } = getPost(props);
   return <BlogLayout post={post} />;
 };
 
-type Props = {
-  params: { slugs: string[] };
-};
-
-export const getPost = (params: { slugs: string[] }): BlogProps => {
+export const getPost = ({ params }: Props): BlogProps => {
   const { slugs } = params;
   const slug = `/${[...slugs].join('/')}`;
   const post = cleanAllPost.find((post) => post.url === slug) as Post;
@@ -30,8 +28,8 @@ export const getPost = (params: { slugs: string[] }): BlogProps => {
   return { post };
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { post } = getPost(params);
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const { post } = getPost(props);
   const { tag } = getTag(post);
   const { title, description, image, url } = post;
   const absoluteUrl = `${siteConfig.url}${url}`;
