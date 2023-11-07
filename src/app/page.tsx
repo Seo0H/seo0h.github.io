@@ -4,7 +4,7 @@ import Home from '@/app/home-page';
 import { DEFAULT_OG_IMAGE_URL, siteConfig } from '@/config';
 import { AllTags, cleanAllPost } from '@/constants/blogDataset';
 
-export const getStaticProps = () => {
+const getPageProps = () => {
   return { posts: cleanAllPost, tags: AllTags };
 };
 
@@ -21,6 +21,6 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const { posts, tags } = getStaticProps();
+  const { posts, tags } = getPageProps();
   return <Home posts={posts} tags={tags} />;
 }

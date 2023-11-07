@@ -1,4 +1,4 @@
-import { Metadata, ResolvingMetadata } from 'next';
+import { Metadata } from 'next';
 
 import { Post } from 'contentlayer/generated';
 
@@ -7,20 +7,14 @@ import { siteConfig } from '@/config';
 import { cleanAllPost } from '@/constants/blogDataset';
 import getTag from '@/lib/useTag';
 
-import type { BlogProps } from '@/lib/types';
-
 type Props = { params: { slugs: string[] } };
 
-export const generateStaticParams = () => {
-  return cleanAllPost.map((post) => `/blog${post.url}`);
-};
-
-const Blog = (props: Props) => {
+function Page(props: Props) {
   const { post } = getPost(props);
   return <BlogLayout post={post} />;
-};
+}
 
-export const getPost = ({ params }: Props): BlogProps => {
+const getPost = ({ params }: Props) => {
   const { slugs } = params;
   const slug = `/${[...slugs].join('/')}`;
   const post = cleanAllPost.find((post) => post.url === slug) as Post;
@@ -28,7 +22,11 @@ export const getPost = ({ params }: Props): BlogProps => {
   return { post };
 };
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
+export const generateStaticParams = () => {
+  return cleanAllPost.map((post) => ({ slug: [`/blog${post.url}`] }));
+};
+
+export const generateMetadata = (props: Props): Metadata => {
   const { post } = getPost(props);
   const { tag } = getTag(post);
   const { title, description, image, url } = post;
@@ -45,6 +43,6 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       description,
     },
   };
-}
+};
 
-export default Blog;
+export default Page;
