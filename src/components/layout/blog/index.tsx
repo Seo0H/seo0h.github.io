@@ -5,6 +5,7 @@ import { BlogSeo } from '@/components/SEO';
 import { CrosshatchTag } from '@/components/common/Tag';
 import * as Layout from '@/components/layout';
 import { default as Style } from '@/components/layout/blog/style';
+import Bookmark from '@/components/mdx/Bookmark';
 import CustomImg from '@/components/mdx/CustomImg';
 import CustomLink from '@/components/mdx/CustomLink';
 import CustomTable from '@/components/mdx/CustomTable';
@@ -20,6 +21,7 @@ const customComponents: MDXComponents = {
   img: CustomImg,
   a: CustomLink,
   table: CustomTable,
+  Bookmark: Bookmark,
 };
 
 const BlogLayout = ({ post }: BlogProps) => {
