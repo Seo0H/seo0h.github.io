@@ -8,8 +8,8 @@ import { default as Style } from '@/components/layout/blog/style';
 import CustomImg from '@/components/mdx/CustomImg';
 import CustomLink from '@/components/mdx/CustomLink';
 import CustomTable from '@/components/mdx/CustomTable';
+import getTag from '@/lib/getTag';
 import { BlogProps } from '@/lib/types';
-import useTag from '@/lib/useTag';
 import useWindowSize from '@/lib/useWindowSize';
 import cvar from '@/utils/cvarAutoComp';
 import isMobile from '@/utils/isMobile';
@@ -25,7 +25,7 @@ const customComponents: MDXComponents = {
 const BlogLayout = ({ post }: BlogProps) => {
   const MDXContent = useMDXComponent(post.body.code);
   const { width } = useWindowSize();
-  const { tag } = useTag(post);
+  const { tag } = getTag(post);
 
   return (
     <Style gap='10px' width='100%' alignItems='center' maxWidth='700px'>
