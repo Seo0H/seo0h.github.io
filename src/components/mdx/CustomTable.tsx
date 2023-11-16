@@ -27,7 +27,6 @@ const Table = styled.table`
   width: 100%;
   text-align: center;
   background: white;
-  table-layout: fixed;
 
   thead {
     font-weight: 600;
