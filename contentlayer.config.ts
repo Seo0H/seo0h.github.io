@@ -14,6 +14,7 @@ const fields: FieldDefs = {
   date: { type: 'date', required: true },
   draft: { type: 'boolean' },
   image: { type: 'string', default: '/img/default-thumbnail.png' },
+  uuid: { type: 'string', required: true },
 };
 
 export const Post = defineDocumentType(() => ({
