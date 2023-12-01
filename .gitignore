@@ -41,3 +41,8 @@ next-env.d.ts
 /build
 /public/robots.txt
 /public/sitemap*.xml
+
+# Supabase
+supabase
+
+*.code-workspace
