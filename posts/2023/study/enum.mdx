@@ -8,11 +8,11 @@ date: 2023-12-15 15:16:36
 
 ## 글을 들어가며
 
-프로젝트를 만들어 가다 보면, 고정된 값들을 보관할 변수가 필요합니다. 이런 값을 '상수' 라고 하는데요, 변하지 않는 값을 상수로 선언해 관리합니다.
+프로젝트를 만들어 가다 보면, 고정된 값들을 보관하고 관리하는 것이 필요합니다. 이런 고정 값을 '상수' 라고 하는데요, 변하지 않는 값을 상수로 선언해 관리합니다.
 
-JavaScript 에서 상수 객체를 만들기 위해선 Object 객체를 이용해 만드는 것 밖에 없었지만, TypeScript 에서는 다른 언어들에서 지원하는 기능인 **열거형(Enum)** 을 지원하고, 또한 **const assertions** 을 통해서 읽기 전용 객체를 만드는 것도 가능합니다.
+JavaScript 에서 상수 관리를 위한 객체를 만들기 위해선 Object를 이용합니다. 여기서 더 나아가 TypeScript 에서는 다른 언어들에서 지원하는 기능인 **열거형(Enum)** 을 지원하고, 또한 **const assertions** 을 통해서 읽기 전용 객체를 만드는 것도 가능합니다.
 
-이런 선택지들 중 **TypeScript에서 상수 관리 객체를 선언하는 방법**을 살펴보고, 각 **장단점을 정리** 해보고자 합니다.
+이런 선택지들 중 **TypeScript에서 상수 관리를 위한 객체를 선언하는 방법**을 살펴보고, 각 **장단점을 정리** 해보고자 합니다.
 
 ## 선택 가능한 방법
 
@@ -82,7 +82,7 @@ var Enum = { '0': 'enum', enum: 0, computed: 9 }
 > - **특징 요약**
 >   - **key - value 양방향 접근** 가능
 >   - **계산이 필요한 값은 할당 불가**
->   -  **컴파일 시 구현되지 않음**. 값만 참조됨
+>   - **컴파일 시 구현되지 않음**. 값만 참조됨
 
 `const enum` 은 기본적인 특징은 enum과 비슷합니다. 사용할 때의 차이점이 있다면 **계산이 필요한 값은 속성에 할당하지 못한다는 것**입니다. 아래 예시 처럼, 계산된 값을 할당하고자 하면. 'const 열거형 멤버 이니셜라이저(= 초기값)는 상수 표현식이어야 합니다.' 라는 에러가 뜨게 됩니다.
 
@@ -125,16 +125,16 @@ const constEnumArr = [0, "ENUM STRING"];
 >   - 기존 JavaScript Object를 **const assertions**을 통해 **readonly로 이용**하는 방식
 >   -  **컴파일 시 원본과 거의 비슷함**
 
-기존 선언된 객체를 **`const` assertions** 을 이용해 변환하는 방법입니다.
+기존 선언된 객체를 **`const assertions`** 을 이용해 변환하는 방법입니다.
 
 
 <details>
-   <summary>**❔`const` assertions (const 주장) 이 뭔가요?** </summary>
+   <summary>**❔`const assertions` (const 단언) 이 뭔가요?** </summary>
        <div markdown="1">
        <br />
         - [const assertions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions)
 
-       TypeScript 3.4에 추가된 리터럴 표현식(=기호 표현식) 구성으로, 유형 이름 대신 const를 사용하는 type 입니다.
+       TypeScript 3.4에 추가된 리터럴 표현식 구성으로, 유형 이름 대신 const를 사용하는 type 입니다.
 
        ```ts
         let greeting = 'hello' as const;                // Type 'hello'
