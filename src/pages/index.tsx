@@ -9,14 +9,9 @@ import FilterTagBtn from '@/components/FilterTagBtn';
 import { PageSEO } from '@/components/SEO';
 import * as Layout from '@/components/layout';
 import * as Style from '@/components/style';
-import {
-  cleanAllPost,
-  AllTags,
-  calcUpdateNeeded,
-  updatePostsOnServer,
-} from '@/constants/blogDataset';
+import { cleanAllPost, AllTags } from '@/constants/blogDataset';
 import { fadeIn, staggerHalf } from '@/lib/animations';
-import { Tables } from '@/types/database.types';
+import { calcUpdateNeeded, updatePostsOnServer } from '@/utils/db-utils';
 
 import type { ReducedPost } from '@/lib/types';
 
@@ -92,24 +87,20 @@ export default function Home({ posts, tags }: { posts: ReducedPost[]; tags: stri
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data: serverPosts, error } = await supabase.from('post').select('*');
+  const { data: serverPostsIdentifier, error } = await supabase.from('post').select('*');
 
-  if (!serverPosts) {
+  if (!serverPostsIdentifier) {
     return { props: { posts: cleanAllPost, tags: AllTags, serverUpdate: false } };
   }
 
-  const isUpdateNeeded = calcUpdateNeeded(serverPosts, cleanAllPost);
+  const isUpdateNeeded = calcUpdateNeeded(serverPostsIdentifier, cleanAllPost);
 
   if (!isUpdateNeeded) console.log("✅ Update isn't needed!");
 
   if (isUpdateNeeded) {
     console.log('⚠️ Update is needed');
 
-    const clientPosts = cleanAllPost
-      .map((post) => ({ id: post.uuid, title: post.title }))
-      .sort((a, b) => (a.id > b.id ? 1 : -1));
-
-    await updatePostsOnServer(clientPosts, serverPosts);
+    await updatePostsOnServer(cleanAllPost, serverPostsIdentifier);
   }
 
   return { props: { posts: cleanAllPost, tags: AllTags, serverUpdate: true } };
