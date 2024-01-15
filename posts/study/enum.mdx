@@ -1,0 +1,225 @@
+---
+title: 'TS 상수 객체 선언 방법'
+description: 'enum, const enum, as const 의 차이점을 공부해보자.'
+draft: false
+image: '/img/2023/study/thumbnail.png'
+date: 2023-12-15 15:16:36
+---
+
+## 글을 들어가며
+
+프로젝트를 만들어 가다 보면, 고정된 값들을 보관하고 관리하는 것이 필요합니다. 이런 고정 값을 '상수' 라고 하는데요, 변하지 않는 값을 상수로 선언해 관리합니다.
+
+JavaScript 에서 상수 관리를 위한 객체를 만들기 위해선 Object를 이용합니다. 여기서 더 나아가 TypeScript 에서는 다른 언어들에서 지원하는 기능인 **열거형(Enum)** 을 지원하고, 또한 **const assertions** 을 통해서 읽기 전용 객체를 만드는 것도 가능합니다.
+
+이런 선택지들 중 **TypeScript에서 상수 관리를 위한 객체를 선언하는 방법**을 살펴보고, 각 **장단점을 정리** 해보고자 합니다.
+
+## 선택 가능한 방법
+
+상수 객체를 선언 시 선택 가능한 방법은 아래 3가지가 있습니다.
+
+> 1. **enum**
+> 2. **const enum**
+> 3. **as const**
+
+유형 별 컴파일 전 후를 비교해보며 특징에 대해 알아보겠습니다.
+
+### enum
+
+> - **특징 요약**
+>   - **key - value 양방향 접근** 가능
+>   - 컴파일 시 **즉시실행함수로 구현**됨
+
+```ts caption="컴파일 전"
+// 컴파일 전
+const computeStr = 'enumStudy';
+
+enum Enum {
+	enum,                         // 0
+	computed = computeStr.length, // 9
+}
+
+const EnumArr: Enum[] = [Enum.enum, Enum.computed];
+```
+enum은 객체처럼 사용이 가능합니다. 만약 초기 값을 지정하지 않으면, 자동으로 0부터 인텍싱 된 값이 객체 속성의 값으로 부여됩니다.
+
+따라서 위 코드에서 선언된 `Enum` 은 **Key - value의 양방향 접근**을 통해 아래처럼 사용이 가능합니다.
+
+```ts caption="enum 객체의 인덱스 및 키 값으로 둘 다 접근 가능한 모습"
+console.log(Enum.enum);     // 0
+console.log(Enum.computed); // 9
+console.log(Enum[0]);       // enum
+console.log(Enum[9]);       // computed
+console.log(Enum[10]);      // undefined
+```
+그럼 이 TS 파일은 어떤식으로 컴파일되기에, 위와 같은 접근이 허용되는 걸까요?
+
+```js caption="컴파일 후"
+// 컴파일 후
+"useStrict"
+const computeStr = 'enumStudy';
+
+var Enum;
+(function (Enum) {
+    Enum[Enum["enum"] = 0] = "enum";
+    Enum[Enum["computed"] = computeStr.length] = "computed";
+})(Enum || (Enum = {}));
+
+const EnumArr = [Enum.enum, Enum.computed];
+
+console.log(Enum) // { '0': 'enum', enum: 0, computed: 9 }
+```
+
+위의 예시 처럼, 즉시실행함수로 구현됩니다. 최종적으로 제가 만든 Enum 객체는 아래와 같은 모습이 됩니다.
+
+```js
+var Enum = { '0': 'enum', enum: 0, computed: 9 }
+```
+---
+
+### const enum
+
+> - **특징 요약**
+>   - **key - value 양방향 접근** 가능
+>   - **계산이 필요한 값은 할당 불가**
+>   - **컴파일 시 구현되지 않음**. 값만 참조됨
+
+`const enum` 은 기본적인 특징은 enum과 비슷합니다. 사용할 때의 차이점이 있다면 **계산이 필요한 값은 속성에 할당하지 못한다는 것**입니다. 아래 예시 처럼, 계산된 값을 할당하고자 하면. 'const 열거형 멤버 이니셜라이저(= 초기값)는 상수 표현식이어야 합니다.' 라는 에러가 뜨게 됩니다.
+
+```ts {5}
+const computeStr = 'enumStudy';
+
+const enum ConstEnum {
+	enum = 'ENUM',
+	computed = computeStr.length, // TS Error : const 열거형 멤버 이니셜라이저는 상수 표현식이어야 합니다..ts(2474)
+}
+```
+따라서, `const enum`은 **정적인 값만 저장할 수 있다는 특징**이 있습니다.
+
+```ts
+const enum ConstEnum {
+	enumKey,
+	enumString = 'ENUM STRING',
+}
+```
+그럼 **위와 같은 ConstEnum 은 어떤 식으로 컴파일될까요?**
+
+정답은, **구현되지 않는다** 입니다. 컴파일 시 결과만이 전달되고 const enum 구현은 최종 컴파일 파일에는 존재하지 않습니다.
+
+
+따라서 해당 Enum의 값을 참조하는 다른 객체가 있다면, **참조된 값만 전달**됩니다. 이런 특징으로 인해 아래에서 설명 할 여러 문제점이 생기게 되었습니다.
+
+```ts
+// ts - 컴파일 전
+const constEnumArr: ConstEnum[] = [ConstEnum.enumKey, ConstEnum.enumString]
+
+// js - 컴파일 후
+const constEnumArr = [0, "ENUM STRING"];
+```
+
+---
+
+### as const
+
+> - **특징 요약**
+>   - 기존 JavaScript Object를 **const assertions**을 통해 **readonly로 이용**하는 방식
+>   -  **컴파일 시 원본과 거의 비슷함**
+
+기존 선언된 객체를 **`const assertions`** 을 이용해 변환하는 방법입니다.
+
+
+<details>
+   <summary>**❔`const assertions` (const 단언) 이 뭔가요?** </summary>
+       <div markdown="1">
+       <br />
+        - [const assertions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions)
+
+       TypeScript 3.4에 추가된 리터럴 표현식 구성으로, 유형 이름 대신 const를 사용하는 type 입니다.
+
+       ```ts
+        let greeting = 'hello' as const;                // Type 'hello'
+        let greetsArray = ['hello','world'] as const    // Type readonly ['hello','world']
+        let greetsContents = { text: "hello"} as const  // Type { readonly text: "hello"}
+       ```
+
+       </div>
+</details>
+
+```ts {7} caption="컴파일 전"
+// 컴파일 전
+const computeStr = 'enumStudy';
+
+const AsConst = {
+	enum: 'ENUM',
+	computed: computeStr.length,
+} as const;
+```
+
+```ts caption="컴파일 후"
+const computeStr = 'enumStudy';
+
+const AsConst = {
+    enum: 'ENUM',
+    computed: computeStr.length,
+};
+
+const AsConstArr = [AsConst.enum, AsConst.computed];
+```
+컴파일 전과 후, **크게 변화가 별로 없는 것이 특징**인 것 같습니다.
+
+---
+
+## 방식의 장단점 비교
+### enum
+
+- **장점**
+    - TypeScript에서 에서 제안하는 **상수 선언의 가장 정석적인 방법**입니다.
+    - **value가 number일 경우, key - number 값을 이용한 양방향 접근**이 가능하기에 여러 사용 방법을 응용할 수 있습니다.
+    - **그 자체로 Type 으로 사용이 가능**합니다. (별다른 Union type 지정이 필요하지 않습니다.)
+
+- **단점**
+    - 즉시실행함수로 컴파일되기에, 특정 번들러에서는 **Tree-Shaking이 되지 않습니다.** (사용되지 않을 시 자동으로 제거되는 기능이 동작하지 않습니다.)
+    - value에 임의의 number 값을 넣게 되면, **의도치 않은 인덱싱이 각 value에 할당될 수 있어 주의가 필요**합니다.
+    - vsCode 에서 사용할 시, **내부 값을 알기 위해서 enum이 위치한 파일로 이동**해야 합니다.
+
+### const enum
+
+- **장점**
+    - 위 enum의 장점과 거의 유사합니다. (양방향 매핑, 그 자체로 type 사용 가능..)
+    - 컴파일 시 참조된 값만 넘겨지고 구현되지 않아 **용량을 차지하지 않습니다.**
+
+- **단점**
+    - **컴파일 시 구현되지 않기에** 외부 배포 용으로 사용할 시, 해당 라이브러리나 패키지를 사용하는 측에서 **const enum 객체를 찾지 못해 오류가 날 수 있습니다.**
+    - 위 오류를 해결하기 위해 **트랜스파일러 설정 또는 tsConfig 설정이 추가로 필요**합니다.
+    - vsCode 에서 사용할 시, **내부 값을 알기 위해서 enum이 위치한 파일로 이동**해야 합니다.
+
+### as const
+
+- **장점**
+    - 컴파일 이후, 다른 방법들과 비교했을 시 **가장 원본과 비슷한 형태로 컴파일**됩니다. 따라서 컴파일 된 결과물을 다른 곳에 이용하기에 용이합니다.
+    - **tree-shaking이 가능**합니다.
+    - vsCode 에서 사용할 시, **내부 key-value 값들을 마우스 호버 만으로 쉽게 파악**할 수 있습니다.
+
+- **단점**
+    - 해당 객체를 위한 Union type을 따로 만들어 주어야 합니다.
+
+#### 추가 ) vsCode 상에서 보여지는 모습
+
+| enum                                            | const enum                                      | as const                                        |
+| ----------------------------------------------- | ----------------------------------------------- | ----------------------------------------------- |
+| ![enum](/posts/enum/231215-174645.png) | ![const enum ](/posts/enum/231215-174800.png) | ![as const](/posts/enum/231215-174819.png) |
+
+
+## 결론
+
+가능하면, 부작용을 일으킬 수 있는 `const enum` 보다는 **`enum` 또는 `as const`를 사용하는 것**이 상대적으로 좋다는 것을 알게 되었어요. 저는 개인적으로 vsCode 상에서 해당 변수의 내부가 보이는 것이 개발 생산성을 증가시켜준다고 생각해 type 단언이 귀찮지 않은 상황이라면, **`as const`를 사용**할 것 같아요.
+
+이 글을 작성하기 전까진 3가지 종류의 상수 객체 선언에 대해 항상 알쏭달쏭하며 사용하곤 했었는데, 저와 같은 고민을 하시는 분들에게 조금이나마 도움이 되었으면 해요.
+
+이 글을 쓸 동기를 제공해 준 저희 스터디원들 에게 다시한번 고맙다고 전하고 싶네요. 👍
+
+## 참고 문헌
+- [TypeScript Enum](https://www.typescriptlang.org/docs/handbook/enums.html#const-enum-pitfalls)
+- [TypeScript enum을 사용하지 않는 게 좋은 이유를 Tree-shaking 관점에서 소개합니다.](https://engineering.linecorp.com/ko/blog/typescript-enum-tree-shaking)
+- [안녕하세요, TypeScript enum](https://www.kabuku.co.jp/developers/good-bye-typescript-enum)
+- [우리 팀의 우아한 타입스크립트 컨벤션 정하기 여정](https://techblog.woowahan.com/9804/)

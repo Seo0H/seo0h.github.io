@@ -3,6 +3,7 @@ import { compareDesc } from 'date-fns';
 import { type Post, allPosts } from 'contentlayer/generated';
 
 import supabase from '@/api/client';
+import getTag from '@/lib/getTag';
 import { Tables } from '@/types/database.types';
 
 export const reducePost = ({ body: _, _raw, _id, ...post }: Post) => post;
@@ -15,8 +16,9 @@ export const cleanAllPost = allPosts
 export const allReducedPosts = cleanAllPost.map(reducePost);
 
 function makeTag(post: Post) {
+  const { tag } = getTag(post);
   return {
-    tag: post._raw.sourceFileDir.split('/')[1],
+    tag,
     ...post,
   };
 }
