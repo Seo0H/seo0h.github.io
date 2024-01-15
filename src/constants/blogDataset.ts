@@ -10,16 +10,24 @@ export const reducePost = ({ body: _, _raw, _id, ...post }: Post) => post;
 
 export const cleanAllPost = allPosts
   .filter((post) => !post.draft)
-  .map(makeTag)
+  .map(removeUUIDNewLine)
+  .map(enrichPostWithTag)
   .sort((a, b) => compareDesc(new Date(a.date).getTime(), new Date(b.date).getTime()));
 
 export const allReducedPosts = cleanAllPost.map(reducePost);
 
-function makeTag(post: Post) {
+function enrichPostWithTag(post: Post) {
   const { tag } = getTag(post);
   return {
     tag,
     ...post,
+  };
+}
+
+function removeUUIDNewLine(post: Post): Post {
+  return {
+    ...post,
+    uuid: post.uuid.replace(/\n|\r|\s*/g, ''),
   };
 }
 
@@ -46,14 +54,17 @@ export function calcUpdateNeeded(
   clientPostsBeforeSorted: typeof cleanAllPost,
 ) {
   const serverPosts = [...serverPostsBeforeSorted].sort((a, b) => (a.id > b.id ? 1 : -1));
+
+  if (serverPosts.length === 0) return true;
+
   const clientPosts = clientPostsBeforeSorted
     .map((post) => ({ id: post.uuid, title: post.title }))
     .sort((a, b) => (a.id > b.id ? 1 : -1));
 
   const isClientAndServerPostCountSame = serverPosts?.length === clientPosts.length;
-  const isTitleAllMatch = clientPosts.every(
-    (clientPost, idx) => clientPost.title === serverPosts[idx].title,
-  );
+  const isTitleAllMatch = clientPosts.every((clientPost, idx) => {
+    return serverPosts[idx] !== undefined && clientPost.title === serverPosts[idx].title;
+  });
   const isUpdateNeeded = !isClientAndServerPostCountSame || isTitleAllMatch === false;
 
   return isUpdateNeeded;
@@ -83,11 +94,15 @@ export async function updatePostsOnServer(
     }
   });
 
-  if (insertPosts.length) {
-    await supabase.from('post').insert(insertPosts);
-  }
+  try {
+    if (insertPosts.length) {
+      await supabase.from('post').insert(insertPosts);
+    }
 
-  if (updatePosts.length) {
-    await supabase.from('post').upsert(updatePosts);
+    if (updatePosts.length) {
+      await supabase.from('post').upsert(updatePosts);
+    }
+  } catch (e) {
+    console.error(e);
   }
 }
