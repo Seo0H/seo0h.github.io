@@ -1,8 +1,7 @@
 import { Post } from 'contentlayer/generated';
 
 const getTag = (post: Post) => {
-  // ex. /2023/some-tag/title -> ['', 2023, some-tag, title]
-  return { tag: post._raw.sourceFileDir.split('/')[1] };
+  return { tag: post._raw.sourceFileDir.replace('/', '') }; // ex. /some-tag
 };
 
 export default getTag;
