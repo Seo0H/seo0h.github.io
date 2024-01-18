@@ -1,0 +1,30 @@
+name: Feature Branch Build Test
+
+on:
+  push:
+    branches: ['feature/**']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '18.x'
+
+      - name: Installing my packages
+        run: npm ci
+
+      - name: Build my App
+        run:
+          npm run build && npm run export && touch ./out/.nojekyll
+        env:
+          NEXT_PUBLIC_GA_ID: ${{ secrets.NEXT_PUBLIC_GA_ID }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+
