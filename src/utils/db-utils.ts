@@ -2,12 +2,29 @@ import type { Post } from 'contentlayer/generated';
 
 import supabase from '@/api/client';
 import { cleanAllPost } from '@/constants/blogDataset';
-import { Tables } from '@/types/database.types';
 
-type PostsIdentifier = {
-  id: string;
-  title: string;
-};
+import type { Tables } from '@/types/database.types';
+
+/**
+ * @description Post의 서버 데이터 업데이트 필요 여부 핸들링 함수
+ */
+export async function handlePostDataServerUpdate({
+  serverPosts,
+  clientPosts,
+}: {
+  serverPosts: Tables<'post'>[];
+  clientPosts: typeof cleanAllPost;
+}) {
+  if (isUpdateNeeded(serverPosts, clientPosts) === false) console.log("✅ Update isn't needed!");
+  else {
+    try {
+      console.log('⚠️ Update is needed');
+      await updatePostsOnServer(clientPosts, serverPosts);
+    } catch (error) {
+      throw new Error('포스트 데이터를 서버에 업데이트 하던 중 에러가 발생했습니다.');
+    }
+  }
+}
 
 /**
  * @description 서버 데이터 업데이트 판별 함수
@@ -15,8 +32,8 @@ type PostsIdentifier = {
  * @param clientPostsBeforeSorted
  * @returns
  */
-export function calcUpdateNeeded(
-  serverPostsBeforeSorted: PostsIdentifier[],
+function isUpdateNeeded(
+  serverPostsBeforeSorted: Tables<'post'>[],
   clientPostsBeforeSorted: typeof cleanAllPost,
 ) {
   const serverPosts = [...serverPostsBeforeSorted].sort((a, b) => (a.id > b.id ? 1 : -1));
@@ -31,20 +48,16 @@ export function calcUpdateNeeded(
   const isTitleAllMatch = clientPosts.every((clientPost, idx) => {
     return serverPosts[idx] !== undefined && clientPost.title === serverPosts[idx].title;
   });
-  const isUpdateNeeded = !isClientAndServerPostCountSame || isTitleAllMatch === false;
 
-  return isUpdateNeeded;
+  return !isClientAndServerPostCountSame || isTitleAllMatch === false;
 }
 
 /**
- * @description 서버 포스트 식별자 데이터를 클라이언트 데이터 식별자 기준으로 업데이트 하는 함수
+ * @description Post 서버 데이터를 클라이언트 Post 데이터 기준으로 업데이트 하는 함수
  * @param clientPosts
- * @param serverPostIdentifiers
+ * @param serverPosts
  */
-export async function updatePostsOnServer(
-  clientPosts: Post[],
-  serverPostIdentifiers: PostsIdentifier[],
-) {
+async function updatePostsOnServer(clientPosts: Post[], serverPosts: Tables<'post'>[]) {
   const insertPosts: Tables<'post'>[] = [];
   const updatePosts: Tables<'post'>[] = [];
 
@@ -54,13 +67,10 @@ export async function updatePostsOnServer(
 
   clientPostsIdentifiers.forEach((clientIdentifier) => {
     // 동기화 작업. 클라이언트의 포스트 기준 업데이트
-    const isUUIDExist = serverPostIdentifiers.some(
-      (serverPost) => serverPost.id === clientIdentifier.id,
-    );
+    const isUUIDExist = serverPosts.some((serverPost) => serverPost.id === clientIdentifier.id);
     const isTitleChanged =
       isUUIDExist &&
-      serverPostIdentifiers.some((serverPost) => serverPost.title === clientIdentifier.title) ===
-        false;
+      serverPosts.some((serverPost) => serverPost.title === clientIdentifier.title) === false;
 
     if (!isUUIDExist) {
       insertPosts.push(clientIdentifier);
@@ -72,15 +82,11 @@ export async function updatePostsOnServer(
     }
   });
 
-  try {
-    if (insertPosts.length) {
-      await supabase.from('post').insert(insertPosts);
-    }
+  if (insertPosts.length) {
+    await supabase.from('post').insert(insertPosts);
+  }
 
-    if (updatePosts.length) {
-      await supabase.from('post').upsert(updatePosts);
-    }
-  } catch (e) {
-    console.error(e);
+  if (updatePosts.length) {
+    await supabase.from('post').upsert(updatePosts);
   }
 }
