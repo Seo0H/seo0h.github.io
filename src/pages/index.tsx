@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { GetStaticProps } from 'next';
 
+import supabase from '@/api/client';
 import BlogBox from '@/components/BlogBox';
 import FilterTagBtn from '@/components/FilterTagBtn';
 import { PageSEO } from '@/components/SEO';
@@ -10,6 +11,7 @@ import * as Layout from '@/components/layout';
 import * as Style from '@/components/style';
 import { cleanAllPost, AllTags } from '@/constants/blogDataset';
 import { fadeIn, staggerHalf } from '@/lib/animations';
+import { handlePostDataServerUpdate } from '@/utils/db-utils';
 
 import type { ReducedPost } from '@/lib/types';
 
@@ -84,6 +86,17 @@ export default function Home({ posts, tags }: { posts: ReducedPost[]; tags: stri
   );
 }
 
-export const getStaticProps: GetStaticProps = () => {
-  return { props: { posts: cleanAllPost, tags: AllTags } };
+export const getStaticProps: GetStaticProps = async () => {
+  const { data: serverPosts } = await supabase.from('post').select('*');
+
+  if (!serverPosts) {
+    return { props: { posts: cleanAllPost, tags: AllTags, serverUpdate: false } };
+  }
+
+  await handlePostDataServerUpdate({
+    serverPosts,
+    clientPosts: cleanAllPost,
+  });
+
+  return { props: { posts: cleanAllPost, tags: AllTags, serverUpdate: true } };
 };

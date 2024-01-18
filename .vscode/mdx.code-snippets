@@ -7,8 +7,9 @@
       "title: '$1'",
       "description: '$2'",
       "draft: false",
-      "image: '$3",
+      "image: $3",
       "date: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
+      "uuid: $UUID",
       "---",
       "",
       "$0"
@@ -59,5 +60,12 @@
     "body": [
       "caption=\"$0\"",
     ],
-  }
+  },
+  "Insert UUID" : {
+    "prefix" : ["uuid"],
+    "discription":"Output a random UUID",
+    "body": [
+      "uuid: $UUID",
+    ],
+  },
 }
