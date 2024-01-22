@@ -16,10 +16,7 @@ const TagStyle = css`
 
   /* style */
   border-radius: 20px;
-  border: 1px solid ${cvar({ key: 'gray', idx: '200' })};
-
   font-size: 18px;
-  color: ${cvar({ key: 'gray', idx: '200' })};
 
   @media (width < ${display.tablet}) {
     padding: 4px 12px;
@@ -32,7 +29,7 @@ export const TagBtn = styled(motion.button)<{ $isSelected: boolean }>`
   ${TagStyle}
 
   --select-color: ${({ $isSelected }) =>
-    $isSelected ? cvar({ key: 'mainColor' }) : cvar({ key: 'gray', idx: '200' })};
+    $isSelected ? cvar({ key: 'mainColor' }) : cvar({ key: 'gray', idx: '300' })};
 
   font-weight: ${({ $isSelected }) => ($isSelected ? 600 : 500)};
   border: 1px solid var(--select-color);
@@ -44,7 +41,7 @@ export const CrosshatchTag = styled.span`
     content: '# ';
   }
 
-  color: ${cvar({ key: 'gray', idx: '200' })};
+  color: ${cvar({ key: 'gray', idx: '400' })};
   font-size: 16px;
   font-weight: 600;
 `;

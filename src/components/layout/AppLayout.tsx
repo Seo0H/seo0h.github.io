@@ -44,7 +44,7 @@ const Footer = styled.footer`
   span,
   a {
     font-size: 12px;
-    color: ${cvar({ key: 'gray', idx: '300' })};
+    color: ${cvar({ key: 'gray', idx: '500' })};
   }
 
   a {

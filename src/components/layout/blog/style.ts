@@ -14,7 +14,7 @@ const code = css`
     font-family: Consolas;
     word-break: break-all;
 
-    color: ${cvar({ key: 'gray', idx: '300' })};
+    color: ${cvar({ key: 'gray', idx: '500' })};
     background-color: ${cvar({ key: 'gray', idx: '100' })};
   }
 
@@ -89,7 +89,7 @@ const callout = css`
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: ${cvar({ key: 'gray', idx: '300' })};
+      background-color: ${cvar({ key: 'gray', idx: '500' })};
       border-radius: 10px;
     }
   }
@@ -99,7 +99,7 @@ const callout = css`
   blockquote {
     border-radius: 5px;
     padding: 20px;
-    background-color: #f0f0f0;
+    background-color: ${cvar({ key: 'gray', idx: '100' })};
     transition: all;
   }
 
@@ -122,7 +122,7 @@ const anchor = css`
 
   .anchor::before {
     content: '#';
-    color: ${cvar({ key: 'gray', idx: '200' })};
+    color: ${cvar({ key: 'gray', idx: '500' })};
 
     @media (width < ${display.tablet}) {
       visibility: hidden;
@@ -156,7 +156,7 @@ const marker = css`
     list-style-position: inside;
     list-style-type: decimal;
 
-    color: ${cvar({ key: 'gray', idx: '400' })};
+    color: ${cvar({ key: 'gray', idx: '500' })};
     font-size: 17px;
     font-weight: 400;
     line-height: 170%;
@@ -167,7 +167,7 @@ const marker = css`
     list-style-position: inside;
     list-style-type: '✦ ';
 
-    color: ${cvar({ key: 'gray', idx: '400' })};
+    color: ${cvar({ key: 'gray', idx: '500' })};
     font-size: 17px;
     font-weight: 400;
     line-height: 170%;
@@ -192,7 +192,7 @@ const marker = css`
 const toggle = css``;
 
 const BlogStyle = styled(Layout.VStack)`
-  color: ${cvar({ key: 'gray', idx: '300' })};
+  color: ${cvar({ key: 'gray', idx: '500' })};
 
   a {
     color: inherit;

@@ -63,7 +63,7 @@ const GlobalStyles = createGlobalStyle`${css`
   }
 
   h1 {
-    color: ${cvar({ key: 'gray', idx: '500' })};
+    color: ${cvar({ key: 'gray', idx: '800' })};
     font-size: 48px;
     font-weight: 700;
     line-height: 1.3;
@@ -75,7 +75,7 @@ const GlobalStyles = createGlobalStyle`${css`
   }
 
   h2 {
-    color: ${cvar({ key: 'gray', idx: '500' })};
+    color: ${cvar({ key: 'gray', idx: '800' })};
     font-size: 36px;
     font-weight: 700;
     line-height: 1.4;
@@ -86,7 +86,7 @@ const GlobalStyles = createGlobalStyle`${css`
   }
 
   h3 {
-    color: ${cvar({ key: 'gray', idx: '500' })};
+    color: ${cvar({ key: 'gray', idx: '800' })};
     font-size: 32px;
     font-weight: 700;
     line-height: 1.4;
@@ -97,7 +97,7 @@ const GlobalStyles = createGlobalStyle`${css`
   }
 
   h4 {
-    color: ${cvar({ key: 'gray', idx: '500' })};
+    color: ${cvar({ key: 'gray', idx: '800' })};
     font-size: 26px;
     font-weight: 600;
     line-height: 1.4;
@@ -108,7 +108,7 @@ const GlobalStyles = createGlobalStyle`${css`
   }
 
   h5 {
-    color: ${cvar({ key: 'gray', idx: '500' })};
+    color: ${cvar({ key: 'gray', idx: '800' })};
     font-size: 20px;
     font-weight: 600;
     line-height: 1.4;
@@ -117,7 +117,7 @@ const GlobalStyles = createGlobalStyle`${css`
   p,
   time,
   span {
-    color: ${cvar({ key: 'gray', idx: '400' })};
+    color: ${cvar({ key: 'gray', idx: '500' })};
     font-size: 17px;
     font-weight: 400;
     line-height: 170%;

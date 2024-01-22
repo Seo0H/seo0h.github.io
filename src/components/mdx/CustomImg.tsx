@@ -24,7 +24,7 @@ const Image = styled.img`
   object-fit: cover;
 
   border-radius: 10px;
-  border: 1px solid ${cvar({ key: 'gray', idx: '100' })};
+  border: 1px solid ${cvar({ key: 'gray', idx: '200' })};
 `;
 
 const Alt = styled.span`

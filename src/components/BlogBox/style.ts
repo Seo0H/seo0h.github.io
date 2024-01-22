@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import * as Layout from '@/components/layout';
 import { display } from '@/constants/styles';
+import cvar from '@/utils/cvarAutoComp';
 
 export const ListBoxWrapper = styled(Layout.HStack)`
   cursor: pointer;
@@ -9,7 +10,14 @@ export const ListBoxWrapper = styled(Layout.HStack)`
   border: 10px solid transparent;
 
   &:hover {
-    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+    img {
+      box-shadow: 2px 6px 6px 0px ${cvar({ key: 'gray', idx: '300' })};
+      outline: 1px solid ${cvar({ key: 'gray', idx: '50' })};
+    }
+
+    h2 {
+      color: ${cvar({ key: 'mainColor' })};
+    }
   }
 
   @media (width < ${display.tablet}) {
@@ -27,7 +35,10 @@ export const ResH2 = styled.h2`
   }
 `;
 
-export const MiniP = styled.p`
+export const InfoP = styled.p`
+  font-weight: 300;
+  font-size: 16px;
+
   @media (width < ${display.tablet}) {
     font-size: 14px;
     margin-top: 10px;
@@ -50,6 +61,6 @@ export const ResVStack = styled(Layout.VStack)`
 `;
 
 export const P = styled.p`
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.4;
 `;

@@ -33,8 +33,8 @@ const BlogBox = ({ post }: { post: ReducedPost }) => {
             <Layout.VStack>
               <Layout.HStack alignItems='flex-end' justifyContent='space-between'>
                 <Layout.HStack gap='10px' alignItems='center'>
-                  <Style.MiniP suppressHydrationWarning>{post.formattedDate}</Style.MiniP>
-                  <Style.MiniP>{`${post.readingTime}분`}</Style.MiniP>
+                  <Style.InfoP suppressHydrationWarning>{post.formattedDate}</Style.InfoP>
+                  <Style.InfoP>{`${post.readingTime}분`}</Style.InfoP>
                 </Layout.HStack>
               </Layout.HStack>
             </Layout.VStack>

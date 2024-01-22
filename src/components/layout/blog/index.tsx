@@ -53,7 +53,7 @@ const BlogLayout = ({ post }: BlogProps) => {
             <h1>{post.title}</h1>
           </Layout.VStack>
 
-          <h5 style={{ color: cvar({ key: 'gray', idx: '300' }), fontWeight: '300' }}>
+          <h5 style={{ color: cvar({ key: 'gray', idx: '500' }), fontWeight: '300' }}>
             {post.description}
           </h5>
 
@@ -83,7 +83,7 @@ const BlogLayout = ({ post }: BlogProps) => {
 
           <h5
             style={{
-              color: cvar({ key: 'gray', idx: '300' }),
+              color: cvar({ key: 'gray', idx: '500' }),
               fontWeight: '300',
             }}
           >

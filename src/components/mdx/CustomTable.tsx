@@ -20,7 +20,7 @@ const TableWrapper = styled.div`
   width: 100%;
 
   border-radius: 10px;
-  border: 1px solid ${cvar({ key: 'gray', idx: '100' })};
+  border: 1px solid ${cvar({ key: 'gray', idx: '200' })};
 `;
 
 const Table = styled.table`
@@ -40,7 +40,7 @@ const Table = styled.table`
   }
 
   tr {
-    border-bottom: 1px solid ${cvar({ key: 'gray', idx: '100' })};
+    border-bottom: 1px solid ${cvar({ key: 'gray', idx: '200' })};
     &:last-child {
       border-bottom: none;
     }
