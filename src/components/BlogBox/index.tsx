@@ -4,12 +4,12 @@ import Link from 'next/link';
 
 import { CrosshatchTag } from '@/components/common/Tag';
 import * as Layout from '@/components/layout';
-import { fadeInUp, hover, tab } from '@/lib/animations';
+import { fadeInUp, tab } from '@/lib/animations';
 
 import * as Style from './style';
-import type { ReducedPost } from '@/lib/types';
+import type { Post } from '@/types/post';
 
-const BlogBox = ({ post }: { post: ReducedPost }) => {
+const BlogBox = ({ post }: { post: Post }) => {
   return (
     <motion.div variants={fadeInUp} whileTap={tab}>
       <Link href={`/blog/[...slugs]`} as={`/blog${post.url}`}>
@@ -34,7 +34,8 @@ const BlogBox = ({ post }: { post: ReducedPost }) => {
               <Layout.HStack alignItems='flex-end' justifyContent='space-between'>
                 <Layout.HStack gap='10px' alignItems='center'>
                   <Style.InfoP suppressHydrationWarning>{post.formattedDate}</Style.InfoP>
-                  <Style.InfoP>{`${post.readingTime}분`}</Style.InfoP>
+                  <Style.InfoP>{`${post.readingTime} min`}</Style.InfoP>
+                  <Style.InfoP>{`${post.view} views`}</Style.InfoP>
                 </Layout.HStack>
               </Layout.HStack>
             </Layout.VStack>

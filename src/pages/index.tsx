@@ -3,19 +3,18 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { GetStaticProps } from 'next';
 
-import supabase from '@/api/client';
 import BlogBox from '@/components/BlogBox';
 import FilterTagBtn from '@/components/FilterTagBtn';
 import { PageSEO } from '@/components/SEO';
 import * as Layout from '@/components/layout';
 import * as Style from '@/components/style';
-import { cleanAllPost, AllTags } from '@/constants/blogDataset';
+import { PostData } from '@/constants/blogDataset';
 import { fadeIn, staggerHalf } from '@/lib/animations';
 import { handlePostDataServerUpdate } from '@/utils/db-utils';
 
-import type { ReducedPost } from '@/lib/types';
+import type { Post } from '@/types/post';
 
-export default function Home({ posts, tags }: { posts: ReducedPost[]; tags: string[] }) {
+export default function Home({ posts, tags }: { posts: Post[]; tags: string[] }) {
   const [filteredPosts, setFilteredPosts] = useState(posts);
   const [selectedTag, setSelectedTag] = useState('ALL');
 
@@ -87,16 +86,18 @@ export default function Home({ posts, tags }: { posts: ReducedPost[]; tags: stri
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data: serverPosts } = await supabase.from('post').select('*');
+  const { serverPosts, posts, allTags: tags } = await PostData.getInstance();
 
-  if (!serverPosts) {
-    return { props: { posts: cleanAllPost, tags: AllTags, serverUpdate: false } };
+  if (!serverPosts.length) {
+    return { props: { posts, tags, serverUpdate: false } };
   }
 
   await handlePostDataServerUpdate({
     serverPosts,
-    clientPosts: cleanAllPost,
+    clientPosts: posts,
   });
 
-  return { props: { posts: cleanAllPost, tags: AllTags, serverUpdate: true } };
+  return {
+    props: { posts, tags, serverUpdate: true },
+  };
 };
