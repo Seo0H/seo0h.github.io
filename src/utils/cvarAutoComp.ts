@@ -5,20 +5,23 @@ import type { globalColor } from '@/constants/styles';
  * @param idx : key가 `gray`일 경우 요구됨.
  * @returns string : `var(--key)` | `var(--gray-idx)`
  */
-export default function cvar({ key, idx }: CvarAutoCompProps) {
+export default function cvar(cvarProps: CvarAutoCompProps) {
+  const { key } = cvarProps;
+
   switch (key) {
     case 'gray':
-      if (idx === undefined) {
-        throw new Error('idx is required for gray key');
-      }
-      return `var(--gray-${idx})`;
+      return `var(--gray-${cvarProps.idx})`;
 
     default:
       return `var(--${key})`;
   }
 }
 
-interface CvarAutoCompProps {
-  key: keyof typeof globalColor;
-  idx?: '100' | '200' | '300' | '400' | '500';
-}
+type GrayIdx = keyof typeof globalColor.gray;
+
+type CvarAutoCompProps =
+  | {
+      key: 'gray';
+      idx: GrayIdx;
+    }
+  | { key: Exclude<keyof typeof globalColor, 'gray'> };
