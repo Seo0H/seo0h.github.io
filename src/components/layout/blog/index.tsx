@@ -9,11 +9,11 @@ import CustomImg from '@/components/mdx/CustomImg';
 import CustomLink from '@/components/mdx/CustomLink';
 import CustomTable from '@/components/mdx/CustomTable';
 import getTag from '@/lib/getTag';
-import { BlogProps } from '@/lib/types';
 import useWindowSize from '@/lib/useWindowSize';
 import cvar from '@/utils/cvarAutoComp';
 import isMobile from '@/utils/isMobile';
 
+import type { Post } from '@/types/post';
 import type { MDXComponents } from 'mdx/types';
 
 const customComponents: MDXComponents = {
@@ -22,7 +22,7 @@ const customComponents: MDXComponents = {
   table: CustomTable,
 };
 
-const BlogLayout = ({ post }: BlogProps) => {
+const BlogLayout = ({ post }: { post: Post }) => {
   const MDXContent = useMDXComponent(post.body.code);
   const { width } = useWindowSize();
   const { tag } = getTag(post);
@@ -76,7 +76,8 @@ const BlogLayout = ({ post }: BlogProps) => {
 
               <Layout.VStack alignItems='flex-end'>
                 <p>{post.formattedDate}</p>
-                <p>{post.readingTime} 분</p>
+                <p>{post.readingTime} min read</p>
+                <p>{post.view} views</p>
               </Layout.VStack>
             </Layout.HStack>
           </Layout.VStack>
