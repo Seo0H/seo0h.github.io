@@ -62,6 +62,7 @@ const GlobalStyles = createGlobalStyle`${css`
     word-break: keep-all;
   }
 
+  // FIXME: 전역에 선언되어 있는 헤딩 스타일 제거. 필요한 요소에서 직접 정의하도록 수정
   h1 {
     color: ${cvar({ key: 'gray', idx: '800' })};
     font-size: 48px;

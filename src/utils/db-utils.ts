@@ -1,9 +1,9 @@
-import type { Post } from 'contentlayer/generated';
-
 import supabase from '@/api/client';
-import { cleanAllPost } from '@/constants/blogDataset';
 
 import type { Tables } from '@/types/database.types';
+import type { Post } from '@/types/post';
+
+// FIXME: 해당 유틸 함수들 PostData class 메서드로 이동 필요. Post Data의 '행동'과 관련된 함수들이기 때문
 
 /**
  * @description Post의 서버 데이터 업데이트 필요 여부 핸들링 함수
@@ -13,7 +13,7 @@ export async function handlePostDataServerUpdate({
   clientPosts,
 }: {
   serverPosts: Tables<'post'>[];
-  clientPosts: typeof cleanAllPost;
+  clientPosts: Post[];
 }) {
   if (isUpdateNeeded(serverPosts, clientPosts) === false) console.log("✅ Update isn't needed!");
   else {
@@ -34,7 +34,7 @@ export async function handlePostDataServerUpdate({
  */
 function isUpdateNeeded(
   serverPostsBeforeSorted: Tables<'post'>[],
-  clientPostsBeforeSorted: typeof cleanAllPost,
+  clientPostsBeforeSorted: Post[],
 ) {
   const serverPosts = [...serverPostsBeforeSorted].sort((a, b) => (a.id > b.id ? 1 : -1));
 
@@ -58,8 +58,8 @@ function isUpdateNeeded(
  * @param serverPosts
  */
 async function updatePostsOnServer(clientPosts: Post[], serverPosts: Tables<'post'>[]) {
-  const insertPosts: Tables<'post'>[] = [];
-  const updatePosts: Tables<'post'>[] = [];
+  const insertPosts: Omit<Tables<'post'>, 'view'>[] = [];
+  const updatePosts: Omit<Tables<'post'>, 'view'>[] = [];
 
   const clientPostsIdentifiers = clientPosts
     .map((post) => ({ id: post.uuid, title: post.title }))
