@@ -19,7 +19,7 @@ export class PostData {
   public allTags: string[];
 
   private constructor() {
-    // initialize posts and tag
+    // 클라이언트 데이터로 데이터 프로퍼티 초기화 진행
     this.posts = allPosts
       .filter((post) => !post.draft)
       .map(initializePost)
@@ -32,26 +32,27 @@ export class PostData {
       }, new Set()),
     );
 
+    // 추후 인스턴스를 호출할 시 서버 데이터와 동기화
     this.serverPosts = [];
   }
 
   /**
-   * @description PostData의 싱글톤 인스턴스를 반환하는 인스턴스 메서드. 서버 Data 동기화 진행.
+   * @description PostData의 싱글톤 인스턴스를 반환하는 인스턴스 메서드. 호출 시 서버 Data 동기화 진행.
    */
   public static async getInstance() {
     if (!PostData.instance) {
       PostData.instance = new PostData();
 
       PostData.instance.serverPosts = await getBlogPost();
-      await PostData.instance.addViewFromServerDataToPost();
+      PostData.instance.updatePostViewsFromServer();
     }
     return PostData.instance;
   }
 
   /**
-   * @description 각 포스트의 조회수 데이터를 추가하는 함수. getInstance가 비동기 함수이기에 비동기 메서드로 호출
+   * @description 각 포스트의 조회수 서버 데이터를 클라이언트 포스트 데이터에 추가하는 함수.
    */
-  private async addViewFromServerDataToPost() {
+  private updatePostViewsFromServer() {
     if (this.serverPosts.length === 0) throw new Error('server post data가 누락되었습니다.');
 
     this.posts = this.posts.map((post) => {
