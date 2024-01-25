@@ -27,6 +27,22 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 const Blog = (props: { post: Post }) => {
+  useEffect(() => {
+    let fetchAbortController = new AbortController();
+    updatePostHandler(fetchAbortController);
+
+    // 중복 요청 취소 clean up
+    return () => fetchAbortController.abort();
+  }, []);
+
+  async function updatePostHandler(abortController: AbortController) {
+    // TODO: react query 를 이용하도록 변경
+    const { data, error } = await updatePostViews({ uuid: props.post.uuid }, abortController);
+    if (data?.status) {
+      // TODO: Update Post views + 1
+    }
+  }
+
   return <BlogLayout {...props} />;
 };
 
