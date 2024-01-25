@@ -1,10 +1,36 @@
-import { createClient } from '@supabase/supabase-js';
+import { Post } from '@/types/post';
 
-import { Database } from '@/types/database.types';
+// TODO: NODE_ENV 추가
+const isDev = true;
+const BACKEND_API_URL = isDev ? 'http://localhost:8080' : process.env.NEXT_PUBLIC_BACKEND_URL;
 
-const supabaseUrl = process.env.SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_KEY!;
+type APIReturnType = {
+  status: boolean;
+  message: string;
+};
 
-const supabase = createClient<Database>(supabaseUrl, supabaseKey);
+export const updatePostViews = async (
+  { uuid: id }: Pick<Post, 'uuid'>,
+  abortController: AbortController,
+): Promise<{ data: APIReturnType | null; error?: boolean }> => {
+  try {
+    const response = await fetch(`${BACKEND_API_URL}/post/views/increment`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify({ id }),
+      credentials: 'include',
+      signal: abortController.signal,
+    });
 
-export default supabase;
+    const data = await response.json();
+
+    return { data };
+  } catch (e) {
+    if (!abortController.signal.aborted) {
+      console.log('updatePost 요청이 취소되었습니다.');
+    }
+    return { error: true, data: null };
+  }
+};

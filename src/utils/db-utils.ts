@@ -1,4 +1,4 @@
-import supabase from '@/api/client';
+import supabase from '@/api/database';
 
 import type { Tables } from '@/types/database.types';
 import type { Post } from '@/types/post';
