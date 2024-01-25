@@ -1,20 +1,20 @@
 import { useState } from 'react';
 
 import { motion } from 'framer-motion';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps, GetStaticProps, InferGetStaticPropsType } from 'next';
 
 import BlogBox from '@/components/BlogBox';
 import FilterTagBtn from '@/components/FilterTagBtn';
 import { PageSEO } from '@/components/SEO';
 import * as Layout from '@/components/layout';
 import * as Style from '@/components/style';
-import { PostData } from '@/constants/blogDataset';
+import { StaticPostData } from '@/constants/blogDataset';
 import { fadeIn, staggerHalf } from '@/lib/animations';
 import { handlePostDataServerUpdate } from '@/utils/db-utils';
 
 import type { Post } from '@/types/post';
 
-export default function Home({ posts, tags }: { posts: Post[]; tags: string[] }) {
+export default function Home({ posts, tags }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [filteredPosts, setFilteredPosts] = useState(posts);
   const [selectedTag, setSelectedTag] = useState('ALL');
 
@@ -85,11 +85,11 @@ export default function Home({ posts, tags }: { posts: Post[]; tags: string[] })
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  const { serverPosts, posts, allTags: tags } = await PostData.getInstance();
+export const getStaticProps = (async () => {
+  const { serverPosts, posts, allTags: tags } = await StaticPostData.getInstance();
 
   if (!serverPosts.length) {
-    return { props: { posts, tags, serverUpdate: false } };
+    return { props: { posts, tags } };
   }
 
   await handlePostDataServerUpdate({
@@ -98,6 +98,10 @@ export const getStaticProps: GetStaticProps = async () => {
   });
 
   return {
-    props: { posts, tags, serverUpdate: true },
+    props: { posts, tags },
+    revalidate: 20,
   };
-};
+}) satisfies GetStaticProps<{
+  posts: Post[];
+  tags: string[];
+}>;

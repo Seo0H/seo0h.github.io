@@ -1,11 +1,14 @@
+import { useEffect } from 'react';
+
+import { updatePostViews } from '@/api/client';
 import BlogLayout from '@/components/layout/blog';
-import { PostData } from '@/constants/blogDataset';
+import { StaticPostData } from '@/constants/blogDataset';
 import { Post } from '@/types/post';
 
 import type { GetStaticPaths, GetStaticProps } from 'next';
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { posts } = await PostData.getInstance();
+  const { posts } = await StaticPostData.getInstance();
   return {
     paths: posts.map((post) => `/blog${post.url}`),
     fallback: false,
@@ -13,13 +16,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { posts } = await PostData.getInstance();
+  const StaticpostData = await StaticPostData.getInstance();
+  const { posts } = StaticpostData;
   const { slugs } = params as { slugs: string[] };
 
   const slug = `/${[...slugs].join('/')}`;
   const post = posts.find((post) => post.url === slug);
 
-  return { props: { post } };
+  return { props: { post }, revalidate: 20 };
 };
 
 const Blog = (props: { post: Post }) => {
