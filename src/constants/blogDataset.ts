@@ -11,8 +11,8 @@ import type { Post } from '@/types/post';
 /**
  * @description 싱글톤 클래스. Server Data와 Client data 를 결합해 유저에게 보여 줄 Post Data 객체를 생성
  */
-export class PostData {
-  private static instance: PostData;
+export class StaticPostData {
+  private static instance: StaticPostData;
 
   public posts: Post[];
   public serverPosts: Tables<'post'>[] | [];
@@ -32,27 +32,28 @@ export class PostData {
       }, new Set()),
     );
 
-    // 추후 인스턴스를 호출할 시 서버 데이터와 동기화
+    // 추후 인스턴스를 호출할 시 서버 데이터와 동기화하기 때문에 우선 초기화함.
     this.serverPosts = [];
   }
 
   /**
-   * @description PostData의 싱글톤 인스턴스를 반환하는 인스턴스 메서드. 호출 시 서버 Data 동기화 진행.
+   * @description StaticPostData의 싱글톤 인스턴스를 반환하는 인스턴스 메서드. 호출 시 서버 Data 동기화 진행.
    */
   public static async getInstance() {
-    if (!PostData.instance) {
-      PostData.instance = new PostData();
-
-      PostData.instance.serverPosts = await getBlogPost();
-      PostData.instance.updatePostViewsFromServer();
+    if (!StaticPostData.instance) {
+      StaticPostData.instance = new StaticPostData();
     }
-    return PostData.instance;
+
+    await StaticPostData.instance.updatePostViewsFromServer();
+    return StaticPostData.instance;
   }
 
   /**
-   * @description 각 포스트의 조회수 서버 데이터를 클라이언트 포스트 데이터에 추가하는 함수.
+   * @description 각 포스트의 조회수 서버 데이터를 불러와 클라이언트 포스트 데이터에 추가하는 함수.
    */
-  private updatePostViewsFromServer() {
+  private async updatePostViewsFromServer() {
+    this.serverPosts = await getBlogPost();
+
     if (this.serverPosts.length === 0) throw new Error('server post data가 누락되었습니다.');
 
     this.posts = this.posts.map((post) => {
