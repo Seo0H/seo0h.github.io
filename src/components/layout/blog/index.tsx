@@ -13,6 +13,7 @@ import useWindowSize from '@/lib/useWindowSize';
 import cvar from '@/utils/cvarAutoComp';
 import isMobile from '@/utils/isMobile';
 
+import type { ViewState } from '@/components/layout/state';
 import type { Post } from '@/types/post';
 import type { MDXComponents } from 'mdx/types';
 
@@ -22,7 +23,7 @@ const customComponents: MDXComponents = {
   table: CustomTable,
 };
 
-const BlogLayout = ({ post }: { post: Post }) => {
+const BlogLayout = ({ post, viewsState }: { post: Post; viewsState: ViewState }) => {
   const MDXContent = useMDXComponent(post.body.code);
   const { width } = useWindowSize();
   const { tag } = getTag(post);
@@ -65,6 +66,11 @@ const BlogLayout = ({ post }: { post: Post }) => {
           >
             <p style={{ color: 'inherit', fontWeight: 'inherit' }}>{post.formattedDate}</p>
             <p style={{ color: 'inherit', fontWeight: 'inherit' }}>{post.readingTime}분</p>
+            <p style={{ color: 'inherit', fontWeight: 'inherit' }}>
+              {viewsState.isSuccess && `${post.view} views`}
+              {viewsState.isLoading && `Loading..`}
+              {viewsState.isError && `ERROR!`}
+            </p>
           </Layout.HStack>
         </Layout.VStack>
       ) : (
@@ -77,7 +83,11 @@ const BlogLayout = ({ post }: { post: Post }) => {
               <Layout.VStack alignItems='flex-end'>
                 <p>{post.formattedDate}</p>
                 <p>{post.readingTime} min read</p>
-                <p>{post.view} views</p>
+                <p>
+                  {viewsState.isSuccess && `${post.view} views`}
+                  {viewsState.isLoading && `Loading..`}
+                  {viewsState.isError && `ERROR!`}
+                </p>
               </Layout.VStack>
             </Layout.HStack>
           </Layout.VStack>

@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
 
+import { useImmer } from 'use-immer';
+
 import { updatePostViews } from '@/api/client';
 import BlogLayout from '@/components/layout/blog';
+import { useViewsState } from '@/components/layout/state';
 import { StaticPostData } from '@/constants/blogDataset';
 import { Post } from '@/types/post';
 
@@ -16,34 +19,42 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const StaticpostData = await StaticPostData.getInstance();
-  const { posts } = StaticpostData;
+  const { posts } = await StaticPostData.getInstance();
   const { slugs } = params as { slugs: string[] };
 
   const slug = `/${[...slugs].join('/')}`;
   const post = posts.find((post) => post.url === slug);
 
-  return { props: { post }, revalidate: 20 };
+  return { props: { post }, revalidate: 10 };
 };
 
-const Blog = (props: { post: Post }) => {
+const BlogPostFeather = (props: { post: Post }) => {
+  const [updatedProps, setUpdatedProps] = useImmer(props);
+  const { viewsState, setViewsState } = useViewsState();
+
   useEffect(() => {
+    setViewsState({ type: 'SET_LOADING' });
+
     let fetchAbortController = new AbortController();
-    updatePostHandler(fetchAbortController);
+    updatePostViews({ uuid: props.post.uuid }, fetchAbortController)
+      .then((res) => {
+        if (res.status === true) {
+          setUpdatedProps((prev) => {
+            prev.post.view = Number(res.data);
+          });
+        }
+      })
+      .finally(() => setViewsState({ type: 'SET_SUCCESS' }))
+      .catch((e) => {
+        console.log(e);
+        setViewsState({ type: 'SET_ERROR' });
+      });
 
     // 중복 요청 취소 clean up
     return () => fetchAbortController.abort();
   }, []);
 
-  async function updatePostHandler(abortController: AbortController) {
-    // TODO: react query 를 이용하도록 변경
-    const { data, error } = await updatePostViews({ uuid: props.post.uuid }, abortController);
-    if (data?.status) {
-      // TODO: Update Post views + 1
-    }
-  }
-
-  return <BlogLayout {...props} />;
+  return <BlogLayout {...updatedProps} {...{ viewsState }} />;
 };
 
-export default Blog;
+export default BlogPostFeather;
