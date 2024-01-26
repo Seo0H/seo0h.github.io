@@ -35,7 +35,6 @@ const BlogBox = ({ post }: { post: Post }) => {
                 <Layout.HStack gap='10px' alignItems='center'>
                   <Style.InfoP suppressHydrationWarning>{post.formattedDate}</Style.InfoP>
                   <Style.InfoP>{`${post.readingTime} min`}</Style.InfoP>
-                  <Style.InfoP>{`${post.view} views`}</Style.InfoP>
                 </Layout.HStack>
               </Layout.HStack>
             </Layout.VStack>
