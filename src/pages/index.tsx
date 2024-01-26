@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { motion } from 'framer-motion';
-import { GetServerSideProps, GetStaticProps, InferGetStaticPropsType } from 'next';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
 
 import BlogBox from '@/components/BlogBox';
 import FilterTagBtn from '@/components/FilterTagBtn';
@@ -99,7 +99,7 @@ export const getStaticProps = (async () => {
 
   return {
     props: { posts, tags },
-    revalidate: 20,
+    revalidate: 10,
   };
 }) satisfies GetStaticProps<{
   posts: Post[];
