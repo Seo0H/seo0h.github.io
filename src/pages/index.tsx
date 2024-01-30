@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 
-import BlogBox from '@/components/BlogBox';
 import FilterTagBtn from '@/components/FilterTagBtn';
 import { PageSEO } from '@/components/SEO';
 import * as Layout from '@/components/layout';
+import PostPreview from '@/components/post-preview';
 import * as Style from '@/components/style';
 import { StaticPostData } from '@/constants/blogDataset';
 import { fadeIn, staggerHalf } from '@/lib/animations';
@@ -76,7 +76,7 @@ export default function Home({ posts, tags }: InferGetStaticPropsType<typeof get
         <motion.div variants={staggerHalf}>
           <Layout.VStack gap='20px'>
             {filteredPosts.map((post) => (
-              <BlogBox key={crypto.randomUUID()} post={post} />
+              <PostPreview key={crypto.randomUUID()} post={post} />
             ))}
           </Layout.VStack>
         </motion.div>

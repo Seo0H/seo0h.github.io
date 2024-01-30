@@ -2,18 +2,19 @@ import Image from 'next/image';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 
 import { BlogSeo } from '@/components/SEO';
+import { default as Style } from '@/components/blog-post/style';
+import Views from '@/components/blog-post/views';
 import { CrosshatchTag } from '@/components/common/Tag';
 import * as Layout from '@/components/layout';
-import { default as Style } from '@/components/layout/blog/style';
 import CustomImg from '@/components/mdx/CustomImg';
 import CustomLink from '@/components/mdx/CustomLink';
 import CustomTable from '@/components/mdx/CustomTable';
+import useUpdateViews from '@/hooks/use-update-views';
 import getTag from '@/lib/getTag';
 import useWindowSize from '@/lib/useWindowSize';
 import cvar from '@/utils/cvarAutoComp';
 import isMobile from '@/utils/isMobile';
 
-import type { ViewState } from '@/components/layout/state';
 import type { Post } from '@/types/post';
 import type { MDXComponents } from 'mdx/types';
 
@@ -23,7 +24,7 @@ const customComponents: MDXComponents = {
   table: CustomTable,
 };
 
-const BlogLayout = ({ post, viewsState }: { post: Post; viewsState: ViewState }) => {
+const PostContainer = ({ post }: { post: Post }) => {
   const MDXContent = useMDXComponent(post.body.code);
   const { width } = useWindowSize();
   const { tag } = getTag(post);
@@ -67,9 +68,7 @@ const BlogLayout = ({ post, viewsState }: { post: Post; viewsState: ViewState })
             <p style={{ color: 'inherit', fontWeight: 'inherit' }}>{post.formattedDate}</p>
             <p style={{ color: 'inherit', fontWeight: 'inherit' }}>{post.readingTime}분</p>
             <p style={{ color: 'inherit', fontWeight: 'inherit' }}>
-              {viewsState.isSuccess && `${post.view} views`}
-              {viewsState.isLoading && `Loading..`}
-              {viewsState.isError && `ERROR!`}
+              <Views uuid={post.uuid} view={post.view} />
             </p>
           </Layout.HStack>
         </Layout.VStack>
@@ -84,9 +83,7 @@ const BlogLayout = ({ post, viewsState }: { post: Post; viewsState: ViewState })
                 <p>{post.formattedDate}</p>
                 <p>{post.readingTime} min read</p>
                 <p>
-                  {viewsState.isSuccess && `${post.view} views`}
-                  {viewsState.isLoading && `Loading..`}
-                  {viewsState.isError && `ERROR!`}
+                  <Views uuid={post.uuid} view={post.view} />
                 </p>
               </Layout.VStack>
             </Layout.HStack>
@@ -112,4 +109,4 @@ const BlogLayout = ({ post, viewsState }: { post: Post; viewsState: ViewState })
   );
 };
 
-export default BlogLayout;
+export default PostContainer;

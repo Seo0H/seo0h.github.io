@@ -9,7 +9,7 @@ import { fadeInUp, tab } from '@/lib/animations';
 import * as Style from './style';
 import type { Post } from '@/types/post';
 
-const BlogBox = ({ post }: { post: Post }) => {
+const PostPreview = ({ post }: { post: Post }) => {
   return (
     <motion.div variants={fadeInUp} whileTap={tab}>
       <Link href={`/blog/[...slugs]`} as={`/blog${post.url}`}>
@@ -45,4 +45,4 @@ const BlogBox = ({ post }: { post: Post }) => {
   );
 };
 
-export default BlogBox;
+export default PostPreview;
