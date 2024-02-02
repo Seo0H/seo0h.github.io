@@ -1,4 +1,4 @@
-import { Console } from 'console';
+import axios, { AxiosError, CancelTokenSource } from 'axios';
 
 import client from '@/api/client';
 
@@ -12,44 +12,56 @@ export const initialApiStatus: APIStatusType = {
   isAbort: false,
 };
 
-export default class IncreasePostViewsApi implements API {
-  readonly END_POINT = '/post/views/increment' as const;
+type PostViews = {
+  views: number;
+};
+
+export default class IncreasePostViewsApi implements API<PostViews> {
+  readonly END_POINT = '/post/views' as const;
   readonly postId: string;
 
   private status: APIStatusType = initialApiStatus;
-  private abortController?: AbortController;
+  private cancelTokenSource?: CancelTokenSource;
 
-  constructor({ uuid: postId }: Pick<Post, 'uuid'>, abortController?: AbortController) {
-    if (abortController) this.abortController = abortController;
+  constructor({ uuid: postId }: Pick<Post, 'uuid'>, cancelTokenSource?: CancelTokenSource) {
+    if (cancelTokenSource) this.cancelTokenSource = cancelTokenSource;
     this.postId = postId;
   }
 
-  async fetch(): Promise<APIResponseType> {
+  async fetch() {
     try {
       this.status = { ...initialApiStatus, isLoading: true };
 
-      const { data } = await client.patch<{ data: string; message?: string }>(
+      const { data } = await client.patch<APIResponseType<PostViews>>(
         this.END_POINT,
         {
-          data: { id: this.postId },
+          id: this.postId,
         },
-        { withCredentials: true, signal: this.abortController?.signal },
+        { withCredentials: true, cancelToken: this.cancelTokenSource?.token },
       );
 
       this.status = { ...initialApiStatus, isSuccess: true };
 
       return { ...data };
     } catch (e) {
-      if (this.abortController?.signal.aborted) {
+      if (axios.isCancel(e)) {
         this.status = { ...initialApiStatus, isAbort: true };
         return {
           data: null,
-          message: 'updatePost 요청이 취소되었습니다.',
+          message: e.message,
         };
       }
 
-      this.status = { ...initialApiStatus, isError: true };
+      if (e instanceof AxiosError || e instanceof Error) {
+        this.status = { ...initialApiStatus, isError: true };
+        return {
+          data: null,
+          message: e.message,
+        };
+      }
 
+      // Unknown Error..
+      this.status = { ...initialApiStatus, isError: true };
       throw e;
     }
   }

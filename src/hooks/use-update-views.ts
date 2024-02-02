@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import axios from 'axios';
+
 import IncreasePostViewsApi, { initialApiStatus } from '@/api/views/increase-view';
 import { APIStatusType } from '@/api/views/type';
 
@@ -13,24 +15,22 @@ export default function useUpdateViews({ uuid, view: initialView }: Pick<Post, '
   });
 
   useEffect(() => {
-    let abortController = new AbortController();
-    const updateViewState = new IncreasePostViewsApi({ uuid }, abortController);
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    const updateViewState = new IncreasePostViewsApi({ uuid }, source);
 
     updateViewState
       .fetch()
       .then((res) => {
-        setView(Number(res.data));
-      })
-      .catch((e) => {
-        // FIXME: 유의미한 에러 핸들링 처리 필요.
-        setApiStatus(updateViewState.getStatus());
+        if (updateViewState.getStatus().isAbort) return;
+        setView(Number(res.data?.views));
       })
       .finally(() => {
         setApiStatus(updateViewState.getStatus());
       });
 
     return () => {
-      abortController.abort();
+      source.cancel();
     };
   }, []);
 

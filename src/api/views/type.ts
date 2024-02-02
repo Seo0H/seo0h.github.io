@@ -1,5 +1,5 @@
-export type APIResponseType = {
-  data: string | null;
+export type APIResponseType<ReturnType> = {
+  data: ReturnType | null;
   message?: string;
 };
 
@@ -10,8 +10,8 @@ export type APIStatusType = {
   isAbort: boolean;
 };
 
-export interface API {
+export interface API<ReturnType> {
   END_POINT: string;
-  fetch(): Promise<APIResponseType>;
+  fetch(): Promise<APIResponseType<ReturnType>>;
   getStatus(): APIStatusType;
 }
