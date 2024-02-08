@@ -8,7 +8,7 @@ import { APIStatusType } from '@/api/views/type';
 import type { Post } from '@/types/post';
 
 export default function useUpdateViews({ uuid, view: initialView }: Pick<Post, 'uuid' | 'view'>) {
-  const [view, setView] = useState(initialView);
+  const [views, setView] = useState(initialView);
   const [apiStatus, setApiStatus] = useState<APIStatusType>({
     ...initialApiStatus,
     isLoading: true,
@@ -34,5 +34,5 @@ export default function useUpdateViews({ uuid, view: initialView }: Pick<Post, '
     };
   }, []);
 
-  return { view, status: apiStatus };
+  return { views, status: apiStatus };
 }

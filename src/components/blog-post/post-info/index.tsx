@@ -11,12 +11,12 @@ const PCViewPostInfo = dynamic(() => import('@/components/blog-post/post-info/pc
 
 const PostInfo = ({ post, tag }: { post: Post; tag: string }) => {
   const { windowSize } = useWindowSize();
-  const { view, status: viewsApiStatus } = useUpdateViews({ uuid: post.uuid, view: post.view });
+  const { views, status: viewsApiStatus } = useUpdateViews({ uuid: post.uuid, view: post.view });
 
   return (
     <>
       {windowSize !== undefined && (
-        <PostViewContext.Provider value={{ view, status: viewsApiStatus }}>
+        <PostViewContext.Provider value={{ views, status: viewsApiStatus }}>
           {isMobile(windowSize?.width) ? (
             <MobileViewPostInfo post={post} tag={tag} />
           ) : (
