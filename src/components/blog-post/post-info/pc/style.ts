@@ -15,7 +15,7 @@ export const Grid = styled(Layout.Grid)`
 export const InfoWrapper = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 export const H5 = styled.h5`

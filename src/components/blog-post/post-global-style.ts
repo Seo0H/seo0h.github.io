@@ -13,7 +13,7 @@ const code = css`
     border-radius: 0.4rem;
     padding: 0.1rem 0.6rem;
 
-    font-family: Consolas;
+    font-family: var(--font-menlo);
     word-break: break-all;
 
     color: ${cvar({ key: 'gray', idx: '500' })};
@@ -27,7 +27,7 @@ const code = css`
 
     margin: 5px 0;
 
-    font-family: Consolas;
+    font-family: var(--font-menlo);
 
     background-color: ${cvar({ key: 'gray', idx: '100' })};
 
@@ -124,7 +124,7 @@ const anchor = css`
 
   .anchor::before {
     content: '#';
-    color: ${cvar({ key: 'gray', idx: '500' })};
+    color: ${cvar({ key: 'gray', idx: '300' })};
 
     @media (width < ${display.tablet}) {
       visibility: hidden;
@@ -215,7 +215,7 @@ export const postGlobalStyle = css`
   }
 
   strong {
-    font-weight: 800;
+    font-weight: 700;
   }
 
   ${code}
@@ -247,7 +247,7 @@ const BlogStyle = styled(Layout.VStack)`
   }
 
   strong {
-    font-weight: 800;
+    font-weight: 700;
   }
 
   ${code}
