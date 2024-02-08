@@ -2,8 +2,8 @@ import { createContext, useContext } from 'react';
 
 import { APIStatusType } from '@/api/views/type';
 
-type PostViewContextValue = {
-  view: number;
+export type PostViewContextValue = {
+  views: number;
   status: APIStatusType;
 };
 

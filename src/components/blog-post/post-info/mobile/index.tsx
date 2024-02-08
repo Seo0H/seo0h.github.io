@@ -4,7 +4,8 @@ import Views from '@/components/blog-post/post-info/views';
 import { CrosshatchTag } from '@/components/common/Tag';
 import * as Layout from '@/components/layout';
 import { Post } from '@/types/post';
-import cvar from '@/utils/cvarAutoComp';
+
+import * as S from './style';
 
 const MobileViewPostInfo = ({ post, tag }: { post: Post; tag: string }) => {
   return (
@@ -14,22 +15,15 @@ const MobileViewPostInfo = ({ post, tag }: { post: Post; tag: string }) => {
         <h1>{post.title}</h1>
       </Layout.VStack>
 
-      <h5 style={{ color: cvar({ key: 'gray', idx: '500' }), fontWeight: '300' }}>
-        {post.description}
-      </h5>
+      <S.H5>{post.description}</S.H5>
 
-      <Layout.HStack
-        gap='10px'
-        margin='10px 0 0 0'
-        alignItems='center'
-        style={{ fontWeight: '300' }}
-      >
-        <p style={{ color: 'inherit', fontWeight: 'inherit' }}>{post.formattedDate}</p>
-        <p style={{ color: 'inherit', fontWeight: 'inherit' }}>{post.readingTime}분</p>
-        <p style={{ color: 'inherit', fontWeight: 'inherit' }}>
+      <S.HStack gap='10px' margin='10px 0 0 0' alignItems='center'>
+        <S.P>{post.formattedDate}</S.P>
+        <S.P>{post.readingTime}분</S.P>
+        <S.P>
           <Views />
-        </p>
-      </Layout.HStack>
+        </S.P>
+      </S.HStack>
     </Layout.VStack>
   );
 };

@@ -3,8 +3,8 @@ import { memo } from 'react';
 import Views from '@/components/blog-post/post-info/views';
 import { CrosshatchTag } from '@/components/common/Tag';
 import * as Layout from '@/components/layout';
-import cvar from '@/utils/cvarAutoComp';
 
+import * as S from './style';
 import type { Post } from '@/types/post';
 
 const PCViewPostInfo = ({ post, tag }: { post: Post; tag: string }) => {
@@ -12,27 +12,25 @@ const PCViewPostInfo = ({ post, tag }: { post: Post; tag: string }) => {
     <Layout.VStack width='100%' gap='10px' margin='20px 0'>
       <Layout.VStack>
         <CrosshatchTag>{tag}</CrosshatchTag>
-        <Layout.HStack width='100%' justifyContent='space-between' alignItems='center'>
-          <h1>{post.title}</h1>
+        <Layout.HStack alignItems='center'>
+          <S.H1>{post.title}</S.H1>
 
-          <Layout.VStack alignItems='flex-end'>
-            <p>{post.formattedDate}</p>
-            <p>{post.readingTime} min read</p>
-            <p>
+          <S.Grid
+            justifyItems='end'
+            gridTemplateRow='repeat(3,minmax(auto,1rem))'
+            width='100%'
+            gap='.5rem'
+          >
+            <S.InfoWrapper>{post.formattedDate}</S.InfoWrapper>
+            <S.InfoWrapper>{post.readingTime} min read</S.InfoWrapper>
+            <S.InfoWrapper>
               <Views />
-            </p>
-          </Layout.VStack>
+            </S.InfoWrapper>
+          </S.Grid>
         </Layout.HStack>
       </Layout.VStack>
 
-      <h5
-        style={{
-          color: cvar({ key: 'gray', idx: '500' }),
-          fontWeight: '300',
-        }}
-      >
-        {post.description}
-      </h5>
+      <S.H5>{post.description}</S.H5>
     </Layout.VStack>
   );
 };
