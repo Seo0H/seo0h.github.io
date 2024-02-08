@@ -1,5 +1,6 @@
 {
   "Post Matter": {
+    "scope": "*.mdx",
     "prefix": ["---"],
     "description": "Output a file header with the file name and date",
     "body": [
@@ -17,16 +18,19 @@
     "scope": "md,mdx"
   },
   "Current DateTime": {
+    "scope": "*.mdx",
     "prefix": ["@today-time", "cdt"],
     "description": "Output current DateTime YYYY-MM-DD HH:mm:ss",
     "body": "$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND"
   },
   "Current Date": {
+    "scope": "*.mdx",
     "prefix": ["@today-date", "cd"],
     "description": "Output current Date YYYY-MM-DD",
     "body": "$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE"
   },
   "Foldable Toggle" :{
+    "scope": "*.mdx",
     "prefix":["toggle", ">>"],
     "discription":"Output a Foldagble Toggle can click.",
     "body": [
@@ -38,6 +42,7 @@
     ],
   },
   "Plain Code block" : {
+    "scope": "*.mdx",
     "prefix" : ["```"],
     "discription":"Output a Coad block syntax with captions",
     "body": [
@@ -45,8 +50,10 @@
       "$0",
       "```"
     ],
+
   },
   "Code block Caption" : {
+    "scope": "*.mdx",
     "prefix" : ["``` caption"],
     "discription":"Output a Coad block syntax with captions",
     "body": [
@@ -55,6 +62,7 @@
     ],
   },
   "Add Caption" : {
+    "scope": "*.mdx",
     "prefix" : ["caption"],
     "discription":"Output a captions syntax",
     "body": [
@@ -62,6 +70,7 @@
     ],
   },
   "Insert UUID" : {
+    "scope": "*.mdx",
     "prefix" : ["uuid"],
     "discription":"Output a random UUID",
     "body": [
