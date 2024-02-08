@@ -1,25 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 type WindowSize = {
   width: number;
   height: number;
 };
 
+/**
+ * @description window가 초기화되기 전에는 `undefined` return. 사용하는 곳에서 예외 처리 필요.
+ */
 export default function useWindowSize() {
-  const [windowSize, setWindowSize] = useState<WindowSize>({
-    width: 0,
-    height: 0,
-  });
+  const [windowSize, setWindowSize] = useState<WindowSize>();
+
   useEffect(() => {
-    function handleResize() {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    }
     window.addEventListener('resize', handleResize);
     handleResize();
+
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  return windowSize;
+
+  const handleResize = useCallback(() => {
+    setWindowSize({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+  }, []);
+
+  return { windowSize };
 }
