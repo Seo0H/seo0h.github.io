@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "contentlayer build && next build && next-sitemap",
     "start": "next start",
+    "dev:ssl": "export PORT=2999 && node server.js",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "prettier": "prettier --check ./src",
