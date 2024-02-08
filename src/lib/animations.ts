@@ -40,8 +40,8 @@ export const fadeInUp: Variants = {
   exit: {
     opacity: 0,
     y: 30,
-    transition: { duration: 0.6, ease: defaultEasing },
-    willChange: 'opacity, transform',
+    transition: { duration: 0.3, ease: defaultEasing },
+    willChange: 'opacity',
   },
 };
 

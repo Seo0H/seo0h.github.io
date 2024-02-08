@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 
-import * as Layout from '@/components/layout';
 import { display } from '@/constants/styles';
 import cvar from '@/utils/cvarAutoComp';
 
-export const ListBoxWrapper = styled(Layout.HStack)`
+export const ListBoxWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  align-items: center;
+
   cursor: pointer;
   border-radius: 10px;
   border: 10px solid transparent;
@@ -45,8 +49,14 @@ export const InfoP = styled.p`
   }
 `;
 
-export const ImgContainer = styled(Layout.Box)`
+export const ImgContainer = styled.div`
   display: block;
+  position: relative;
+
+  @media (width > ${display.tablet}) {
+    min-width: 180px;
+    min-height: 180px;
+  }
 
   @media (width < ${display.tablet}) {
     width: 100%;
@@ -54,7 +64,13 @@ export const ImgContainer = styled(Layout.Box)`
   }
 `;
 
-export const ResVStack = styled(Layout.VStack)`
+export const ResVStack = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  word-break: keep-all;
+  flex: 1;
+
   @media (width <${display.tablet}) {
     gap: 0px;
   }

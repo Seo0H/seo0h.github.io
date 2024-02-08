@@ -13,8 +13,8 @@ const PostPreview = ({ post }: { post: Post }) => {
   return (
     <motion.div variants={fadeInUp} whileTap={tab}>
       <Link href={`/blog/[...slugs]`} as={`/blog${post.url}`}>
-        <Style.ListBoxWrapper gap='24px' alignItems='center'>
-          <Style.ImgContainer position='relative' width='180px' height='180px' minWidth='80px'>
+        <Style.ListBoxWrapper>
+          <Style.ImgContainer>
             <Image
               style={{ objectFit: 'cover', borderRadius: '10px' }}
               src={post.image}
@@ -23,7 +23,7 @@ const PostPreview = ({ post }: { post: Post }) => {
             />
           </Style.ImgContainer>
 
-          <Style.ResVStack gap='18px' style={{ wordBreak: 'keep-all', flex: '1' }}>
+          <Style.ResVStack>
             <Layout.VStack>
               <CrosshatchTag>{post.tag}</CrosshatchTag>
               <Style.ResH2>{post.title}</Style.ResH2>
@@ -35,6 +35,7 @@ const PostPreview = ({ post }: { post: Post }) => {
                 <Layout.HStack gap='10px' alignItems='center'>
                   <Style.InfoP suppressHydrationWarning>{post.formattedDate}</Style.InfoP>
                   <Style.InfoP>{`${post.readingTime} min`}</Style.InfoP>
+                  <Style.InfoP>{`${post.view} views`}</Style.InfoP>
                 </Layout.HStack>
               </Layout.HStack>
             </Layout.VStack>

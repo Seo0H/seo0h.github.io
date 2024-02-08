@@ -1,15 +1,17 @@
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 
 import { BlogSeo } from '@/components/SEO';
 import PostInfo from '@/components/blog-post/post-info';
-import { default as Style } from '@/components/blog-post/style';
 import * as Layout from '@/components/layout';
 import CustomImg from '@/components/mdx/CustomImg';
 import CustomLink from '@/components/mdx/CustomLink';
 import CustomTable from '@/components/mdx/CustomTable';
+import { fadeIn, fadeInUp, staggerHalf } from '@/lib/animations';
 import getTag from '@/lib/getTag';
 
+import * as S from './style';
 import type { Post } from '@/types/post';
 import type { MDXComponents } from 'mdx/types';
 
@@ -24,7 +26,7 @@ const PostContainer = ({ post }: { post: Post }) => {
   const { tag } = getTag(post);
 
   return (
-    <Style gap='10px' width='100%' alignItems='center' maxWidth='700px'>
+    <S.PostGlobalStyleContainer variants={staggerHalf} initial='initial' animate='animate'>
       <BlogSeo
         {...post}
         tag={tag}
@@ -33,23 +35,34 @@ const PostContainer = ({ post }: { post: Post }) => {
         images={[post.image]}
       />
 
-      <Layout.Flex position='relative' width='100%' height='340px'>
+      <S.ImageWrapper variants={fadeIn}>
         <Image
           src={post.image}
           fill
           style={{ objectFit: 'cover', borderRadius: '20px' }}
           alt='img'
         />
-      </Layout.Flex>
+      </S.ImageWrapper>
 
-      <PostInfo post={post} tag={tag} />
-      <hr />
+      <motion.div
+        key='post-info'
+        variants={fadeInUp}
+        initial='initial'
+        animate='animate'
+        exit='exit'
+      >
+        <S.PostInfoWrapper>
+          <PostInfo post={post} tag={tag} />
+        </S.PostInfoWrapper>
+      </motion.div>
 
-      <Layout.VStack width='100%' className='mdx' gap='20px'>
-        <h2>Table Of Contents</h2>
-        <MDXContent components={customComponents} />
-      </Layout.VStack>
-    </Style>
+      <motion.section variants={fadeInUp}>
+        <Layout.VStack width='100%' className='mdx' gap='20px'>
+          <h2>Table Of Contents</h2>
+          <MDXContent components={customComponents} />
+        </Layout.VStack>
+      </motion.section>
+    </S.PostGlobalStyleContainer>
   );
 };
 
