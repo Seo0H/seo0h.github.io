@@ -1,26 +1,29 @@
-import BlogLayout from '@/components/layout/blog';
-import { cleanAllPost } from '@/constants/blogDataset';
+import PostContainer from '@/components/blog-post';
+import { StaticPostData } from '@/constants/blogDataset';
+import { Post } from '@/types/post';
 
-import type { BlogProps } from '@/lib/types';
 import type { GetStaticPaths, GetStaticProps } from 'next';
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const { posts } = await StaticPostData.getInstance();
   return {
-    paths: cleanAllPost.map((post) => `/blog${post.url}`),
+    paths: posts.map((post) => `/blog${post.url}`),
     fallback: false,
   };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const { posts } = await StaticPostData.getInstance();
   const { slugs } = params as { slugs: string[] };
+
   const slug = `/${[...slugs].join('/')}`;
-  const post = cleanAllPost.find((post) => post.url === slug);
+  const post = posts.find((post) => post.url === slug);
 
-  return { props: { post } };
+  return { props: { post }, revalidate: 10 };
 };
 
-const Blog = (props: BlogProps) => {
-  return <BlogLayout {...props} />;
+const BlogPostFeather = (props: { post: Post }) => {
+  return <PostContainer {...props} />;
 };
 
-export default Blog;
+export default BlogPostFeather;

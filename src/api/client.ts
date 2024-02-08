@@ -1,10 +1,11 @@
-import { createClient } from '@supabase/supabase-js';
+import axios from 'axios';
 
-import { Database } from '@/types/database.types';
+const isDev = process.env.NODE_ENV === 'development';
 
-const supabaseUrl = process.env.SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_KEY!;
+const BACKEND_API_URL = isDev ? 'https://localhost:8080' : process.env.NEXT_PUBLIC_BACKEND_ENDPOINT;
 
-const supabase = createClient<Database>(supabaseUrl, supabaseKey);
+const client = axios.create({
+  baseURL: BACKEND_API_URL,
+});
 
-export default supabase;
+export default client;

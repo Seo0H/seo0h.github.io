@@ -4,6 +4,8 @@ import * as Layout from '@/components/layout';
 import { display } from '@/constants/styles';
 import cvar from '@/utils/cvarAutoComp';
 
+// DESCRIPTION: MDX포스트의 전체적인 스타일을 정의하는 스타일시트
+
 const code = css`
   /* inline code style */
   code {
@@ -11,7 +13,7 @@ const code = css`
     border-radius: 0.4rem;
     padding: 0.1rem 0.6rem;
 
-    font-family: Consolas;
+    font-family: var(--font-menlo);
     word-break: break-all;
 
     color: ${cvar({ key: 'gray', idx: '500' })};
@@ -25,7 +27,7 @@ const code = css`
 
     margin: 5px 0;
 
-    font-family: Consolas;
+    font-family: var(--font-menlo);
 
     background-color: ${cvar({ key: 'gray', idx: '100' })};
 
@@ -122,7 +124,7 @@ const anchor = css`
 
   .anchor::before {
     content: '#';
-    color: ${cvar({ key: 'gray', idx: '500' })};
+    color: ${cvar({ key: 'gray', idx: '300' })};
 
     @media (width < ${display.tablet}) {
       visibility: hidden;
@@ -191,6 +193,38 @@ const marker = css`
 
 const toggle = css``;
 
+export const postGlobalStyle = css`
+  color: ${cvar({ key: 'gray', idx: '500' })};
+
+  a {
+    color: inherit;
+    font-weight: 600;
+    text-decoration-line: underline;
+    line-height: 1.8;
+  }
+
+  .mdx > :is(h1, h2) {
+    margin-top: 20px;
+  }
+
+  hr {
+    width: 100%;
+    border: 0;
+    height: 1px;
+    background: ${cvar({ key: 'gray', idx: '100' })};
+  }
+
+  strong {
+    font-weight: 700;
+  }
+
+  ${code}
+  ${callout}
+  ${marker}
+  ${anchor}
+  ${toc}
+`;
+
 const BlogStyle = styled(Layout.VStack)`
   color: ${cvar({ key: 'gray', idx: '500' })};
 
@@ -213,7 +247,7 @@ const BlogStyle = styled(Layout.VStack)`
   }
 
   strong {
-    font-weight: 800;
+    font-weight: 700;
   }
 
   ${code}

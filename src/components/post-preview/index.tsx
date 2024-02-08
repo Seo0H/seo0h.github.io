@@ -4,17 +4,17 @@ import Link from 'next/link';
 
 import { CrosshatchTag } from '@/components/common/Tag';
 import * as Layout from '@/components/layout';
-import { fadeInUp, hover, tab } from '@/lib/animations';
+import { fadeInUp, tab } from '@/lib/animations';
 
 import * as Style from './style';
-import type { ReducedPost } from '@/lib/types';
+import type { Post } from '@/types/post';
 
-const BlogBox = ({ post }: { post: ReducedPost }) => {
+const PostPreview = ({ post }: { post: Post }) => {
   return (
     <motion.div variants={fadeInUp} whileTap={tab}>
       <Link href={`/blog/[...slugs]`} as={`/blog${post.url}`}>
-        <Style.ListBoxWrapper gap='24px' alignItems='center'>
-          <Style.ImgContainer position='relative' width='180px' height='180px' minWidth='80px'>
+        <Style.ListBoxWrapper>
+          <Style.ImgContainer>
             <Image
               style={{ objectFit: 'cover', borderRadius: '10px' }}
               src={post.image}
@@ -23,7 +23,7 @@ const BlogBox = ({ post }: { post: ReducedPost }) => {
             />
           </Style.ImgContainer>
 
-          <Style.ResVStack gap='18px' style={{ wordBreak: 'keep-all', flex: '1' }}>
+          <Style.ResVStack>
             <Layout.VStack>
               <CrosshatchTag>{post.tag}</CrosshatchTag>
               <Style.ResH2>{post.title}</Style.ResH2>
@@ -34,7 +34,8 @@ const BlogBox = ({ post }: { post: ReducedPost }) => {
               <Layout.HStack alignItems='flex-end' justifyContent='space-between'>
                 <Layout.HStack gap='10px' alignItems='center'>
                   <Style.InfoP suppressHydrationWarning>{post.formattedDate}</Style.InfoP>
-                  <Style.InfoP>{`${post.readingTime}분`}</Style.InfoP>
+                  <Style.InfoP>{`${post.readingTime} min`}</Style.InfoP>
+                  <Style.InfoP>{`${post.view} views`}</Style.InfoP>
                 </Layout.HStack>
               </Layout.HStack>
             </Layout.VStack>
@@ -45,4 +46,4 @@ const BlogBox = ({ post }: { post: ReducedPost }) => {
   );
 };
 
-export default BlogBox;
+export default PostPreview;

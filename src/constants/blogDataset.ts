@@ -1,39 +1,66 @@
 import { compareDesc } from 'date-fns';
 
-import { type Post as ContentlayerPost, allPosts } from 'contentlayer/generated';
+import { allPosts } from 'contentlayer/generated';
 
-import getTag from '@/lib/getTag';
+import { getBlogPost } from '@/api/database';
+import { initializePost } from '@/constants/utils';
 
-export const reducePost = ({ body: _, _raw, _id, ...post }: ContentlayerPost) => post;
+import type { Tables } from '@/types/database.types';
+import type { Post } from '@/types/post';
 
-type Post = ContentlayerPost & { tag: string };
+/**
+ * @description 싱글톤 클래스. Server Data와 Client data 를 결합해 유저에게 보여 줄 Post Data 객체를 생성
+ */
+export class StaticPostData {
+  private static instance: StaticPostData;
 
-export const cleanAllPost = allPosts
-  .filter((post) => !post.draft)
-  .map(removeUUIDNewLine)
-  .map(enrichPostWithTag)
-  .sort((a, b) => compareDesc(new Date(a.date).getTime(), new Date(b.date).getTime()));
+  public posts: Post[];
+  public serverPosts: Tables<'post'>[] | [];
+  public allTags: string[];
 
-export const allReducedPosts = cleanAllPost.map(reducePost);
+  private constructor() {
+    // 클라이언트 데이터로 데이터 프로퍼티 초기화 진행
+    this.posts = allPosts
+      .filter((post) => !post.draft)
+      .map(initializePost)
+      .sort((a, b) => compareDesc(new Date(a.date).getTime(), new Date(b.date).getTime()));
 
-function enrichPostWithTag(post: ContentlayerPost): Post {
-  const { tag } = getTag(post);
-  return {
-    tag,
-    ...post,
-  };
+    this.allTags = Array.from(
+      this.posts.reduce<Set<string>>((acc, post) => {
+        acc.add(post.tag);
+        return acc;
+      }, new Set()),
+    );
+
+    // 추후 인스턴스를 호출할 시 서버 데이터와 동기화하기 때문에 우선 초기화함.
+    this.serverPosts = [];
+  }
+
+  /**
+   * @description StaticPostData의 싱글톤 인스턴스를 반환하는 인스턴스 메서드. 호출 시 서버 Data 동기화 진행.
+   */
+  public static async getInstance() {
+    if (!StaticPostData.instance) {
+      StaticPostData.instance = new StaticPostData();
+    }
+
+    await StaticPostData.instance.updatePostViewsFromServer();
+    return StaticPostData.instance;
+  }
+
+  /**
+   * @description 각 포스트의 조회수 서버 데이터를 불러와 클라이언트 포스트 데이터에 추가하는 함수.
+   */
+  private async updatePostViewsFromServer() {
+    this.serverPosts = await getBlogPost();
+
+    if (this.serverPosts.length === 0) throw new Error('server post data가 누락되었습니다.');
+
+    this.posts = this.posts.map((post) => {
+      const addViewPost: Post = { ...post, view: 0 };
+      addViewPost.view =
+        this.serverPosts.find((serverPosts) => post.uuid === serverPosts.id)?.view ?? 0;
+      return addViewPost;
+    });
+  }
 }
-
-function removeUUIDNewLine(post: ContentlayerPost) {
-  return {
-    ...post,
-    uuid: post.uuid.replace(/\n|\r|\s*/g, ''),
-  };
-}
-
-export const AllTags = Array.from(
-  cleanAllPost.reduce<Set<string>>((acc, post) => {
-    acc.add(post.tag);
-    return acc;
-  }, new Set()),
-);

@@ -45,6 +45,7 @@ interface GridProps extends SizeAndMarginAndPaddingProps {
     | 'space-around'
     | 'space-evenly';
   placeSelf?: 'stretch' | 'start' | 'center' | 'end';
+  justifyItems?: 'stretch' | 'start' | 'center' | 'end';
 }
 
 type KeysEnum<T> = { [P in keyof Required<T>]: string };
@@ -97,6 +98,7 @@ const GridPropsKeys: KeysEnum<GridProps> = {
   maxHeight: '',
   minWidth: '',
   minHeight: '',
+  justifyItems: '',
 };
 
 const SizeAndMarginAndPaddingProperty = css<SizeAndMarginAndPaddingProps>`
@@ -131,6 +133,7 @@ const GridProperty = css<GridProps>`
   place-items: ${({ placeItems }) => placeItems || ''};
   place-content: ${({ placeContent }) => placeContent || ''};
   place-self: ${({ placeSelf }) => placeSelf || ''};
+  justify-items: ${({ justifyItems }) => justifyItems || ''};
 `;
 
 export const Flex = styled.div.withConfig({
