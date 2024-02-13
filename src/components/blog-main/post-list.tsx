@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { motion } from 'framer-motion';
 
+import GetAllPost from '@/api/post/get-all-post';
+import { isError } from '@/api/views/type';
 import FilterTagBtn from '@/components/FilterTagBtn';
+import { updateViewFromServerPost } from '@/components/blog-main/utils';
 import * as Layout from '@/components/layout';
 import PostPreview from '@/components/post-preview';
 import { fadeIn, staggerHalf } from '@/lib/animations';
@@ -13,6 +16,14 @@ const PostList = ({ posts, tags }: BlogMainProps) => {
   const [filteredPosts, setFilteredPosts] = useState(posts);
   const [selectedTag, setSelectedTag] = useState('ALL');
 
+  useEffect(() => {
+    const postViewFromServer = new GetAllPost();
+    postViewFromServer.fetch().then((serverPosts) => {
+      if (isError(serverPosts) || serverPosts.length === 0) return;
+      setFilteredPosts((clientPosts) => updateViewFromServerPost(clientPosts, serverPosts));
+    });
+  }, []);
+
   const handleTagFilter = (tagName: string | 'ALL') => {
     if (tagName === 'ALL') {
       setFilteredPosts(posts);
@@ -22,6 +33,7 @@ const PostList = ({ posts, tags }: BlogMainProps) => {
       setSelectedTag(tagName);
     }
   };
+
   return (
     <>
       <motion.section variants={fadeIn} initial='initial' animate='animate'>

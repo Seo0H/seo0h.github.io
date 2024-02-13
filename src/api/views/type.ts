@@ -1,8 +1,3 @@
-export type APIResponseType<ReturnType> = {
-  data: ReturnType | null;
-  message?: string;
-};
-
 export type APIStatusType = {
   isLoading: boolean;
   isSuccess: boolean;
@@ -10,8 +5,25 @@ export type APIStatusType = {
   isAbort: boolean;
 };
 
-export interface API<ReturnType> {
-  END_POINT: string;
-  fetch(): Promise<APIResponseType<ReturnType>>;
+export interface API<APIResponseType> {
+  readonly END_POINT: string;
+  fetch(): Promise<APIResponseType | ErrorType>;
   getStatus(): APIStatusType;
+}
+
+export type ErrorType = {
+  message: string | undefined;
+  error: unknown;
+};
+
+export const initialApiStatus: APIStatusType = {
+  isLoading: false,
+  isSuccess: false,
+  isError: false,
+  isAbort: false,
+};
+
+export function isError(res: unknown | ErrorType): res is ErrorType {
+  if (typeof res === 'object' && res !== null && 'error' in res) return true;
+  return false;
 }

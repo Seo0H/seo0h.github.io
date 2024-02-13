@@ -1,18 +1,11 @@
 import axios, { AxiosError, CancelTokenSource } from 'axios';
 
 import client from '@/api/client';
+import { initialApiStatus, type API, type APIStatusType, ErrorType } from '@/api/views/type';
 
-import type { API, APIResponseType, APIStatusType } from '@/api/views/type';
 import type { Post } from '@/types/post';
 
-export const initialApiStatus: APIStatusType = {
-  isLoading: false,
-  isSuccess: false,
-  isError: false,
-  isAbort: false,
-};
-
-type PostViews = {
+export type PostViews = {
   views: number;
 };
 
@@ -32,7 +25,7 @@ export default class IncreasePostViewsApi implements API<PostViews> {
     try {
       this.status = { ...initialApiStatus, isLoading: true };
 
-      const { data } = await client.patch<APIResponseType<PostViews>>(
+      const { data } = await client.patch<PostViews>(
         this.END_POINT,
         {
           id: this.postId,
@@ -42,27 +35,26 @@ export default class IncreasePostViewsApi implements API<PostViews> {
 
       this.status = { ...initialApiStatus, isSuccess: true };
 
-      return { ...data };
+      return data;
     } catch (e) {
       if (axios.isCancel(e)) {
         this.status = { ...initialApiStatus, isAbort: true };
         return {
-          data: null,
           message: e.message,
+          error: e,
         };
       }
 
       if (e instanceof AxiosError || e instanceof Error) {
         this.status = { ...initialApiStatus, isError: true };
-        return {
-          data: null,
+        throw {
           message: e.message,
+          error: e,
         };
       }
 
-      // Unknown Error..
       this.status = { ...initialApiStatus, isError: true };
-      throw e;
+      throw { message: '알 수 없는 에러가 일어났습니다.', error: e };
     }
   }
 

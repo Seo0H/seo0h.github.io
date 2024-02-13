@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 
 import axios from 'axios';
 
-import IncreasePostViewsApi, { initialApiStatus } from '@/api/views/increase-view';
-import { APIStatusType } from '@/api/views/type';
+import IncreasePostViewsApi from '@/api/views/increase-view';
+import { isError, type APIStatusType, initialApiStatus } from '@/api/views/type';
 
 import type { Post } from '@/types/post';
 
@@ -22,8 +22,7 @@ export default function useUpdateViews({ uuid, view: initialView }: Pick<Post, '
     updateViewState
       .fetch()
       .then((res) => {
-        if (updateViewState.getStatus().isAbort) return;
-        setView(Number(res.data?.views));
+        if (!isError(res)) setView(Number(res?.views));
       })
       .finally(() => {
         setApiStatus(updateViewState.getStatus());
