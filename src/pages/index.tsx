@@ -13,10 +13,6 @@ export default function Home(props: InferGetStaticPropsType<typeof getStaticProp
 export const getStaticProps = (async () => {
   const { serverPosts, posts, allTags: tags } = await StaticPostData.getInstance();
 
-  if (!serverPosts.length) {
-    return { props: { posts, tags } };
-  }
-
   await handlePostDataServerUpdate({
     serverPosts,
     clientPosts: posts,
@@ -24,7 +20,6 @@ export const getStaticProps = (async () => {
 
   return {
     props: { posts, tags },
-    revalidate: 10,
   };
 }) satisfies GetStaticProps<{
   posts: Post[];

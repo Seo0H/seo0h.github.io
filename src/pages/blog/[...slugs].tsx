@@ -19,7 +19,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = `/${[...slugs].join('/')}`;
   const post = posts.find((post) => post.url === slug);
 
-  return { props: { post }, revalidate: 10 };
+  return { props: { post } };
 };
 
 const BlogPostFeather = (props: { post: Post }) => {
