@@ -85,11 +85,15 @@ async function updatePostsOnServer(clientPosts: Post[], serverPosts: Tables<'pos
 
   try {
     if (insertPosts.length) {
-      await supabase.from(postTableName).insert(insertPosts);
+      const data = await supabase.from(postTableName).insert(insertPosts);
+      if (data.error) throw data;
+      console.log(`[SUPABASE] insert success`);
     }
 
     if (updatePosts.length) {
-      await supabase.from(postTableName).upsert(updatePosts);
+      const data = await supabase.from(postTableName).upsert(updatePosts);
+      if (data.error) throw data;
+      console.log(`[SUPABASE] update success`);
     }
   } catch (e) {
     console.log(e);
