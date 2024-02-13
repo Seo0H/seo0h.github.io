@@ -54,13 +54,13 @@ export class StaticPostData {
   private async updatePostViewsFromServer() {
     this.serverPosts = await getBlogPost();
 
-    if (this.serverPosts.length === 0) throw new Error('server post data가 누락되었습니다.');
-
-    this.posts = this.posts.map((post) => {
-      const addViewPost: Post = { ...post, view: 0 };
-      addViewPost.view =
-        this.serverPosts.find((serverPosts) => post.uuid === serverPosts.id)?.view ?? 0;
-      return addViewPost;
-    });
+    if (this.serverPosts.length > 0) {
+      this.posts = this.posts.map((post) => {
+        const addViewPost: Post = { ...post, view: 0 };
+        addViewPost.view =
+          this.serverPosts.find((serverPosts) => post.uuid === serverPosts.id)?.view ?? 0;
+        return addViewPost;
+      });
+    }
   }
 }
