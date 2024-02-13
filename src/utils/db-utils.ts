@@ -1,4 +1,5 @@
 import supabase from '@/api/database';
+import { postTableName } from '@/lib/mode';
 
 import type { Tables } from '@/types/database.types';
 import type { Post } from '@/types/post';
@@ -82,11 +83,16 @@ async function updatePostsOnServer(clientPosts: Post[], serverPosts: Tables<'pos
     }
   });
 
-  if (insertPosts.length) {
-    await supabase.from('post').insert(insertPosts);
-  }
+  try {
+    if (insertPosts.length) {
+      await supabase.from(postTableName).insert(insertPosts);
+    }
 
-  if (updatePosts.length) {
-    await supabase.from('post').upsert(updatePosts);
+    if (updatePosts.length) {
+      await supabase.from(postTableName).upsert(updatePosts);
+    }
+  } catch (e) {
+    console.log(e);
+    throw e;
   }
 }
