@@ -23,7 +23,9 @@ export default class GetAllPostFromServer implements API<ServerPost[]> {
     try {
       this.status = { ...initialApiStatus, isLoading: true };
 
-      const { data } = await client.get<ServerPost[]>(this.END_POINT);
+      const { data } = await client.get<ServerPost[]>(this.END_POINT, {
+        cancelToken: this.cancelTokenSource?.token,
+      });
 
       this.status = { ...initialApiStatus, isSuccess: true };
 

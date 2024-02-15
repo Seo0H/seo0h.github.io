@@ -6,7 +6,7 @@ import { initialApiStatus, type API, type APIStatusType, ErrorType } from '@/api
 import type { Post } from '@/types/post';
 
 export type PostViews = {
-  views: number;
+  views: string;
 };
 
 export default class IncreasePostViewsApi implements API<PostViews> {
@@ -32,6 +32,8 @@ export default class IncreasePostViewsApi implements API<PostViews> {
         },
         { withCredentials: true, cancelToken: this.cancelTokenSource?.token },
       );
+
+      if (Number.isNaN(Number(data.views))) throw new Error('API Interface Error');
 
       this.status = { ...initialApiStatus, isSuccess: true };
 
