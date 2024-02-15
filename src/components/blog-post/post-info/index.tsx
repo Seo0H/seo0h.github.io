@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 
 import PostViewContext from '@/components/blog-post/post-info/context';
-import useUpdateViews from '@/hooks/use-update-views';
+import useUpdateViews from '@/lib/hooks/use-update-views';
 import useWindowSize from '@/lib/useWindowSize';
 import { Post } from '@/types/post';
 import isMobile from '@/utils/isMobile';
