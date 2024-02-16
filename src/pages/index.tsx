@@ -2,12 +2,15 @@ import { GetStaticProps, InferGetStaticPropsType } from 'next';
 
 import BlogMain from '@/components/blog-main';
 import { StaticPostData } from '@/constants/blogDataset';
+import useCombinedPost from '@/lib/hooks/use-combined-post';
 import { handlePostDataServerUpdate } from '@/utils/db-utils';
 
 import type { Post } from '@/types/post';
 
 export default function Home(props: InferGetStaticPropsType<typeof getStaticProps>) {
-  return <BlogMain {...props} />;
+  const { posts, status: apiStatus, key } = useCombinedPost(props.posts);
+
+  return <BlogMain {...{ ...props, posts, apiStatus }} key={key} />;
 }
 
 export const getStaticProps = (async () => {
