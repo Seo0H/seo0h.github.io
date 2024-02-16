@@ -10,6 +10,6 @@ export function updateViewFromServerPost(clientPosts: Post[], serverPostInfos: S
       .filter((serverPost) => serverPost.id === clientPost.uuid)
       .pop();
 
-    return { ...clientPost, view: Number(updatedPost?.views) || clientPost.view };
+    return { ...clientPost, views: Number(updatedPost?.views) || 0 };
   });
 }

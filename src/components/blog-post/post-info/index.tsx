@@ -11,7 +11,7 @@ const PCViewPostInfo = dynamic(() => import('@/components/blog-post/post-info/pc
 
 const PostInfo = ({ post, tag }: { post: Post; tag: string }) => {
   const { windowSize } = useWindowSize();
-  const { views, status: viewsApiStatus } = useUpdateViews({ uuid: post.uuid, view: post.view });
+  const { views, status: viewsApiStatus } = useUpdateViews({ uuid: post.uuid, views: post.views });
 
   return (
     <>
