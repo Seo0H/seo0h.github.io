@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 
 import axios from 'axios';
 
@@ -10,7 +10,7 @@ import type { Post } from '@/types/post';
 
 /**
  *  서버 데이터와 클라이언트 데이터를 합치는 커스텀 훅
- * @returns {object} { posts : 서버 데이터 추가가 완료된 post 객체 , status : 서버 데이터 패칭 상태를 나타내는 변수 }
+ * @returns {object} { posts : 서버 데이터 추가가 완료된 post 객체 , status : 서버 데이터 패칭 상태를 나타내는 변수, key: 재 랜더링 트리거 알림 변수 }
  */
 const useCombinedPost = (initialPost: Post[]) => {
   const [posts, setPosts] = useState(initialPost);
@@ -18,6 +18,8 @@ const useCombinedPost = (initialPost: Post[]) => {
     ...initialApiStatus,
     isLoading: true,
   });
+
+  const key = crypto.randomUUID();
 
   useEffect(() => {
     const CancelToken = axios.CancelToken;
@@ -40,7 +42,7 @@ const useCombinedPost = (initialPost: Post[]) => {
     };
   }, []);
 
-  return { posts, status: viewStatus };
+  return { posts, status: viewStatus, key };
 };
 
 export default useCombinedPost;
