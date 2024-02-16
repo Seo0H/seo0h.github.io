@@ -44,23 +44,7 @@ export class StaticPostData {
       StaticPostData.instance = new StaticPostData();
     }
 
-    await StaticPostData.instance.updatePostViewsFromServer();
+    StaticPostData.instance.serverPosts = await getBlogPost();
     return StaticPostData.instance;
-  }
-
-  /**
-   * @description 각 포스트의 조회수 서버 데이터를 불러와 클라이언트 포스트 데이터에 추가하는 함수.
-   */
-  private async updatePostViewsFromServer() {
-    this.serverPosts = await getBlogPost();
-
-    if (this.serverPosts.length > 0) {
-      this.posts = this.posts.map((post) => {
-        const addViewPost: Post = { ...post, view: 0 };
-        addViewPost.view =
-          this.serverPosts.find((serverPosts) => post.uuid === serverPosts.id)?.view ?? 0;
-        return addViewPost;
-      });
-    }
   }
 }

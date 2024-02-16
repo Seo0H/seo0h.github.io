@@ -9,6 +9,6 @@ export function initializePost(post: ContentlayerPost): Post {
     ...post,
     tag,
     uuid: post.uuid.replace(/\n|\r|\s*/g, ''),
-    view: 0,
+    views: 0,
   };
 }

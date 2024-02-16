@@ -36,7 +36,7 @@ const PostPreview = ({ post, viewStatus }: { post: Post; viewStatus: APIStatusTy
                 <Layout.HStack gap='10px' alignItems='center'>
                   <Style.InfoP suppressHydrationWarning>{post.formattedDate}</Style.InfoP>
                   <Style.InfoP>{`${post.readingTime} min`}</Style.InfoP>
-                  {viewStatus.isSuccess && <Style.InfoP>{`${post.view} views`}</Style.InfoP>}
+                  {viewStatus.isSuccess && <Style.InfoP>{`${post.views} views`}</Style.InfoP>}
                 </Layout.HStack>
               </Layout.HStack>
             </Layout.VStack>
