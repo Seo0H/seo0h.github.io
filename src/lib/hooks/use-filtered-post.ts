@@ -1,22 +1,25 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import type { Post } from '@/types/post';
+import { usePostsContext } from '@/components/blog-main/context';
 
-const useFilteredPost = (initialPosts: Post[], initialTag: string) => {
-  const [filteredPosts, setFilteredPosts] = useState(initialPosts);
+const useFilteredPost = (initialTag: string) => {
+  const { setDisplayPosts, allPosts } = usePostsContext();
   const [selectedTag, setSelectedTag] = useState(initialTag);
 
-  const setTag = useCallback((tag: string) => {
-    if (tag === initialTag) {
-      setFilteredPosts(initialPosts);
-    } else {
-      setFilteredPosts(initialPosts.filter((post) => post.url.includes(tag)));
-    }
+  const setTag = useCallback(
+    (tag: string) => {
+      if (tag === initialTag) {
+        setDisplayPosts(allPosts);
+      } else {
+        setDisplayPosts(allPosts.filter((post) => post.url.includes(tag)));
+      }
 
-    setSelectedTag(tag);
-  }, []);
+      setSelectedTag(tag);
+    },
+    [allPosts, initialTag],
+  );
 
-  return { setTag, filteredPosts, selectedTag };
+  return { setTag, selectedTag };
 };
 
 export default useFilteredPost;
