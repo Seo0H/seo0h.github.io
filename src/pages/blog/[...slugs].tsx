@@ -1,11 +1,11 @@
 import PostContainer from '@/components/blog-post';
-import { StaticPostData } from '@/constants/blogDataset';
+import { StaticPostData } from '@/constants/blogDataset/blogDataset';
 import { Post } from '@/types/post';
 
 import type { GetStaticPaths, GetStaticProps } from 'next';
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { posts } = await StaticPostData.getInstance();
+  const { clientPosts: posts } = await StaticPostData.getInstance();
   return {
     paths: posts.map((post) => `/blog${post.url}`),
     fallback: false,
@@ -13,7 +13,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { posts } = await StaticPostData.getInstance();
+  const { clientPosts: posts } = await StaticPostData.getInstance();
   const { slugs } = params as { slugs: string[] };
 
   const slug = `/${[...slugs].join('/')}`;

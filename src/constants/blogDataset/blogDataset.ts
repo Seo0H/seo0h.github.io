@@ -3,6 +3,7 @@ import { compareDesc } from 'date-fns';
 import { allPosts } from 'contentlayer/generated';
 
 import { getBlogPost } from '@/api/database';
+import { isUpdateNeeded, updatePostsOnServer } from '@/constants/blogDataset/utils';
 import { initializePost } from '@/constants/utils';
 
 import type { Tables } from '@/types/database.types';
@@ -14,19 +15,19 @@ import type { Post } from '@/types/post';
 export class StaticPostData {
   private static instance: StaticPostData;
 
-  public posts: Post[];
+  public clientPosts: Post[];
   public serverPosts: Tables<'post'>[] | [];
   public allTags: string[];
 
   private constructor() {
     // 클라이언트 데이터로 데이터 프로퍼티 초기화 진행
-    this.posts = allPosts
+    this.clientPosts = allPosts
       .filter((post) => !post.draft)
       .map(initializePost)
       .sort((a, b) => compareDesc(new Date(a.date).getTime(), new Date(b.date).getTime()));
 
     this.allTags = Array.from(
-      this.posts.reduce<Set<string>>((acc, post) => {
+      this.clientPosts.reduce<Set<string>>((acc, post) => {
         acc.add(post.tag);
         return acc;
       }, new Set()),
@@ -46,5 +47,18 @@ export class StaticPostData {
 
     StaticPostData.instance.serverPosts = await getBlogPost();
     return StaticPostData.instance;
+  }
+
+  public async synchronizeServerAndClientPosts() {
+    if (isUpdateNeeded(this.serverPosts, this.clientPosts) === false)
+      console.log("✅ Update isn't needed!");
+    else {
+      try {
+        console.log('⚠️ Update is needed');
+        await updatePostsOnServer(this.clientPosts, this.serverPosts);
+      } catch (error) {
+        throw new Error('포스트 데이터를 서버에 업데이트 하던 중 에러가 발생했습니다.');
+      }
+    }
   }
 }

@@ -1,7 +1,7 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 
 import BlogMain from '@/components/blog-main';
-import { StaticPostData } from '@/constants/blogDataset';
+import { StaticPostData } from '@/constants/blogDataset/blogDataset';
 import useCombinedPost from '@/lib/hooks/use-combined-post';
 import { handlePostDataServerUpdate } from '@/utils/db-utils';
 
@@ -14,12 +14,9 @@ export default function Home(props: InferGetStaticPropsType<typeof getStaticProp
 }
 
 export const getStaticProps = (async () => {
-  const { serverPosts, posts, allTags: tags } = await StaticPostData.getInstance();
-
-  await handlePostDataServerUpdate({
-    serverPosts,
-    clientPosts: posts,
-  });
+  const staticPosts = await StaticPostData.getInstance();
+  await staticPosts.synchronizeServerAndClientPosts();
+  const { clientPosts: posts, allTags: tags } = staticPosts;
 
   return {
     props: { posts, tags },

@@ -63,7 +63,7 @@ const GlobalStyles = createGlobalStyle`${css`
 
   h2 {
     color: ${cvar({ key: 'gray', idx: '800' })};
-    font-size: 36px;
+    font-size: 34px;
     font-weight: 700;
     line-height: 1.4;
 
@@ -74,7 +74,7 @@ const GlobalStyles = createGlobalStyle`${css`
 
   h3 {
     color: ${cvar({ key: 'gray', idx: '800' })};
-    font-size: 32px;
+    font-size: 30px;
     font-weight: 700;
     line-height: 1.4;
 
