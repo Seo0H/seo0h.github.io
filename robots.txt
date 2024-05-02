@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://seo0h.github.io/
+Host: https://blog.seo0h.me/
 
 # Sitemaps
-Sitemap: https://seo0h.github.io/sitemap.xml
+Sitemap: https://blog.seo0h.me/sitemap.xml
