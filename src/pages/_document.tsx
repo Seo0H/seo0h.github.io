@@ -44,7 +44,7 @@ export default class MyDocument extends Document {
           <meta name='naver-site-verification' content='7ef5e520261e981fd6678836e9a97ea0b6ab1bd2' />
           <meta
             name='google-site-verification'
-            content='hrZSTzuX86qT1XQK9Q3oYEv6DQNixlYGwZkiod1mvEs'
+            content='vHanU2BNbGZCkd0ShyromOITmoJmS4aDytg-EGg9m30'
           />
         </Head>
         <body>
