@@ -41,7 +41,7 @@ export default class MyDocument extends Document {
             crossOrigin=''
             href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable-dynamic-subset.css'
           />
-          <meta name='naver-site-verification' content='7ef5e520261e981fd6678836e9a97ea0b6ab1bd2' />
+          <meta name='naver-site-verification' content='d091b8e268a88e2b470c050c2fca6ee51532c3ef' />
           <meta
             name='google-site-verification'
             content='vHanU2BNbGZCkd0ShyromOITmoJmS4aDytg-EGg9m30'
