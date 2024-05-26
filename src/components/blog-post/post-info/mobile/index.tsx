@@ -12,7 +12,7 @@ const MobileViewPostInfo = ({ post, tag }: { post: Post; tag: string }) => {
     <Layout.VStack width='100%' gap='5px' margin='20px 0 10px 0'>
       <Layout.VStack>
         <CrosshatchTag>{tag}</CrosshatchTag>
-        <h1>{post.title}</h1>
+        <S.H1>{post.title}</S.H1>
       </Layout.VStack>
 
       <S.H5>{post.description}</S.H5>

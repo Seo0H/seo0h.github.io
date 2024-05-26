@@ -5,9 +5,7 @@ import { useMDXComponent } from 'next-contentlayer/hooks';
 import { BlogSeo } from '@/components/SEO';
 import PostInfo from '@/components/blog-post/post-info';
 import * as Layout from '@/components/layout';
-import CustomImg from '@/components/mdx/CustomImg';
-import CustomLink from '@/components/mdx/CustomLink';
-import CustomTable from '@/components/mdx/CustomTable';
+import { Link, Img, Table, P } from '@/components/mdx';
 import { fadeIn, fadeInUp, staggerHalf } from '@/lib/animations';
 import getTag from '@/lib/getTag';
 
@@ -16,9 +14,10 @@ import type { Post } from '@/types/post';
 import type { MDXComponents } from 'mdx/types';
 
 const customComponents: MDXComponents = {
-  img: CustomImg,
-  a: CustomLink,
-  table: CustomTable,
+  img: Img,
+  a: Link,
+  table: Table,
+  p: P,
 };
 
 const PostContainer = ({ post }: { post: Post }) => {

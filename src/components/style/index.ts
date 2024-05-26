@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 
-import { display } from '@/constants/styles';
+import cvar from '@/utils/cvarAutoComp';
 
-export const GettingP = styled.p`
-  white-space: pre-line;
-
-  @media (width < ${display.tablet}) {
-    white-space: normal;
-  }
+export const DefaultP = styled.p`
+  color: ${cvar({ key: 'gray', idx: '500' })};
+  font-size: 17px;
+  font-weight: 400;
 `;

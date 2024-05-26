@@ -26,9 +26,8 @@ const PostPreview = ({ post, viewStatus }: { post: Post; viewStatus: APIStatusTy
 
           <Style.ResVStack>
             <Layout.VStack>
-              <CrosshatchTag>{post.tag}</CrosshatchTag>
               <Style.ResH2>{post.title}</Style.ResH2>
-              <Style.P>{post.description}</Style.P>
+              <Style.Description>{post.description}</Style.Description>
             </Layout.VStack>
 
             <Layout.VStack>

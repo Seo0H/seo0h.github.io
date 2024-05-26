@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 
 import * as Layout from '@/components/layout';
+import { display } from '@/constants/styles';
 import cvar from '@/utils/cvarAutoComp';
 
 export const H1 = styled.h1`
   flex: 4;
-  line-height: 100%;
+  color: ${cvar({ key: 'gray', idx: '800' })};
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.6;
 `;
 
 export const Grid = styled(Layout.Grid)`

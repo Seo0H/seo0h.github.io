@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import { DefaultP } from '../style';
 import { display } from '@/constants/styles';
 import cvar from '@/utils/cvarAutoComp';
 
@@ -34,14 +35,19 @@ export const ListBoxWrapper = styled.div`
 
 export const ResH2 = styled.h2`
   line-height: 1.3;
+  color: ${cvar({ key: 'gray', idx: '700' })};
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.4;
+
   @media (width < ${display.tablet}) {
     margin: 5px 0;
   }
 `;
 
-export const InfoP = styled.p`
-  font-weight: 300;
-  font-size: 16px;
+export const InfoP = styled(DefaultP)`
+  font-weight: 200;
+  font-size: 15px;
 
   @media (width < ${display.tablet}) {
     font-size: 14px;
@@ -76,7 +82,11 @@ export const ResVStack = styled.div`
   }
 `;
 
-export const P = styled.p`
-  font-weight: 400;
-  line-height: 1.4;
+export const Description = styled(DefaultP)`
+  line-height: 1.6;
+  font-weight: 200;
+
+  @media (width <${display.tablet}) {
+    font-size: 16px;
+  }
 `;

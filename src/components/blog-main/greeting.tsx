@@ -1,15 +1,16 @@
 import { motion } from 'framer-motion';
 
 import * as Layout from '@/components/layout';
-import * as Style from '@/components/style';
 import { fadeIn, staggerHalf } from '@/lib/animations';
+
+import * as Style from './style';
 
 const Greeting = () => {
   return (
     <motion.section variants={staggerHalf} initial='initial' animate='animate'>
       <motion.div variants={fadeIn}>
         <Layout.Box margin='30px 0 25px 0'>
-          <h1>Seo / 시오</h1>
+          <Style.H1>Seo / 시오</Style.H1>
         </Layout.Box>
       </motion.div>
 

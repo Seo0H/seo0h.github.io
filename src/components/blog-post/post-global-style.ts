@@ -193,6 +193,18 @@ const marker = css`
 
 const toggle = css``;
 
+const heading = css`
+  h2,
+  h3,
+  h4 {
+    font-size: 24px;
+    line-height: 1.6;
+    font-weight: 700;
+    margin: 24px 0 4px;
+    color: ${cvar({ key: 'gray', idx: '700' })};
+  }
+`;
+
 export const postGlobalStyle = css`
   color: ${cvar({ key: 'gray', idx: '500' })};
 
@@ -203,10 +215,6 @@ export const postGlobalStyle = css`
     line-height: 1.8;
   }
 
-  .mdx > :is(h1, h2) {
-    margin-top: 20px;
-  }
-
   hr {
     width: 100%;
     border: 0;
@@ -223,38 +231,5 @@ export const postGlobalStyle = css`
   ${marker}
   ${anchor}
   ${toc}
+  ${heading}
 `;
-
-const BlogStyle = styled(Layout.VStack)`
-  color: ${cvar({ key: 'gray', idx: '500' })};
-
-  a {
-    color: inherit;
-    font-weight: 600;
-    text-decoration-line: underline;
-    line-height: 1.8;
-  }
-
-  .mdx > :is(h1, h2) {
-    margin-top: 20px;
-  }
-
-  hr {
-    width: 100%;
-    border: 0;
-    height: 1px;
-    background: ${cvar({ key: 'gray', idx: '100' })};
-  }
-
-  strong {
-    font-weight: 700;
-  }
-
-  ${code}
-  ${callout}
-  ${marker}
-  ${anchor}
-  ${toc}
-`;
-
-export default BlogStyle;

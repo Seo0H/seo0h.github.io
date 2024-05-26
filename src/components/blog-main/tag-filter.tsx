@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-import TagFilter from '@/components/blog-main/tag-fliter';
+import FilterTagBtn from '../FilterTagBtn';
 import * as Layout from '@/components/layout';
 import { fadeIn } from '@/lib/animations';
 import useFilteredPost from '@/lib/hooks/use-filtered-post';
@@ -15,7 +15,19 @@ const TagFilterContainer = ({ tags }: { tags: string[] }) => {
   return (
     <motion.section variants={fadeIn} initial='initial' animate='animate'>
       <Layout.HStack margin='0 0 15px 0' gap='10px'>
-        <TagFilter onSelect={handleTagFilter} tags={tags} selectedTag={selectedTag} />
+        <FilterTagBtn onClick={() => handleTagFilter('ALL')} $isSelected={selectedTag === 'ALL'}>
+          ALL
+        </FilterTagBtn>
+
+        {tags.map((tag) => (
+          <FilterTagBtn
+            key={crypto.randomUUID()}
+            onClick={() => handleTagFilter(tag || '')}
+            $isSelected={selectedTag === tag}
+          >
+            {tag}
+          </FilterTagBtn>
+        ))}
       </Layout.HStack>
     </motion.section>
   );

@@ -44,4 +44,5 @@ export const CrosshatchTag = styled.span`
   color: ${cvar({ key: 'gray', idx: '400' })};
   font-size: 16px;
   font-weight: 600;
+  line-height: 1.4;
 `;
