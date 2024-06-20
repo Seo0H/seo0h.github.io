@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import cvar from '@/utils/cvarAutoComp';
 
-const CustomImg = ({ src, alt, ...props }: ComponentProps<'img'>) => {
+export const Img = ({ src, alt, ...props }: ComponentProps<'img'>) => {
   return (
     <>
       <Image src={src as string} alt={alt as string} loading='lazy' />
@@ -12,8 +12,6 @@ const CustomImg = ({ src, alt, ...props }: ComponentProps<'img'>) => {
     </>
   );
 };
-
-export default CustomImg;
 
 const Image = styled.img`
   max-width: 100%;

@@ -4,15 +4,13 @@ import styled from 'styled-components';
 
 import cvar from '@/utils/cvarAutoComp';
 
-function CustomTable({ children, ...props }: ComponentProps<'table'>) {
+export function Table({ children, ...props }: ComponentProps<'table'>) {
   return (
     <TableWrapper>
-      <Table>{children}</Table>
+      <TableStyle>{children}</TableStyle>
     </TableWrapper>
   );
 }
-
-export default CustomTable;
 
 const TableWrapper = styled.div`
   overflow: hidden;
@@ -23,7 +21,7 @@ const TableWrapper = styled.div`
   border: 1px solid ${cvar({ key: 'gray', idx: '200' })};
 `;
 
-const Table = styled.table`
+const TableStyle = styled.table`
   width: 100%;
   text-align: center;
   background: white;

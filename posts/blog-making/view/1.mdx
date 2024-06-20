@@ -1,6 +1,6 @@
 ---
 title: '블로그 조회수 기능 제작기 - 1'
-description: '클라이언트 데이터가 따로 존재하는 상황에서 조회수 기능 구현하기'
+description: 클라이언트 데이터가 따로 존재하는 상황에서 조회수 기능 구현하기
 draft: false
 image:
 date: 2024-03-04 15:46:22
@@ -26,7 +26,6 @@ uuid: fbf28aa8-b8ad-4ab0-a564-7e79ac149feb
 > 1. **GA** : GA의 조회수를 가져오기
 > 2. **DB + Next.js** : Supabase와 Next IRS 기능을 이용해 조회수 정보 구현
 
-
 ![예민하게 수집되는 ga의 조회수 정보](/posts/views/240304-163433.png)
 
 둘 중 좀 리소스가 적게 드는 방법은 1번. **GA의 조회수를 가져오는 방법**이였으나 생각보다, **너무 예민하게 조회수를 수집한다는 단점**이 있었습니다. (screen-view + page-view를 합산한 이벤트라고 하네요.) 따라서 자연스럽게 2번 방법으로 방향성을 잡게 되었습니다.
@@ -34,6 +33,7 @@ uuid: fbf28aa8-b8ad-4ab0-a564-7e79ac149feb
 2번 방법을 구현하기 위해선 크게 4가지의 문제들을 해결해야 했습니다.
 
 > **⚠️ Issues**
+>
 > 1. **스키마 구성** : 조회수 정보가 담긴 DB의 스키마를 어떻게 구성 할 것인가?
 > 2. **정보 식별 방법** : 클라이언트의 post 정보를 어덯게 DB에 저장하고 식별할 것인가?
 > 3. **정합성 유지** : DB와 클라이언트의 post의 데이터의 정합성을 어떻게 유지할 것인가?
@@ -79,6 +79,7 @@ uuid: fbf28aa8-b8ad-4ab0-a564-7e79ac149feb
         ---
        ```
        </div>
+
 </details>
 
 ---
@@ -89,10 +90,9 @@ uuid: fbf28aa8-b8ad-4ab0-a564-7e79ac149feb
 
 ![supabase schema](/posts/views/240304-192459.png)
 
-
 | 속성(attribute) | type      | 설명                          |
-| --------------- | :--------- | :---------------------------- |
-| id              | text (pk) | 포스트를 식별하는 유니크한 값      |
+| --------------- | :-------- | :---------------------------- |
+| id              | text (pk) | 포스트를 식별하는 유니크한 값 |
 | title           | text      | 포스트 제목                   |
 | views           | int4      | 조회수                        |
 
@@ -119,9 +119,9 @@ export const getStaticProps = (async () => {
   const staticPost = await StaticPostData.getInstance();
   const { serverPosts, posts, allTags: tags } = staticPost;
 
- //  Post의 서버 데이터 업데이트 필요 여부를 판단하고,
- // 업데이트가 필요하면 서버 데이터를 클라이언트 데이터 기준으로 업데이트 합니다.
- await staticPost.synchronizeServerAndClientPosts({
+  //  Post의 서버 데이터 업데이트 필요 여부를 판단하고,
+  // 업데이트가 필요하면 서버 데이터를 클라이언트 데이터 기준으로 업데이트 합니다.
+  await staticPost.synchronizeServerAndClientPosts({
     serverPosts,
     clientPosts: posts,
   });
@@ -133,18 +133,18 @@ export const getStaticProps = (async () => {
   posts: Post[];
   tags: string[];
 }>;
-
 ```
+
 `synchronizeServerAndClientPosts` 내부에서 아래와 같이 상황별 로그가 찍히도록 구성해두었습니다.
 
-
-| 새로운 포스트 생성                  | 제목 수정                           | 업데이트 불필요                |
+| 새로운 포스트 생성                  | 제목 수정                           | 업데이트 불필요                     |
 | ----------------------------------- | ----------------------------------- | ----------------------------------- |
 | ![](/posts/views/240304-200421.png) | ![](/posts/views/240304-200200.png) | ![](/posts/views/240304-200221.png) |
 
 ### 조회수 로직 - 세션 또는 쿠키를 이용한 검증
 
 > **⚠️ Issues**
+>
 > 1. ~~**스키마 구성** : 조회수 정보가 담긴 DB의 스키마를 어떻게 구성 할 것인가?~~
 > 2. ~~**정보 식별 방법** : 클라이언트의 post 정보를 어덯게 DB에 저장하고 식별할 것인가?~~
 > 3. ~~**정합성 유지** : DB와 클라이언트의 post의 데이터의 정합성을 어떻게 유지할 것인가?~~
