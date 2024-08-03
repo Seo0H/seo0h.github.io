@@ -9,8 +9,8 @@ const Greeting = () => {
   return (
     <motion.section variants={staggerHalf} initial='initial' animate='animate'>
       <motion.div variants={fadeIn}>
-        <Layout.Box margin='30px 0 25px 0'>
-          <Style.H1>Seo / 시오</Style.H1>
+        <Layout.Box margin='20px 0 10px 0'>
+          <Style.H1>시오</Style.H1>
         </Layout.Box>
       </motion.div>
 

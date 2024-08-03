@@ -15,15 +15,6 @@ const PostPreview = ({ post, viewStatus }: { post: Post; viewStatus: APIStatusTy
     <motion.div variants={fadeInUp} whileTap={tab}>
       <Link href={`/blog/[...slugs]`} as={`/blog${post.url}`}>
         <Style.ListBoxWrapper>
-          <Style.ImgContainer>
-            <Image
-              style={{ objectFit: 'cover', borderRadius: '10px' }}
-              src={post.image}
-              alt='img'
-              fill
-            />
-          </Style.ImgContainer>
-
           <Style.ResVStack>
             <Layout.VStack>
               <Style.ResH2>{post.title}</Style.ResH2>

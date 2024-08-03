@@ -5,7 +5,7 @@ import { display } from '@/constants/styles';
 import cvar from '@/utils/cvarAutoComp';
 
 export const H1 = styled.h1`
-  font-size: 40px;
+  font-size: 32px;
   line-height: 1.6;
   font-weight: 700;
   color: ${cvar({ key: 'gray', idx: '800' })};
@@ -14,7 +14,7 @@ export const H1 = styled.h1`
 export const GettingP = styled(DefaultP)`
   white-space: pre-line;
   line-height: 1.6;
-  font-weight: 400;
+  font-weight: 300;
 
   @media (width < ${display.tablet}) {
     white-space: normal;
