@@ -20,9 +20,7 @@ const MobileViewPostInfo = ({ post, tag }: { post: Post; tag: string }) => {
       <S.HStack gap='10px' margin='10px 0 0 0' alignItems='center'>
         <S.P>{post.formattedDate}</S.P>
         <S.P>{post.readingTime}분</S.P>
-        <S.P>
-          <Views />
-        </S.P>
+        <S.P>{/* <Views /> */}</S.P>
       </S.HStack>
     </Layout.VStack>
   );

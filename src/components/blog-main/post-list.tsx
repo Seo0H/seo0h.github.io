@@ -24,9 +24,7 @@ const PostList = () => {
               </motion.div>
             )}
             {(postApiStatus.isSuccess || postApiStatus.isError) &&
-              displayPosts.map((post) => (
-                <PostPreview key={crypto.randomUUID()} post={post} viewStatus={postApiStatus} />
-              ))}
+              displayPosts.map((post) => <PostPreview key={crypto.randomUUID()} post={post} />)}
           </AnimatePresence>
         </Layout.VStack>
       </motion.div>

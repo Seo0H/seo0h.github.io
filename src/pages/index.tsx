@@ -15,7 +15,7 @@ export default function Home(props: InferGetStaticPropsType<typeof getStaticProp
 
 export const getStaticProps = (async () => {
   const staticPosts = await StaticPostData.getInstance();
-  await staticPosts.synchronizeServerAndClientPosts();
+  // await staticPosts.synchronizeServerAndClientPosts();
   const { clientPosts: posts, allTags: tags } = staticPosts;
 
   return {

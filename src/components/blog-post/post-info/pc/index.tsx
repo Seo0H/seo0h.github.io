@@ -23,9 +23,7 @@ const PCViewPostInfo = ({ post, tag }: { post: Post; tag: string }) => {
           >
             <S.InfoWrapper>{post.formattedDate}</S.InfoWrapper>
             <S.InfoWrapper>{post.readingTime} min read</S.InfoWrapper>
-            <S.InfoWrapper>
-              <Views />
-            </S.InfoWrapper>
+            <S.InfoWrapper>{/* <Views /> */}</S.InfoWrapper>
           </S.Grid>
         </Layout.HStack>
       </Layout.VStack>

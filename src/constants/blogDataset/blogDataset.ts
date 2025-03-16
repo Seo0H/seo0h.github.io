@@ -45,7 +45,7 @@ export class StaticPostData {
       StaticPostData.instance = new StaticPostData();
     }
 
-    StaticPostData.instance.serverPosts = await getBlogPost();
+    // StaticPostData.instance.serverPosts = await getBlogPost();
     return StaticPostData.instance;
   }
 
